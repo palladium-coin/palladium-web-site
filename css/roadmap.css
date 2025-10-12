@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ===== ROADMAP PAGE SPECIFIC STYLES ===== */
+/* Navbar styles moved to css/navbar.css */
+
+/* Milestone Cards */
+.milestone-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.milestone-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 212, 170, 0.2);
+}
+
+.milestone-card.completed {
+    border-left: 4px solid #48c774;
+}
+
+.milestone-card.upcoming {
+    border-left: 4px solid #ffdd57;
+}
+
+.milestone-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.milestone-status {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.milestone-status.completed {
+    background: rgba(72, 199, 116, 0.2);
+    color: #48c774;
+    border: 1px solid #48c774;
+}
+
+.milestone-status.upcoming {
+    background: rgba(255, 221, 87, 0.2);
+    color: #ffdd57;
+    border: 1px solid #ffdd57;
+}
+
+.custom-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.custom-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.custom-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #00d4aa;
+    font-weight: bold;
+}
+
+/* Button Styles */
+.button.is-info {
+    background: linear-gradient(135deg, #3298dc 0%, #2980b9 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(50, 152, 220, 0.3);
+}
+
+.button.is-info:hover {
+    background: linear-gradient(135deg, #2980b9 0%, #21618c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(50, 152, 220, 0.4);
+}
+
+.fix-link a {
+    color: transparent;
+}
+
+.exchange_box {
+    cursor: pointer;
+}
+
+.exchange_box,
+figure {
+    transition: 0.2s all;
+}
+
+figure:hover {
+    transform: scale(1.05);
+}
+
+.button:hover {
+    transform: scale(1.05);
+}
+
+a>figure {
+    transition: 0.2s all;
+}
+
+a>figure:hover {
+    transform: scale(1.1);
+}
+
+.button:hover:not(.is-link) {
+    transform: scale(1.1);
+}
+
+.icon-text>span {
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    hyphens: auto !important;
+}
+
+#wavecontainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+#waveduco {
+    height: 12rem;
+    color: white;
+    z-index: 1;
+    position: absolute;
+    display: table;
+    margin: 0 auto;
+    animation: scale 2.73s ease-in-out infinite;
+}
+
+#devices {
+    transition: opacity 0.5s;
+}
+
+.hide {
+    opacity: 0 !important;
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(1.3);
+    }
+
+    30% {
+        transform: scale(0.9);
+    }
+
+    85% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1.3);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .milestone-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .milestone-card {
+        padding: 1.5rem;
+    }
+    
+    .buttons.is-centered {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .button.is-large {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}

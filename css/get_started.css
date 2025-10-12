@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ===== GET STARTED PAGE SPECIFIC STYLES ===== */
+/* Stile semplice allineato con index.html */
+
+/* Sezioni hero più compatte */
+.hero.is-small .hero-body {
+    padding: 2rem 1.5rem;
+}
+
+/* Titoli */
+.title.is-1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: white !important;
+    margin-bottom: 1rem !important;
+}
+
+.title.is-2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: white !important;
+    margin-bottom: 0.75rem !important;
+}
+
+.title.is-3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: white !important;
+    margin-bottom: 1rem !important;
+}
+
+.title.is-4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: #b5b5b5 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Sottotitoli */
+.subtitle {
+    font-family: 'Poppins', sans-serif;
+    color: #b5b5b5 !important;
+    margin-bottom: 0.75rem !important;
+}
+
+/* Contenuto e paragrafi */
+.content p {
+    font-family: 'Poppins', sans-serif;
+    color: #b5b5b5 !important;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+/* Testo in grassetto */
+.content strong, 
+.ideal-for strong {
+    color: white !important;
+    font-weight: 600;
+}
+
+/* Liste personalizzate */
+.custom-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0.75rem;
+}
+
+.custom-list li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 0.5rem;
+    color: #b5b5b5 !important;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.5;
+}
+
+.custom-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ff6b35;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Sezione "Ideal for" */
+.ideal-for {
+    background: rgba(255, 107, 53, 0.1);
+    border-left: 4px solid #ff6b35;
+    padding: 0.75rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+    color: white !important;
+}
+
+/* Icone */
+.fas {
+    color: #ff6b35 !important;
+}
+
+/* Pulsanti di download */
+.button.is-primary {
+    background-color: #ff6b35 !important;
+    border-color: #ff6b35 !important;
+    color: white !important;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.button.is-primary:hover {
+    background-color: #e55a2b !important;
+    border-color: #e55a2b !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.button.is-primary .icon {
+    margin-right: 0.5rem;
+}
+
+/* Media queries per responsive */
+@media screen and (max-width: 768px) {
+    .hero.is-small .hero-body {
+        padding: 1.5rem 1rem;
+    }
+    
+    .title.is-1 {
+        font-size: 2.5rem !important;
+    }
+    
+    .title.is-3 {
+        font-size: 1.75rem !important;
+    }
+    
+    .custom-list li {
+        margin-bottom: 0.4rem;
+        padding-left: 1.5rem;
+        font-size: 0.9rem;
+    }
+}

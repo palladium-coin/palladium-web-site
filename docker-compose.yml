@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Servizio web principale
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: palladium-website-dev
+    ports:
+      - "8080:80"
+    volumes:
+      # Mount per sviluppo live reload
+      - ./:/usr/share/nginx/html:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+    restart: unless-stopped
+    networks:
+      - palladium-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Servizio API (opzionale, se necessario)
+  api:
+    build:
+      context: ./endpoint
+      dockerfile: Dockerfile
+    container_name: palladium-api-dev
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - DEBUG=true
+    volumes:
+      - ./endpoint:/app
+    restart: unless-stopped
+    networks:
+      - palladium-network
+    depends_on:
+      - web
+
+networks:
+  palladium-network:
+    driver: bridge
+
+# Volume per dati persistenti (se necessario)
+volumes:
+  nginx_logs:
+    driver: local

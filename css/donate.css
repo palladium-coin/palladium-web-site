@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ===== DONATE PAGE SPECIFIC STYLES ===== */
+
+/* Professional Donation Card Styles */
+.donation-section {
+    padding: 2rem 0;
+}
+
+.donation-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.donation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.crypto-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.5rem;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+
+.crypto-icon i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+/* Palladium-specific styles */
+.palladium-card {
+    border: 1px solid rgba(255, 107, 53, 0.2);
+}
+
+.palladium-card:hover {
+    border-color: rgba(255, 107, 53, 0.4);
+    box-shadow: 0 12px 40px rgba(255, 107, 53, 0.2);
+}
+
+.palladium-icon {
+    background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.palladium-card .address-text {
+    color: #ff6b35;
+    border: 1px solid rgba(255, 107, 53, 0.2);
+}
+
+.palladium-card .copy-button {
+    background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
+}
+
+.palladium-card .copy-button:hover {
+    background: linear-gradient(135deg, #e55a2b 0%, #d14d21 100%);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.crypto-info h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 0.5rem 0;
+}
+
+.crypto-description {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.address-container {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.address-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.address-text {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    color: #4a9eff;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    border: 1px solid rgba(74, 158, 255, 0.2);
+    word-break: break-all;
+    min-width: 0;
+}
+
+.copy-button {
+    background: linear-gradient(135deg, #4a9eff 0%, #357abd 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.copy-button:hover {
+    background: linear-gradient(135deg, #357abd 0%, #2c5aa0 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+}
+
+.copy-button:active {
+    transform: translateY(0);
+}
+
+.copy-text {
+    font-size: 0.9rem;
+}
+
+/* Thank You Section */
+.thank-you-section {
+    padding: 3rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .donation-card {
+        padding: 1.5rem;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .crypto-icon {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .address-wrapper {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .address-text {
+        font-size: 0.8rem;
+    }
+    
+    .copy-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Legacy styles for compatibility */
+.button.is-primary {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #2c3e50;
+    font-weight: 600;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.button.is-primary:hover {
+    background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+}
+
+.fix-link a {
+    color: transparent;
+}
+
+.exchange_box {
+    cursor: pointer;
+}
+
+.exchange_box,
+figure {
+    transition: 0.2s all;
+}
+
+figure:hover {
+    transform: scale(1.05);
+}
+
+.button:hover {
+    transform: scale(1.05);
+}
+
+#wavecontainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+#waveduco {
+    height: 12rem;
+    color: white;
+    z-index: 1;
+    position: absolute;
+    display: table;
+    margin: 0 auto;
+    animation: scale 2.73s ease-in-out infinite;
+}
+
+#devices {
+    transition: opacity 0.5s;
+}
+
+.hide {
+    opacity: 0 !important;
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(1.3);
+    }
+
+    30% {
+        transform: scale(0.9);
+    }
+
+    85% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1.3);
+    }
+}
+
+/* Inline styles extracted from HTML */
+.bitcoin-icon {
+    color: #f39c12;
+}
+
+
+/* Enhanced Hero Section Styles */
+.hero {
+    background: linear-gradient(135deg, rgba(26, 32, 44, 0.95) 0%, rgba(45, 55, 72, 0.9) 100%);
+    border-radius: 20px;
+    margin-bottom: 4rem;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero .title.is-1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.hero .subtitle.is-4 {
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin-bottom: 2rem;
+}
+
+/* Enhanced Donation Section */
+.donation-section {
+    margin: 4rem 0;
+}
+
+.donation-section .title.is-3 {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.donation-section .fas.fa-heart {
+    animation: heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Enhanced Thank You Section */
+.thank-you-section {
+    background: linear-gradient(135deg, rgba(74, 158, 255, 0.1) 0%, rgba(53, 122, 189, 0.1) 100%);
+    border-radius: 20px;
+    padding: 4rem 2rem;
+    margin: 4rem 0;
+    border: 1px solid rgba(74, 158, 255, 0.2);
+}
+
+.thank-you-section .title.is-2 {
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.thank-you-section .fas.fa-handshake {
+    animation: shake 3s ease-in-out infinite;
+}
+
+@keyframes shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+/* Enhanced Typography */
+.content p {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.has-text-primary-light {
+    color: #90cdf4 !important;
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 768px) {
+    .hero .title.is-1 {
+        font-size: 2.5rem;
+    }
+    
+    .donation-section .title.is-3 {
+        font-size: 2rem;
+    }
+    
+    .thank-you-section .title.is-2 {
+        font-size: 2.2rem;
+    }
+    
+    .thank-you-section {
+        padding: 2rem 1rem;
+    }
+}
