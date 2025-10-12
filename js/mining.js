@@ -49,18 +49,9 @@ class MiningStatsUpdater {
     }
 
     async waitForEnvironment() {
-        return new Promise((resolve) => {
-            const checkEnv = () => {
-                if (window.ENV && window.ENV.API_BASE_URL && CONFIG && CONFIG.API_BASE_URL) {
-                    console.log('Environment and CONFIG ready');
-                    resolve();
-                } else {
-                    console.log('Waiting for environment and CONFIG...');
-                    setTimeout(checkEnv, 100);
-                }
-            };
-            checkEnv();
-        });
+        // No longer needed since CONFIG is hardcoded
+        console.log('CONFIG is hardcoded and ready');
+        return Promise.resolve();
     }
 
     loadFallbackData() {
@@ -78,6 +69,7 @@ class MiningStatsUpdater {
         try {
             const response = await fetch(getApiUrl('HEIGHT'), {
                 method: 'GET',
+                mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Cache-Control': 'no-cache'
@@ -100,6 +92,7 @@ class MiningStatsUpdater {
         try {
             const response = await fetch(getApiUrl('DIFFICULTY'), {
                 method: 'GET',
+                mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Cache-Control': 'no-cache'
@@ -122,6 +115,7 @@ class MiningStatsUpdater {
         try {
             const response = await fetch(getApiUrl('HASHRATE'), {
                 method: 'GET',
+                mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Cache-Control': 'no-cache'
@@ -144,6 +138,7 @@ class MiningStatsUpdater {
         try {
             const response = await fetch(getApiUrl('AVG_BLOCK_TIME'), {
                 method: 'GET',
+                mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Cache-Control': 'no-cache'

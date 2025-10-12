@@ -105,16 +105,8 @@ class HalvingCountdown {
     
     async fetchHalvingData() {
         try {
-            // Wait for configuration to be loaded
-            let retries = 0;
-            while ((!CONFIG || !CONFIG.API_BASE_URL) && retries < 50) {
-                await new Promise(resolve => setTimeout(resolve, 100));
-                retries++;
-            }
-            
-            if (!CONFIG || !CONFIG.API_BASE_URL) {
-                throw new Error('Configuration not loaded after waiting');
-            }
+            // CONFIG is now hardcoded, no need to wait
+            console.log('Using hardcoded CONFIG for API calls');
             
             // Fetch halving data from external API
             const response = await fetch(getApiUrl('HALVING'));
