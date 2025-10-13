@@ -1,7 +1,0 @@
-services:
-  web:
-    build: .
-    ports:
-      - "83:80"
-    container_name: palladium-website-dev
-    restart: unless-stopped
