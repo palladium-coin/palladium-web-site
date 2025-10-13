@@ -47,22 +47,15 @@
     <script async="" src="gtag/js?id=UA-142187073-69"></script>
     <link rel="preload" href="ajax/libs/bodymovin/5.8.1/lottie.min.js" as="script">
     <script src="ajax/libs/bodymovin/5.8.1/lottie.min.js"></script>
-    <link href="aos%402.3.1/dist/aos.css" rel="stylesheet">
-    <script src="aos%402.3.1/dist/aos.js"></script>
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/index.css">
-    <!-- Navbar Module -->
-    <script src="js/navbar.js"></script>
+    <!-- Common loader system -->
+    <script src="js/common.js"></script>
     <!-- Configuration with hardcoded API endpoints -->
     <script src="js/config.js"></script>
 </head>
 
 <body>
-    <div id="pageloader">
-        <div id="loader"></div>
-    </div>
-    <!-- Navbar Container -->
-    <div id="navbar-container"></div>
     <section class="hero is-medium mt-5-mobile" data-aos="fade-right">
         <div class="hero-body">
             <div class="columns is-vcentered">
@@ -111,37 +104,60 @@
                 <div class="column is-2"></div>
             </div>
         </div>
-        <a href="https://palladium.my-explorer.com/" target="_blank">
-            <div class="countdown-container" id="halving-countdown">
-                <div class="countdown-content">
-                    <h3 class="countdown-title">HALVING IN</h3>
-                    <div class="countdown-timer">
-                        <div class="time-unit">
-                            <span id="days">0</span>
-                            <label>DAYS</label>
+    </section>
+
+    <!-- Halving Countdown Section -->
+    <section class="hero is-medium has-background-dark">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-8-desktop is-10-tablet">
+                        <div class="halving-card">
+                            <div class="halving-header">
+                                <h2 class="halving-title">Next Halving</h2>
+                                <p class="halving-subtitle">Countdown to the next reward reduction</p>
+                            </div>
+                            
+                            <div class="countdown-display">
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="days">0</span>
+                                    <span class="countdown-label">Days</span>
+                                </div>
+                                <div class="countdown-separator">:</div>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="hours">00</span>
+                                    <span class="countdown-label">Hours</span>
+                                </div>
+                                <div class="countdown-separator">:</div>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="minutes">00</span>
+                                    <span class="countdown-label">Minutes</span>
+                                </div>
+                                <div class="countdown-separator">:</div>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="seconds">00</span>
+                                    <span class="countdown-label">Seconds</span>
+                                </div>
+                            </div>
+                            
+                            <div class="blocks-remaining">
+                                <span class="blocks-number" id="blocks-remaining">Loading...</span>
+                                <span class="blocks-text">blocks remaining</span>
+                            </div>
+                            
+                            <div class="halving-info">
+                                <a href="https://palladium.my-explorer.com/" target="_blank" class="button is-primary is-outlined">
+                                    <span class="icon">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </span>
+                                    <span>View on Explorer</span>
+                                </a>
+                            </div>
                         </div>
-                        <span class="separator">:</span>
-                        <div class="time-unit">
-                            <span id="hours">00</span>
-                            <label>HOURS</label>
-                        </div>
-                        <span class="separator">:</span>
-                        <div class="time-unit">
-                            <span id="minutes">00</span>
-                            <label>MINUTES</label>
-                        </div>
-                        <span class="separator">:</span>
-                        <div class="time-unit">
-                            <span id="seconds">00</span>
-                            <label>SECONDS</label>
-                        </div>
-                    </div>
-                    <div class="blocks-info">
-                        <span id="blocks-remaining">Loading...</span> blocks remaining
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
     </section>
     <section class="hero is-medium">
         <div class="hero-body" id="explore" data-aos="zoom-in">
@@ -161,10 +177,7 @@
 
     <br><br><br><br><br>
     
-    <!-- FOOTER -->
-    <div id="footer-container"></div>
 </body>
-<script src="js/footer.js"></script>
 <script src="js/index.js"></script>
 
 </html>

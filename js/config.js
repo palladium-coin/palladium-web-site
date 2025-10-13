@@ -1,7 +1,7 @@
 // Configuration for Palladium website
 const CONFIG = {
-    // Use local proxy to avoid CORS issues
-    API_BASE_URL: '/api',
+    // Direct API URL for Palladium blockchain
+    API_BASE_URL: 'http://palladiumblockchain.net:8032',
     
     // API endpoints
     ENDPOINTS: {
