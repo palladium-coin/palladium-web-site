@@ -1,19 +1,22 @@
-// Configuration for Palladium website
+// Configuration file for Palladium website
+// This file contains basic configuration that might be needed in the future
+
 const CONFIG = {
-    // Direct API URL for Palladium blockchain
-    API_BASE_URL: 'http://palladiumblockchain.net:8032',
+    // Base URLs for potential future use
+    API_BASE_URL: 'https://api.palladiumcoin.org',
     
-    // API endpoints
+    // Reserved for future endpoints
     ENDPOINTS: {
-        'HEIGHT': '/height',
-        'DIFFICULTY': '/difficulty', 
-        'HASHRATE': '/hashrate',
-        'AVG_BLOCK_TIME': '/avg-block-time',
-        'HALVING': '/halving'
+        // Placeholder for future API endpoints
     }
 };
 
-// Function to get API URL
+// Utility function for potential future API calls
 function getApiUrl(endpoint) {
-    return CONFIG.API_BASE_URL + CONFIG.ENDPOINTS[endpoint];
+    return `${CONFIG.API_BASE_URL}/${endpoint}`;
+}
+
+// Export for potential future use
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = CONFIG;
 }

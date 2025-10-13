@@ -1,16 +1,6 @@
 /* Get Started page specific JavaScript */
 
-// Page loader animation
-const pageloader = document.getElementById('loader');
-bodymovin.loadAnimation({
-    wrapper: pageloader,
-    animType: 'svg',
-    autoplay: true,
-    loop: true,
-    path: 'assets/animations/loader.json'
-});
-
-// Copy to clipboard function
+// Copy to clipboard function (specific to get started page)
 function copy(text) {
     navigator.clipboard.writeText(text);
 }
