@@ -66,9 +66,6 @@ For quick development without Docker, you can use Python's built-in HTTP server:
 ```bash
 # Python 3 (recommended)
 python -m http.server 8000
-
-# Or Python 2 (if available)
-python -m SimpleHTTPServer 8000
 ```
 
 The site will be available at:
