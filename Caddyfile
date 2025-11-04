@@ -4,22 +4,26 @@
 }
 
 palladiumblockchain.net {
-	root * /srv
-	file_server
+    root * /srv
+    file_server
 
-	# Gzip/encoding
-	encode zstd gzip
+    # Gzip/encoding
+    encode zstd gzip
 
-	# Security headers
-	header {
-		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-		X-Content-Type-Options nosniff
-		X-Frame-Options DENY
-		Referrer-Policy no-referrer-when-downgrade
-		Permissions-Policy "geolocation=(), microphone=(), camera=()"
-	}
+    # Security headers
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        Referrer-Policy no-referrer-when-downgrade
+        Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    }
 
-	# Handle .well-known and static assets normally (root covers everything)
+    # Evita cache persistente per componenti dinamicamente caricati
+    header /navbar.html Cache-Control "no-store"
+    header /footer.html Cache-Control "no-store"
+
+    # Handle .well-known and static assets normally (root covers everything)
 }
 
 www.palladiumblockchain.net {

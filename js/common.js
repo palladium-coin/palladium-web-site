@@ -72,10 +72,11 @@ class PalladiumLoader {
             // Create containers if they don't exist
             this.createContainers();
 
-            // Load navbar and footer in parallel
+            // Load navbar and footer in parallel con cache-busting
+            const cacheBust = `?v=${Date.now()}`;
             const [navbarData, footerData] = await Promise.all([
-                this.fetchComponent('navbar.html'),
-                this.fetchComponent('footer.html')
+                this.fetchComponent('navbar.html' + cacheBust),
+                this.fetchComponent('footer.html' + cacheBust)
             ]);
 
             // Inject components
@@ -120,7 +121,8 @@ class PalladiumLoader {
     }
 
     async fetchComponent(url) {
-        const response = await fetch(url);
+        // Evita che il browser/server servano versioni cacheate
+        const response = await fetch(url, { cache: 'no-store' });
         if (!response.ok) {
             throw new Error(`Failed to fetch ${url}: ${response.status}`);
         }
