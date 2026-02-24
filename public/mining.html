@@ -105,7 +105,7 @@
             <!-- Solo Mining Pool Section -->
             <div class="solo-mining-section mb-6">
                 <div class="has-text-centered mb-5">
-                    <h2 class="title is-3 has-text-white mb-4">
+                    <h2 class="title is-3 has-text-white mb-5">
                         <i class="fas fa-pickaxe has-text-primary mr-3"></i>
                         Solo Mining Pool
                     </h2>
@@ -113,36 +113,36 @@
                         Anyone can contribute by mining in solo mode using an ASIC miner with Stratum protocol
                     </p>
                 </div>
-                
+
                 <div class="columns is-centered">
-                    <div class="column is-8">
-                        <div class="box has-background-dark has-text-white">
-                            <div class="content">
-                                <h3 class="title is-4 has-text-primary mb-4">Mining Configuration</h3>
-                                
-                                <div class="columns is-multiline">
-                                    <div class="column is-6">
-                                        <p><strong>Pool:</strong> palladiumblockchain.net</p>
-                                    </div>
-                                    <div class="column is-6">
-                                        <p><strong>Port:</strong> 3333</p>
-                                    </div>
-                                    <div class="column is-6">
-                                        <p><strong>Username:</strong> &lt;a valid palladium address&gt;</p>
-                                    </div>
-                                    <div class="column is-6">
-                                        <p><strong>Password:</strong> x</p>
-                                    </div>
+                    <div class="column is-7-desktop is-10-tablet is-12-mobile">
+                        <div class="mining-panel">
+                            <div class="mining-panel-header">
+                                <i class="fas fa-server mr-2"></i>Mining Configuration
+                            </div>
+                            <div class="mining-config-grid">
+                                <div class="config-row">
+                                    <span class="config-label"><i class="fas fa-network-wired mr-2"></i>Pool</span>
+                                    <span class="config-value">palladiumblockchain.net</span>
                                 </div>
-                                
-                                <div class="notification is-info mt-5">
-                                    <p class="mb-3">
-                                        <strong>Important:</strong> The coinbase transaction from any mined block will immediately belong to your address.
-                                    </p>
-                                    <p>
-                                        Our mining pool is derived from <strong>ckpool</strong>, written in C and assembly language, 
-                                        specifically designed for performance and efficiency.
-                                    </p>
+                                <div class="config-row">
+                                    <span class="config-label"><i class="fas fa-plug mr-2"></i>Port</span>
+                                    <span class="config-value">3333</span>
+                                </div>
+                                <div class="config-row">
+                                    <span class="config-label"><i class="fas fa-user mr-2"></i>Username</span>
+                                    <span class="config-value config-value--dim">&lt;your palladium address&gt;</span>
+                                </div>
+                                <div class="config-row">
+                                    <span class="config-label"><i class="fas fa-key mr-2"></i>Password</span>
+                                    <span class="config-value">x</span>
+                                </div>
+                            </div>
+                            <div class="mining-note">
+                                <div class="mining-note-icon"><i class="fas fa-info-circle"></i></div>
+                                <div>
+                                    <p class="mb-2">The coinbase transaction from any mined block will immediately belong to your address.</p>
+                                    <p>Our pool is derived from <strong>ckpool</strong> — written in C and assembly, built for performance and efficiency.</p>
                                 </div>
                             </div>
                         </div>

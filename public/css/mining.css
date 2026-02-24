@@ -126,6 +126,90 @@ a>figure:hover {
     50%       { opacity: 0.3; }
 }
 
+/* ===== SOLO MINING PANEL ===== */
+.mining-panel {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(238, 90, 36, 0.25);
+    border-top: 3px solid #EE5A24;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.mining-panel-header {
+    background: rgba(238, 90, 36, 0.1);
+    padding: 1rem 1.75rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #EE5A24;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(238, 90, 36, 0.2);
+}
+
+.mining-config-grid {
+    padding: 0.5rem 1.75rem;
+}
+
+.config-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    gap: 1rem;
+}
+
+.config-row:last-child {
+    border-bottom: none;
+}
+
+.config-label {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
+.config-value {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f0f0f0;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 0.3rem 0.8rem;
+    text-align: right;
+}
+
+.config-value--dim {
+    color: #888;
+    font-style: italic;
+}
+
+.mining-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin: 0.25rem 1.75rem 1.5rem;
+    padding: 1rem 1.25rem;
+    background: rgba(72, 145, 228, 0.07);
+    border: 1px solid rgba(72, 145, 228, 0.2);
+    border-radius: 8px;
+    color: #b0ccee;
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+.mining-note-icon {
+    color: #4891e4;
+    font-size: 1.1rem;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+}
+
 /* Responsive Video */
 video {
     width: 100%;
