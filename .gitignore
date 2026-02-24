@@ -65,6 +65,9 @@ Thumbs.db
 node_modules/
 package-lock.json
 
+# Generated files (contain secrets — re-generated at build/dev time)
+public/js/config.js
+
 # Logs
 *.log
 logs/

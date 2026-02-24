@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Palladium Blockchain Website",
   "scripts": {
-    "dev": "live-server public --port=3000"
+    "dev": "node scripts/generate-config.js && live-server public --port=3000",
+    "generate-config": "node scripts/generate-config.js",
+    "generate-config:prod": "node scripts/generate-config.js --prod"
   },
   "devDependencies": {
     "live-server": "^1.2.2"

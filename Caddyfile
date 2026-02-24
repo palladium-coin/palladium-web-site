@@ -5,6 +5,12 @@
 
 palladiumblockchain.net {
     root * /srv
+
+    # Proxy API calls to the palladium-stack dashboard (Flask on port 8080)
+    handle /api/* {
+        reverse_proxy localhost:8080
+    }
+
     file_server
 
     # Gzip/encoding

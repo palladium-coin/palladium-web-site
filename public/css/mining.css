@@ -85,6 +85,47 @@ a>figure:hover {
     }
 }
 
+/* ===== NETWORK STATS CARDS ===== */
+.stat-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(238, 90, 36, 0.2);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(238, 90, 36, 0.55);
+}
+
+.stat-label {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+}
+
+.stat-value {
+    color: #EE5A24;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    font-family: 'Poppins', sans-serif;
+}
+
+.stat-loading {
+    animation: stat-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes stat-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+}
+
 /* Responsive Video */
 video {
     width: 100%;
