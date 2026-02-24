@@ -75,8 +75,8 @@ class PalladiumLoader {
             // Load navbar and footer in parallel con cache-busting
             const cacheBust = `?v=${Date.now()}`;
             const [navbarData, footerData] = await Promise.all([
-                this.fetchComponent('navbar.html' + cacheBust),
-                this.fetchComponent('footer.html' + cacheBust)
+                this.fetchComponent('/partials/navbar.html' + cacheBust),
+                this.fetchComponent('/partials/footer.html' + cacheBust)
             ]);
 
             // Inject components

@@ -2,7 +2,7 @@
 FROM caddy:2.7-alpine
 
 # Copy site contents into the container
-COPY . /srv
+COPY public/ /srv
 
 # Provide Caddy configuration
 COPY Caddyfile /etc/caddy/Caddyfile
