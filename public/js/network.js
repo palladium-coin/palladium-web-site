@@ -122,4 +122,14 @@ async function fetchNetworkData() {
 }
 
 document.addEventListener('DOMContentLoaded', fetchNetworkData);
-setInterval(fetchNetworkData, 60_000);
+setInterval(fetchNetworkData, 15_000);
+
+// Manual refresh button
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('refresh-btn');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+        btn.classList.add('spinning');
+        fetchNetworkData().finally(() => btn.classList.remove('spinning'));
+    });
+});
