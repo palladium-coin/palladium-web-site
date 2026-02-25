@@ -88,6 +88,10 @@ function renderServers(servers) {
 async function fetchNetworkData() {
     const headers = apiHeaders();
 
+    // Show timestamp immediately so it's never blank
+    const ts = document.getElementById('last-updated');
+    if (ts) ts.textContent = new Date().toLocaleTimeString();
+
     try {
         const [peersRes, serversRes] = await Promise.all([
             fetch(apiUrl(CONFIG.ENDPOINTS.NETWORK_PEERS),     { headers }),
@@ -116,20 +120,17 @@ async function fetchNetworkData() {
         showEmpty('servers-list', 'Connection error.');
     }
 
-    // Update timestamp
-    const ts = document.getElementById('last-updated');
-    if (ts) ts.textContent = new Date().toLocaleTimeString();
 }
 
-document.addEventListener('DOMContentLoaded', fetchNetworkData);
+// Scripts are after </body> so DOM is already ready — call directly
+fetchNetworkData();
 setInterval(fetchNetworkData, 15_000);
 
 // Manual refresh button
-document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('refresh-btn');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-        btn.classList.add('spinning');
-        fetchNetworkData().finally(() => btn.classList.remove('spinning'));
+const _refreshBtn = document.getElementById('refresh-btn');
+if (_refreshBtn) {
+    _refreshBtn.addEventListener('click', () => {
+        _refreshBtn.classList.add('spinning');
+        fetchNetworkData().finally(() => _refreshBtn.classList.remove('spinning'));
     });
-});
+}
