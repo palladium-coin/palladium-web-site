@@ -12,10 +12,8 @@ services:
       # Persist Caddy data (certificates, etc.)
       - caddy_data:/data
       - caddy_config:/config
-#    environment:
-      # Optional: set CADDY_ environment variables here
-      # - CADDY_HOST=palladiumblockchain.net
-      # - CADDY_EMAIL=admin@palladiumblockchain.net
+    environment:
+      - CADDY_HOST=${CADDY_HOST}
     # If running behind a firewall/NAT, ensure port 443 is reachable from the Internet
 
 volumes:

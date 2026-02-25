@@ -1,9 +1,4 @@
-{
-	# Optional: increase logging or tweak global options
-	# email you@example.com
-}
-
-palladiumblockchain.net {
+{$CADDY_HOST} {
     root * /srv
 
     # Proxy API calls to the palladium-stack dashboard (Flask on port 8080)
@@ -25,13 +20,13 @@ palladiumblockchain.net {
         Permissions-Policy "geolocation=(), microphone=(), camera=()"
     }
 
-    # Evita cache persistente per componenti dinamicamente caricati
+    # Disable persistent cache for dynamically loaded components
     header /navbar.html Cache-Control "no-store"
     header /footer.html Cache-Control "no-store"
 
     # Handle .well-known and static assets normally (root covers everything)
 }
 
-www.palladiumblockchain.net {
-	redir https://palladiumblockchain.net{uri}
+www.{$CADDY_HOST} {
+	redir https://{$CADDY_HOST}{uri}
 }
