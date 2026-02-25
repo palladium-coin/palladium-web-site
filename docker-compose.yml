@@ -14,6 +14,9 @@ services:
       - caddy_config:/config
     environment:
       - CADDY_HOST=${CADDY_HOST}
+      - API_KEY=${API_KEY}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     # If running behind a firewall/NAT, ensure port 443 is reachable from the Internet
 
 volumes:
