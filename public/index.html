@@ -92,6 +92,38 @@
                     <p class="title is-size-4 has-text-weight-normal">
                         The maximum supply is 21,000,000 PLM and a halving occurs every 210,000 blocks mined. Network security is maintained through the SHA256 proof-of-work algorithm, the same one used by Bitcoin to ensure the integrity of the blockchain.
                     </p>
+                    <!-- Halving Calculator -->
+                    <div class="halving-panel mt-6">
+                        <div class="halving-panel-header">Next Halving</div>
+                        <div class="halving-panel-body">
+                            <div class="columns is-centered">
+                                <div class="column is-4-desktop is-12-mobile">
+                                    <div class="stat-card">
+                                        <p class="stat-label">Current Block</p>
+                                        <p class="stat-value stat-loading" id="halving-block-height">—</p>
+                                    </div>
+                                </div>
+                                <div class="column is-4-desktop is-12-mobile">
+                                    <div class="stat-card">
+                                        <p class="stat-label">Blocks Remaining</p>
+                                        <p class="stat-value stat-loading" id="halving-blocks-remaining">—</p>
+                                    </div>
+                                </div>
+                                <div class="column is-4-desktop is-12-mobile">
+                                    <div class="stat-card">
+                                        <p class="stat-label">Estimated Time</p>
+                                        <p class="stat-value stat-loading" id="halving-time-remaining">—</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="halving-progress-container">
+                                <div class="halving-progress-bar">
+                                    <div class="halving-progress-fill" id="halving-progress-fill"></div>
+                                </div>
+                                <p class="halving-progress-label" id="halving-progress-label"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="column is-2"></div>
             </div>
