@@ -15,20 +15,20 @@
     <!-- Primary Meta Tags -->
     <title>Support Palladium</title>
     <meta name="title" content="Support Palladium">
-    <meta name="description" content="Support Palladium">
-    <meta name="keywords" content="palladium, crypto, mining, blockchain, cryptocurrency">
+    <meta name="description" content="Support the Palladium open-source blockchain project.">
+    <meta name="keywords" content="palladium, crypto, mining, blockchain, cryptocurrency, donate">
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Palladium">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://palladium-coin.com/">
     <meta property="og:title" content="Support Palladium">
-    <meta property="og:description" content="Support Palladium">
+    <meta property="og:description" content="Support the Palladium open-source blockchain project.">
     <meta property="og:image" content="">
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://palladium-coin.com/">
     <meta property="twitter:title" content="Support Palladium">
-    <meta property="twitter:description" content="Support Palladium">
+    <meta property="twitter:description" content="Support the Palladium open-source blockchain project.">
     <!-- CSS -->
     <link rel="preload" href="css/mystyles.css?v=3" as="style">
     <link rel="stylesheet" type="text/css" href="css/mystyles.css?v=3">
@@ -45,104 +45,78 @@
 </head>
 
 <body>
-    <section class="section">
+    <section class="section donate-section">
         <div class="container">
-            <!-- Hero Section -->
-            <div class="hero">
-                <div class="hero-body mt-nav">
-                    <div class="has-text-centered mb-6">
-                        <h1 class="title is-1 has-text-white mb-4">
-                            <span class="has-text-primary">Invest</span> in Palladium's Future
-                        </h1>
-                        <h2 class="subtitle is-4 has-text-white-ter mb-5">
-                            Empowering Innovation Through Community-Driven Development
-                        </h2>
-                        <div class="content is-medium has-text-white-ter">
-                            <p class="mb-4">
-                                Palladium represents the next generation of decentralized cryptocurrency technology, built and maintained through the collective dedication of our global community. As we continue to pioneer innovative blockchain solutions and expand our technological infrastructure, strategic financial support becomes essential for accelerating our roadmap and delivering cutting-edge features.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+
+            <!-- Hero -->
+            <div class="donate-hero mt-nav">
+                <h1 class="donate-title">Support <span class="accent">Palladium</span></h1>
+                <p class="donate-subtitle">
+                    Palladium is a free, open-source project. Every donation helps keep the network growing and the development active.
+                </p>
             </div>
-            
-            <!-- Donation Addresses Section -->
-            <div class="donation-addresses-section mb-6">
-                <div class="columns is-centered">
-                    <!-- Palladium Donation Card -->
-                    <div class="column is-6-desktop is-12-tablet">
-                        <div class="donation-card palladium-card">
-                            <div class="card-header">
-                                <div class="crypto-icon palladium-icon">
-                                    <img src="assets/icons/palladium.png" alt="Palladium" style="width: 32px; height: 32px;">
-                                </div>
-                                <div class="crypto-info">
-                                    <h3 class="crypto-name">Palladium Network</h3>
-                                    <p class="crypto-description">Support us with PLM donations</p>
-                                </div>
+
+            <!-- Donation Cards -->
+            <div class="donate-cards">
+
+                <!-- PLM Card -->
+                <div class="donate-card-wrap">
+                    <div class="donate-panel plm">
+                        <div class="donate-panel-header">
+                            <div class="donate-panel-icon">
+                                <img src="assets/icons/palladium.png" alt="PLM" width="22" height="22">
                             </div>
-                            
-                            <div class="address-container">
-                                <div class="address-wrapper">
-                                    <code class="address-text" id="plm-address">plm1qdq3gu2zvg9lyr8gxd6yln4wavc5tlp8prmvfay</code>
-                                    <button class="copy-button" onclick="copy('plm1qdq3gu2zvg9lyr8gxd6yln4wavc5tlp8prmvfay')" title="Copy Address">
-                                        <i class="fas fa-copy"></i>
-                                        <span class="copy-text">Copy</span>
-                                    </button>
-                                </div>
+                            <div>
+                                <div class="donate-panel-name">Palladium (PLM)</div>
+                                <div class="donate-panel-network">Palladium Network</div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Bitcoin Donation Card -->
-                    <div class="column is-6-desktop is-12-tablet">
-                        <div class="donation-card">
-                            <div class="card-header">
-                                <div class="crypto-icon">
-                                    <i class="fab fa-bitcoin"></i>
-                                </div>
-                                <div class="crypto-info">
-                                    <h3 class="crypto-name">Bitcoin Network</h3>
-                                    <p class="crypto-description">Donate to this address</p>
-                                </div>
-                            </div>
-                            
-                            <div class="address-container">
-                                <div class="address-wrapper">
-                                    <code class="address-text" id="btc-address">bc1q57pl5778yhnlwp8cvtdy2l2ee7farw0kz5y82t</code>
-                                    <button class="copy-button" onclick="copy('bc1q57pl5778yhnlwp8cvtdy2l2ee7farw0kz5y82t')" title="Copy Address">
-                                        <i class="fas fa-copy"></i>
-                                        <span class="copy-text">Copy</span>
-                                    </button>
-                                </div>
+                        <div class="donate-panel-body">
+                            <p class="donate-label">Donation address</p>
+                            <div class="address-row">
+                                <code class="address-code">plm1qdq3gu2zvg9lyr8gxd6yln4wavc5tlp8prmvfay</code>
+                                <button class="copy-btn" onclick="copy('plm1qdq3gu2zvg9lyr8gxd6yln4wavc5tlp8prmvfay', this)">
+                                    <i class="fas fa-copy"></i><span>Copy</span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Strategic Partnership Section -->
-            <div class="donation-section">
-                <div class="has-text-centered mb-6">
-                    <h2 class="title is-3 has-text-white mb-4">
-                        <i class="fas fa-heart has-text-danger mr-3"></i>
-                        Strategic Partnership Opportunities
-                    </h2>
-                    <p class="subtitle is-5 has-text-white-ter mb-5">
-                        Join our mission to revolutionize decentralized finance through strategic contributions
-                    </p>
-                    <div class="content is-medium has-text-white-ter">
-                        <p class="mb-4">
-                            Your financial partnership directly fuels Palladium's technological advancement, enabling us to develop groundbreaking features, enhance network security, and expand our global ecosystem reach.
-                        </p>
+
+                <!-- BTC Card -->
+                <div class="donate-card-wrap">
+                    <div class="donate-panel btc">
+                        <div class="donate-panel-header">
+                            <div class="donate-panel-icon btc-icon">
+                                <i class="fab fa-bitcoin"></i>
+                            </div>
+                            <div>
+                                <div class="donate-panel-name">Bitcoin (BTC)</div>
+                                <div class="donate-panel-network">Bitcoin Network</div>
+                            </div>
+                        </div>
+                        <div class="donate-panel-body">
+                            <p class="donate-label">Donation address</p>
+                            <div class="address-row">
+                                <code class="address-code">bc1q57pl5778yhnlwp8cvtdy2l2ee7farw0kz5y82t</code>
+                                <button class="copy-btn btc" onclick="copy('bc1q57pl5778yhnlwp8cvtdy2l2ee7farw0kz5y82t', this)">
+                                    <i class="fas fa-copy"></i><span>Copy</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
-            
+
+            <!-- Note -->
+            <p class="donate-note">
+                Thank you for supporting an open-source, community-driven project.
+            </p>
+
         </div>
     </section>
-    <br><br><br><br><br>
-    
+
 </body>
 <script src="js/donate.js"></script>
 
