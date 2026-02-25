@@ -2,7 +2,7 @@
 FROM node:20-alpine AS config-builder
 WORKDIR /build
 COPY scripts/ scripts/
-COPY public/js/config.js public/js/config.js
+RUN mkdir -p public/js
 RUN node scripts/generate-config.js --prod
 
 # Stage 2: serve with Caddy
