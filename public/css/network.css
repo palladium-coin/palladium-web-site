@@ -1,0 +1,272 @@
+/* ===== NETWORK PAGE SPECIFIC STYLES ===== */
+
+/* Hero */
+.network-hero {
+    text-align: center;
+    padding: 0 0 2.5rem;
+}
+
+.network-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+.network-title .accent {
+    color: #EE5A24;
+}
+
+.network-subtitle {
+    color: #a0a0a0;
+    font-size: 1.05rem;
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.75;
+}
+
+/* Cards layout — same flexbox pattern as donate.css */
+.network-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    justify-content: center;
+}
+
+.network-card-wrap {
+    flex: 1 1 340px;
+    max-width: 520px;
+    min-width: 0;
+}
+
+/* Panel */
+.network-panel {
+    border: 1px solid rgba(238, 90, 36, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.network-panel:hover {
+    border-color: rgba(238, 90, 36, 0.55);
+    box-shadow: 0 4px 24px rgba(238, 90, 36, 0.08);
+}
+
+/* Panel header */
+.network-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: rgba(238, 90, 36, 0.08);
+    border-bottom: 1px solid rgba(238, 90, 36, 0.25);
+}
+
+.network-panel-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(238, 90, 36, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #EE5A24;
+    font-size: 0.95rem;
+}
+
+.network-panel-title-wrap {
+    flex: 1;
+    min-width: 0;
+}
+
+.network-panel-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+}
+
+.network-panel-sub {
+    font-size: 0.77rem;
+    color: #808080;
+    margin-top: 0.15rem;
+}
+
+/* Count badge */
+.network-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(238, 90, 36, 0.15);
+    color: #EE5A24;
+    border: 1px solid rgba(238, 90, 36, 0.35);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Panel body */
+.network-panel-body {
+    padding: 0.5rem 0;
+    background: rgba(255, 255, 255, 0.02);
+    min-height: 120px;
+}
+
+/* Node / server row */
+.network-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.6rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.15s ease;
+}
+
+.network-row:last-child {
+    border-bottom: none;
+}
+
+.network-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Status dot */
+.net-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.net-dot.online  { background: #48c774; box-shadow: 0 0 5px rgba(72, 199, 116, 0.5); }
+.net-dot.offline { background: #f14668; }
+.net-dot.unknown { background: #888; }
+
+/* Address / host */
+.net-addr {
+    font-family: 'Courier New', monospace;
+    font-size: 0.83rem;
+    color: #d0d0d0;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Direction badge (IN / OUT) */
+.net-dir {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.net-dir.out {
+    background: rgba(238, 90, 36, 0.15);
+    color: #EE5A24;
+    border: 1px solid rgba(238, 90, 36, 0.3);
+}
+
+.net-dir.in {
+    background: rgba(255, 255, 255, 0.06);
+    color: #888;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Port badges for ElectrumX */
+.net-ports {
+    display: flex;
+    gap: 0.3rem;
+    flex-shrink: 0;
+}
+
+.net-port {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
+.net-port.tcp {
+    background: rgba(72, 199, 116, 0.12);
+    color: #48c774;
+    border: 1px solid rgba(72, 199, 116, 0.3);
+}
+
+.net-port.ssl {
+    background: rgba(32, 156, 238, 0.12);
+    color: #209cee;
+    border: 1px solid rgba(32, 156, 238, 0.3);
+}
+
+.net-port.unreachable {
+    background: rgba(255, 255, 255, 0.04);
+    color: #555;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-decoration: line-through;
+}
+
+/* Skeleton loading rows */
+.network-skeleton {
+    height: 14px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    margin: 0.75rem 1.5rem;
+    animation: net-pulse 1.4s ease-in-out infinite;
+}
+
+.network-skeleton:nth-child(2) { width: 75%; animation-delay: 0.2s; }
+.network-skeleton:nth-child(3) { width: 55%; animation-delay: 0.4s; }
+
+@keyframes net-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+}
+
+/* Empty / error state */
+.network-empty {
+    text-align: center;
+    color: #606060;
+    font-size: 0.88rem;
+    padding: 2rem 1.5rem;
+}
+
+/* Footer note */
+.network-note {
+    text-align: center;
+    color: #606060;
+    font-size: 0.85rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.network-note .fas {
+    color: #EE5A24;
+    margin-right: 0.3rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .network-title {
+        font-size: 1.9rem;
+    }
+
+    .network-card-wrap {
+        max-width: 100%;
+    }
+
+    .network-row {
+        padding: 0.6rem 1rem;
+    }
+
+    .network-skeleton {
+        margin: 0.75rem 1rem;
+    }
+}

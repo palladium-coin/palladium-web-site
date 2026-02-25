@@ -59,6 +59,8 @@ const CONFIG = {
         BLOCKS_RECENT:     '/api/palladium/blocks/recent',
         PALLADIUM_INFO:    '/api/palladium/info',
         ELECTRUMX_STATS:   '/api/electrumx/stats',
+        NETWORK_PEERS:     '/api/palladium/peers',
+        ELECTRUMX_SERVERS: '/api/electrumx/servers',
         HEALTH:            '/api/health',
     }
 };

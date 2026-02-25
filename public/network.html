@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="network.html">
+    <meta name="robots" content="index, follow">
+    <!-- Favicons -->
+    <meta name="theme-color" content="#EE5A24">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" href="assets/icons/palladium.png">
+    <link rel="shortcut icon" href="assets/icons/palladium.png">
+    <!-- Primary Meta Tags -->
+    <title>Palladium Network</title>
+    <meta name="title" content="Palladium Network">
+    <meta name="description" content="Live view of active Palladium nodes and ElectrumX servers.">
+    <meta name="keywords" content="palladium, network, nodes, electrumx, peers, blockchain">
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="Palladium">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://palladium-coin.com/network.html">
+    <meta property="og:title" content="Palladium Network">
+    <meta property="og:description" content="Live view of active Palladium nodes and ElectrumX servers.">
+    <meta property="og:image" content="">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://palladium-coin.com/network.html">
+    <meta property="twitter:title" content="Palladium Network">
+    <meta property="twitter:description" content="Live view of active Palladium nodes and ElectrumX servers.">
+    <!-- CSS -->
+    <link rel="preload" href="css/mystyles.css?v=3" as="style">
+    <link rel="stylesheet" type="text/css" href="css/mystyles.css?v=3">
+    <link rel="preload" href="css/footer.css?v=1" as="style">
+    <link rel="stylesheet" type="text/css" href="css/footer.css?v=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/network.css">
+    <!-- Analytics -->
+    <link rel="preload" href="gtag/js?id=UA-142187073-69" as="script">
+    <script async="" src="gtag/js?id=UA-142187073-69"></script>
+    <!-- Common loader -->
+    <script src="js/common.js"></script>
+</head>
+
+<body>
+    <section class="section network-section">
+        <div class="container">
+
+            <!-- Hero -->
+            <div class="network-hero mt-nav">
+                <h1 class="network-title">Palladium <span class="accent">Network</span></h1>
+                <p class="network-subtitle">
+                    Live view of connected P2P nodes and active ElectrumX servers. Updated every 60 seconds.
+                </p>
+            </div>
+
+            <!-- Panels -->
+            <div class="network-cards">
+
+                <!-- Full Nodes -->
+                <div class="network-card-wrap">
+                    <div class="network-panel">
+                        <div class="network-panel-header">
+                            <div class="network-panel-icon">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <div class="network-panel-title-wrap">
+                                <div class="network-panel-name">Full Nodes</div>
+                                <div class="network-panel-sub">Publicly reachable nodes</div>
+                            </div>
+                            <span class="network-badge" id="peers-count">—</span>
+                        </div>
+                        <div class="network-panel-body">
+                            <div class="network-list" id="peers-list">
+                                <div class="network-skeleton"></div>
+                                <div class="network-skeleton"></div>
+                                <div class="network-skeleton"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ElectrumX Servers -->
+                <div class="network-card-wrap">
+                    <div class="network-panel">
+                        <div class="network-panel-header">
+                            <div class="network-panel-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div class="network-panel-title-wrap">
+                                <div class="network-panel-name">ElectrumX Servers</div>
+                                <div class="network-panel-sub">Light wallet infrastructure</div>
+                            </div>
+                            <span class="network-badge" id="servers-count">—</span>
+                        </div>
+                        <div class="network-panel-body">
+                            <div class="network-list" id="servers-list">
+                                <div class="network-skeleton"></div>
+                                <div class="network-skeleton"></div>
+                                <div class="network-skeleton"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Last updated -->
+            <p class="network-note">
+                <i class="fas fa-sync-alt"></i> Auto-refreshes every 60s &mdash; last updated: <span id="last-updated">—</span>
+            </p>
+
+        </div>
+    </section>
+
+</body>
+<script src="js/config.js"></script>
+<script src="js/network.js"></script>
+
+</html>
