@@ -67,6 +67,7 @@ package-lock.json
 
 # Generated files (contain secrets — re-generated at build/dev time)
 public/js/config.js
+public/pool-data/
 
 # Logs
 *.log

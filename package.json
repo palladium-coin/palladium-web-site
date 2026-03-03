@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Palladium Blockchain Website",
   "scripts": {
-    "dev": "node scripts/generate-config.js && live-server public --port=3000",
+    "dev": "node scripts/generate-config.js && bash scripts/sync-pool-data.sh --once && (bash scripts/sync-pool-data.sh --watch --interval 30 & live-server public --port=3000 --ignore=pool-data,pool-data/**)",
     "generate-config": "node scripts/generate-config.js",
-    "generate-config:prod": "node scripts/generate-config.js --prod"
+    "generate-config:prod": "node scripts/generate-config.js --prod",
+    "sync-pool-data": "bash scripts/sync-pool-data.sh --once",
+    "sync-pool-data:watch": "bash scripts/sync-pool-data.sh --watch --interval 30"
   },
   "devDependencies": {
     "live-server": "^1.2.2"
