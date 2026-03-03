@@ -85,13 +85,21 @@ function renderServers(servers) {
 }
 
 // ---- Main fetch ----
+let _loaded = false;
+let _retryTimer = null;
+
 async function fetchNetworkData() {
+    // Cancel any pending initial-load retry (e.g. if interval fires first)
+    clearTimeout(_retryTimer);
+    _retryTimer = null;
+
     const headers = apiHeaders();
 
     // Show timestamp immediately so it's never blank
     const ts = document.getElementById('last-updated');
     if (ts) ts.textContent = new Date().toLocaleTimeString();
 
+    let success = false;
     try {
         const [peersRes, serversRes] = await Promise.all([
             fetch(apiUrl(CONFIG.ENDPOINTS.NETWORK_PEERS),     { headers }),
@@ -101,6 +109,7 @@ async function fetchNetworkData() {
         if (peersRes.ok) {
             const data = await peersRes.json();
             renderPeers(data.peers ?? []);
+            success = true;
         } else {
             showEmpty('peers-list', 'Could not load peer data.');
             setBadge('peers-count', 0);
@@ -109,6 +118,7 @@ async function fetchNetworkData() {
         if (serversRes.ok) {
             const data = await serversRes.json();
             renderServers(data.servers ?? []);
+            success = true;
         } else {
             showEmpty('servers-list', 'Could not load server data.');
             setServerBadge('servers-count', 0);
@@ -120,6 +130,12 @@ async function fetchNetworkData() {
         showEmpty('servers-list', 'Connection error.');
     }
 
+    if (success) {
+        _loaded = true;
+    } else if (!_loaded) {
+        // First load failed: retry every 3 s instead of waiting 15 s
+        _retryTimer = setTimeout(fetchNetworkData, 3_000);
+    }
 }
 
 // Scripts are after </body> so DOM is already ready — call directly

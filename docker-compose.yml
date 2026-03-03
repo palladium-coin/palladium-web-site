@@ -15,10 +15,14 @@ services:
     environment:
       - CADDY_HOST=${CADDY_HOST}
       - API_KEY=${API_KEY}
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    networks:
+      - palladium-net
     # If running behind a firewall/NAT, ensure port 443 is reachable from the Internet
 
 volumes:
   caddy_data:
   caddy_config:
+
+networks:
+  palladium-net:
+    external: true
