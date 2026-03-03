@@ -104,10 +104,10 @@
                 <div class="has-text-centered mb-5">
                     <h2 class="title is-3 has-text-white mb-5">
                         <i class="fas fa-pickaxe has-text-primary mr-3"></i>
-                        Solo Mining Pool
+                        Poolladium (Solo Mode)
                     </h2>
                     <p class="subtitle is-5 has-text-white-ter">
-                        Anyone can contribute by mining in solo mode using an ASIC miner with Stratum protocol
+                        Poolladium works in solo mode and supports ASIC miners via Stratum protocol
                     </p>
                 </div>
 
@@ -115,16 +115,20 @@
                     <div class="column is-7-desktop is-10-tablet is-12-mobile">
                         <div class="mining-panel">
                             <div class="mining-panel-header">
-                                <i class="fas fa-server mr-2"></i>Mining Configuration
+                                <i class="fas fa-server mr-2"></i>Miner Configuration
                             </div>
                             <div class="mining-config-grid">
                                 <div class="config-row">
-                                    <span class="config-label"><i class="fas fa-network-wired mr-2"></i>Pool</span>
+                                    <span class="config-label"><i class="fas fa-network-wired mr-2"></i>Stratum URL</span>
                                     <span class="config-value">palladiumblockchain.net</span>
                                 </div>
                                 <div class="config-row">
                                     <span class="config-label"><i class="fas fa-plug mr-2"></i>Port</span>
                                     <span class="config-value">3333</span>
+                                </div>
+                                <div class="config-row">
+                                    <span class="config-label"><i class="fas fa-broadcast-tower mr-2"></i>High Difficulty Port</span>
+                                    <span class="config-value">4444</span>
                                 </div>
                                 <div class="config-row">
                                     <span class="config-label"><i class="fas fa-user mr-2"></i>Username</span>
@@ -137,9 +141,21 @@
                             </div>
                             <div class="mining-note">
                                 <div class="mining-note-icon"><i class="fas fa-info-circle"></i></div>
-                                <div>
-                                    <p class="mb-2">The coinbase transaction from any mined block will immediately belong to your address.</p>
-                                    <p>Our pool is derived from <strong>ckpool</strong> — written in C and assembly, built for performance and efficiency.</p>
+                                <div class="mining-note-content">
+                                    <p class="mining-note-title">Solo Mining Policy</p>
+                                    <p class="mining-note-text">Coinbase rewards from valid blocks mined through Poolladium are paid directly to the configured payout address.</p>
+                                    <p class="mining-note-text">Poolladium is built on <strong>ckpool</strong>, implemented in C and assembly for high performance and low overhead.</p>
+                                    <div class="mining-note-endpoints">
+                                        <p class="mining-note-endpoints-title">Stratum Endpoints (Full URL)</p>
+                                        <div class="mining-note-endpoint-row">
+                                            <span class="mining-note-endpoint-label">Standard</span>
+                                            <code class="mining-note-endpoint-url">stratum+tcp://palladiumblockchain.net:3333</code>
+                                        </div>
+                                        <div class="mining-note-endpoint-row">
+                                            <span class="mining-note-endpoint-label">High Difficulty</span>
+                                            <code class="mining-note-endpoint-url">stratum+tcp://palladiumblockchain.net:4444</code>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="pool-dashboard-action">
