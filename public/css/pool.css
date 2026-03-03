@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+.pool-brand-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.6rem, 5.2vw, 4.25rem);
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.pool-page-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.12;
+}
+
 .pool-meta {
     display: flex;
     flex-wrap: wrap;
