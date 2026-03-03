@@ -13,7 +13,8 @@ services:
       - caddy_data:/data
       - caddy_config:/config
       # Expose ckpool logs read-only directly under /pool-data
-      - ${POOL_LOG_DIR}:/srv/pool-data:ro
+      # POOL_LOG_DIR is required: compose fails fast if unset/empty
+      - ${POOL_LOG_DIR:?POOL_LOG_DIR is required}:/srv/pool-data:ro
     environment:
       - CADDY_HOST=${CADDY_HOST}
       - API_KEY=${API_KEY}
