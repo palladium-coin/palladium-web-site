@@ -24,6 +24,7 @@
     # Disable persistent cache for dynamically loaded components
     header /navbar.html Cache-Control "no-store"
     header /footer.html Cache-Control "no-store"
+    header /css/* Cache-Control "no-store"
     header /pool-data/* Cache-Control "no-store"
 
     # Handle .well-known and static assets normally (root covers everything)
