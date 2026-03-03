@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate" translate="no">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="pool-user.html">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#EE5A24">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" href="assets/icons/palladium.png">
+    <link rel="shortcut icon" href="assets/icons/palladium.png">
+    <title>Palladium Pool User Statistics</title>
+    <meta name="title" content="Palladium Pool User Statistics">
+    <meta name="description" content="User-specific mining statistics derived from ckpool logs.">
+    <meta name="keywords" content="palladium, mining, pool, user stats, ckpool, hashrate">
+    <link rel="preload" href="css/mystyles.css?v=3" as="style">
+    <link rel="stylesheet" type="text/css" href="css/mystyles.css?v=3">
+    <link rel="preload" href="css/footer.css?v=1" as="style">
+    <link rel="stylesheet" type="text/css" href="css/footer.css?v=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/pool.css">
+    <script src="js/common.js"></script>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="hero">
+                <div class="hero-body mt-nav">
+                    <div class="has-text-centered mb-6">
+                        <h1 class="title is-1 has-text-white mb-3">
+                            User <span class="has-text-primary">Statistics</span>
+                        </h1>
+                        <h2 class="subtitle is-5 has-text-white-ter">
+                            Detailed worker-level statistics for a single pool username
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pool-meta mb-6">
+                <div class="pool-meta-item">
+                    <span class="pool-meta-label">Username</span>
+                    <span class="pool-meta-value" id="user-username">—</span>
+                </div>
+                <div class="pool-meta-item">
+                    <span class="pool-meta-label">Generated</span>
+                    <span class="pool-meta-value" id="user-generated-at">—</span>
+                </div>
+                <div class="pool-meta-item">
+                    <span class="pool-meta-label">Last Share</span>
+                    <span class="pool-meta-value" id="user-last-share">—</span>
+                </div>
+                <div class="pool-meta-actions pool-meta-actions--stack">
+                    <button class="button is-warning is-small" id="refresh-user-stats">
+                        <span class="icon"><i class="fas fa-sync-alt"></i></span>
+                        <span>Refresh</span>
+                    </button>
+                    <a href="pool.html" class="button is-light is-small">
+                        <span class="icon"><i class="fas fa-arrow-left"></i></span>
+                        <span>Back to Pool</span>
+                    </a>
+                </div>
+            </div>
+
+            <div id="user-error" class="pool-error is-hidden"></div>
+
+            <section class="mb-6">
+                <h3 class="title is-4 has-text-white mb-4">Overview</h3>
+                <div class="columns is-multiline">
+                    <div class="column is-3-desktop is-6-tablet is-12-mobile"><div class="pool-stat-card"><p class="pool-stat-label">Workers</p><p class="pool-stat-value" id="user-workers">—</p></div></div>
+                    <div class="column is-3-desktop is-6-tablet is-12-mobile"><div class="pool-stat-card"><p class="pool-stat-label">Shares</p><p class="pool-stat-value" id="user-shares">—</p></div></div>
+                    <div class="column is-3-desktop is-6-tablet is-12-mobile"><div class="pool-stat-card"><p class="pool-stat-label">Best Share</p><p class="pool-stat-value" id="user-bestshare">—</p></div></div>
+                    <div class="column is-3-desktop is-6-tablet is-12-mobile"><div class="pool-stat-card"><p class="pool-stat-label">Best Ever</p><p class="pool-stat-value" id="user-bestever">—</p></div></div>
+                    <div class="column is-3-desktop is-6-tablet is-12-mobile"><div class="pool-stat-card"><p class="pool-stat-label">Authorised</p><p class="pool-stat-value" id="user-authorised">—</p></div></div>
+                </div>
+            </section>
+
+            <section class="mb-6">
+                <h3 class="title is-4 has-text-white mb-4">User Hashrate</h3>
+                <div class="columns is-multiline">
+                    <div class="column is-3-desktop is-6-tablet is-12-mobile"><div class="pool-stat-card"><p class="pool-stat-label">1m</p><p class="pool-stat-value" id="user-hashrate1m">—</p></div></div>
+                    <div class="column is-3-desktop is-6-tablet is-12-mobile"><div class="pool-stat-card"><p class="pool-stat-label">5m</p><p class="pool-stat-value" id="user-hashrate5m">—</p></div></div>
+                    <div class="column is-3-desktop is-6-tablet is-12-mobile"><div class="pool-stat-card"><p class="pool-stat-label">1h</p><p class="pool-stat-value" id="user-hashrate1hr">—</p></div></div>
+                    <div class="column is-3-desktop is-6-tablet is-12-mobile"><div class="pool-stat-card"><p class="pool-stat-label">1d</p><p class="pool-stat-value" id="user-hashrate1d">—</p></div></div>
+                    <div class="column is-3-desktop is-6-tablet is-12-mobile"><div class="pool-stat-card"><p class="pool-stat-label">7d</p><p class="pool-stat-value" id="user-hashrate7d">—</p></div></div>
+                </div>
+            </section>
+
+            <section class="mb-6">
+                <h3 class="title is-4 has-text-white mb-4">Workers</h3>
+                <div id="user-workers-grid" class="user-workers-grid"></div>
+            </section>
+        </div>
+    </section>
+</body>
+<script src="js/config.js"></script>
+<script src="js/pool-user.js"></script>
+
+</html>

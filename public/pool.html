@@ -59,6 +59,26 @@
                 </div>
             </div>
 
+            <div class="pool-user-search mb-6">
+                <form id="pool-user-search-form" class="pool-user-search-form" novalidate>
+                    <label class="pool-user-search-label" for="pool-user-search-input">User Statistics Lookup</label>
+                    <div class="pool-user-search-row">
+                        <input
+                            id="pool-user-search-input"
+                            class="pool-user-search-input"
+                            type="text"
+                            placeholder="Enter wallet address or username"
+                            autocomplete="off"
+                        >
+                        <button type="submit" class="button is-warning">
+                            <span class="icon"><i class="fas fa-search"></i></span>
+                            <span>Open User Page</span>
+                        </button>
+                    </div>
+                    <p id="pool-user-search-error" class="pool-user-search-error is-hidden">Please enter a valid username.</p>
+                </form>
+            </div>
+
             <div id="pool-error" class="pool-error is-hidden"></div>
 
             <section class="mb-6">

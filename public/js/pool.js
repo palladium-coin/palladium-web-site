@@ -132,6 +132,45 @@ function hideError() {
     el.classList.add('is-hidden');
 }
 
+function showUserSearchError(message) {
+    const el = document.getElementById('pool-user-search-error');
+    if (!el) return;
+    el.textContent = message;
+    el.classList.remove('is-hidden');
+}
+
+function hideUserSearchError() {
+    const el = document.getElementById('pool-user-search-error');
+    if (!el) return;
+    el.textContent = '';
+    el.classList.add('is-hidden');
+}
+
+function initUserSearchForm() {
+    const form = document.getElementById('pool-user-search-form');
+    const input = document.getElementById('pool-user-search-input');
+    if (!form || !input) return;
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const username = input.value.trim();
+
+        if (!username) {
+            showUserSearchError('Please enter a username.');
+            return;
+        }
+
+        if (/\s/.test(username)) {
+            showUserSearchError('Username cannot contain spaces.');
+            return;
+        }
+
+        hideUserSearchError();
+        const target = `pool-user.html?username=${encodeURIComponent(username)}`;
+        window.location.href = target;
+    });
+}
+
 function normalizePayload(payload, method) {
     if (!payload || typeof payload !== 'object') return null;
 
@@ -253,6 +292,7 @@ async function loadPoolStats() {
 document.addEventListener('DOMContentLoaded', () => {
     const refreshBtn = document.getElementById('refresh-pool-stats');
     if (refreshBtn) refreshBtn.addEventListener('click', loadPoolStats);
+    initUserSearchForm();
 
     loadPoolStats();
     setInterval(loadPoolStats, AUTO_REFRESH_MS);
