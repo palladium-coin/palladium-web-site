@@ -1,32 +1,36 @@
-/* ===== DONATE PAGE SPECIFIC STYLES ===== */
+/* ============================================================
+   DONATE PAGE — Address panels, copy button
+   ============================================================ */
 
-/* Hero */
+/* ── Hero ─────────────────────────────────────────────────── */
 .donate-hero {
     text-align: center;
     padding: 0 0 2.5rem;
 }
 
 .donate-title {
-    font-size: 2.6rem;
-    font-weight: 700;
-    color: #fff;
+    font-family: var(--font-display, 'Syne', sans-serif);
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 800;
+    color: var(--text-1, #f0f0f0);
     margin-bottom: 0.75rem;
-    line-height: 1.2;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
 }
 
 .donate-title .accent {
-    color: #EE5A24;
+    color: var(--brand, #00C8C8);
 }
 
 .donate-subtitle {
-    color: #a0a0a0;
-    font-size: 1.05rem;
+    color: var(--text-2, #9ca3af);
+    font-size: 1rem;
     max-width: 520px;
     margin: 0 auto;
     line-height: 1.75;
 }
 
-/* Donation cards layout */
+/* ── Donation cards layout ────────────────────────────────── */
 .donate-cards {
     display: flex;
     flex-wrap: wrap;
@@ -41,80 +45,85 @@
     min-width: 0;
 }
 
-/* Panel */
+/* ── Panel ────────────────────────────────────────────────── */
 .donate-panel {
-    border: 1px solid rgba(238, 90, 36, 0.3);
-    border-radius: 12px;
+    border: 1px solid oklch(78% 0.18 195 / 0.25);
+    border-radius: var(--radius-md, 12px);
     overflow: hidden;
     height: 100%;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: var(--surface-1, oklch(12% 0.045 245));
+    transition:
+        border-color 0.25s ease,
+        box-shadow   0.25s ease,
+        transform    0.3s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
 .donate-panel:hover {
-    border-color: rgba(238, 90, 36, 0.6);
-    box-shadow: 0 4px 24px rgba(238, 90, 36, 0.1);
+    border-color: oklch(78% 0.18 195 / 0.55);
+    box-shadow: 0 6px 24px oklch(78% 0.18 195 / 0.1);
+    transform: translateY(-2px);
 }
 
+/* BTC panel variant */
 .donate-panel.btc {
-    border-color: rgba(247, 147, 26, 0.3);
+    border-color: oklch(70% 0.17 55 / 0.25); /* Bitcoin amber */
 }
 
 .donate-panel.btc:hover {
-    border-color: rgba(247, 147, 26, 0.6);
-    box-shadow: 0 4px 24px rgba(247, 147, 26, 0.1);
+    border-color: oklch(70% 0.17 55 / 0.55);
+    box-shadow: 0 6px 24px oklch(70% 0.17 55 / 0.1);
 }
 
-/* Panel header */
+/* ── Panel header ─────────────────────────────────────────── */
 .donate-panel-header {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     padding: 1rem 1.5rem;
-    background: rgba(238, 90, 36, 0.08);
-    border-bottom: 1px solid rgba(238, 90, 36, 0.25);
+    background: oklch(78% 0.18 195 / 0.07);
+    border-bottom: 1px solid oklch(78% 0.18 195 / 0.2);
 }
 
 .donate-panel.btc .donate-panel-header {
-    background: rgba(247, 147, 26, 0.08);
-    border-bottom-color: rgba(247, 147, 26, 0.25);
+    background: oklch(70% 0.17 55 / 0.07);
+    border-bottom-color: oklch(70% 0.17 55 / 0.2);
 }
 
-/* Panel icon circle */
+/* ── Panel icon ───────────────────────────────────────────── */
 .donate-panel-icon {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: rgba(238, 90, 36, 0.15);
+    background: oklch(78% 0.18 195 / 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: #EE5A24;
+    color: var(--brand, #00C8C8);
 }
 
 .donate-panel-icon.btc-icon {
-    background: rgba(247, 147, 26, 0.15);
-    color: #f7931a;
+    background: oklch(70% 0.17 55 / 0.12);
+    color: oklch(70% 0.17 55);
     font-size: 1.2rem;
 }
 
 .donate-panel-name {
     font-size: 1rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-1, #f0f0f0);
     line-height: 1.2;
 }
 
 .donate-panel-network {
     font-size: 0.77rem;
-    color: #808080;
+    color: var(--text-3, oklch(48% 0.012 230));
     margin-top: 0.15rem;
 }
 
-/* Panel body */
+/* ── Panel body ───────────────────────────────────────────── */
 .donate-panel-body {
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
 }
 
 .donate-label {
@@ -122,18 +131,18 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.09em;
-    color: #888;
+    color: var(--text-3, oklch(48% 0.012 230));
     margin-bottom: 0.65rem;
 }
 
-/* Address row */
+/* ── Address row ──────────────────────────────────────────── */
 .address-row {
     display: flex;
     align-items: center;
     gap: 0.65rem;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 8px;
+    background: oklch(9% 0.04 245 / 0.6);
+    border: 1px solid var(--border, oklch(28% 0.03 245));
+    border-radius: var(--radius-sm, 6px);
     padding: 0.6rem 0.75rem 0.6rem 1rem;
     min-width: 0;
 }
@@ -142,26 +151,26 @@
     flex: 1;
     font-family: 'Courier New', monospace;
     font-size: 0.83rem;
-    color: #c8c8c8;
+    color: var(--text-2, #9ca3af);
     word-break: break-all;
     background: transparent;
     padding: 0;
     min-width: 0;
 }
 
-/* Copy button */
+/* ── Copy button ──────────────────────────────────────────── */
 .copy-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
     padding: 0.42rem 0.9rem;
-    border-radius: 6px;
-    border: 1px solid rgba(238, 90, 36, 0.5);
+    border-radius: var(--radius-sm, 6px);
+    border: 1px solid oklch(78% 0.18 195 / 0.45);
     background: transparent;
-    color: #EE5A24;
+    color: var(--brand, #00C8C8);
     font-size: 0.8rem;
     font-weight: 600;
-    font-family: inherit;
+    font-family: var(--font-body, 'Poppins', sans-serif);
     cursor: pointer;
     white-space: nowrap;
     flex-shrink: 0;
@@ -169,46 +178,46 @@
 }
 
 .copy-btn:hover {
-    background: rgba(238, 90, 36, 0.12);
-    border-color: #EE5A24;
+    background: oklch(78% 0.18 195 / 0.1);
+    border-color: var(--brand, #00C8C8);
 }
 
 .copy-btn:active {
-    background: rgba(238, 90, 36, 0.2);
+    background: oklch(78% 0.18 195 / 0.2);
 }
 
 .copy-btn.btc {
-    border-color: rgba(247, 147, 26, 0.5);
-    color: #f7931a;
+    border-color: oklch(70% 0.17 55 / 0.45);
+    color: oklch(70% 0.17 55);
 }
 
 .copy-btn.btc:hover {
-    background: rgba(247, 147, 26, 0.12);
-    border-color: #f7931a;
+    background: oklch(70% 0.17 55 / 0.1);
+    border-color: oklch(70% 0.17 55);
 }
 
 .copy-btn.btc:active {
-    background: rgba(247, 147, 26, 0.2);
+    background: oklch(70% 0.17 55 / 0.2);
 }
 
 .copy-btn.copied,
 .copy-btn.btc.copied {
-    border-color: #48c774;
-    color: #48c774;
-    background: rgba(72, 199, 116, 0.1);
+    border-color: var(--success, oklch(65% 0.20 145));
+    color: var(--success, oklch(65% 0.20 145));
+    background: oklch(65% 0.20 145 / 0.08);
 }
 
-/* Footer note */
+/* ── Footer note ──────────────────────────────────────────── */
 .donate-note {
     text-align: center;
-    color: #606060;
+    color: var(--text-3, oklch(48% 0.012 230));
     font-size: 0.88rem;
     margin-top: 2.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid var(--border, oklch(28% 0.03 245));
 }
 
-/* Responsive */
+/* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 600px) {
     .donate-title {
         font-size: 1.9rem;

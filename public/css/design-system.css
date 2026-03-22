@@ -1,0 +1,462 @@
+/* ============================================================
+   PALLADIUM DESIGN SYSTEM
+   Global tokens, typography, animations, and base overrides.
+   Injected by js/common.js on every page.
+   ============================================================ */
+
+/* ── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ── Design Tokens ────────────────────────────────────────── */
+:root {
+  /* Colors */
+  --bg:          oklch(9%  0.04  245);
+  --surface-1:   oklch(12% 0.045 245);
+  --surface-2:   oklch(16% 0.04  245);
+  --surface-3:   oklch(22% 0.035 245);
+  --border:      oklch(28% 0.03  245);
+  --border-strong: oklch(36% 0.03 245);
+  --text-1:      oklch(95% 0.006 240);
+  --text-2:      oklch(68% 0.012 230);
+  --text-3:      oklch(48% 0.012 230);
+
+  --brand:       oklch(78% 0.18  195);
+  --brand-dark:  oklch(62% 0.18  195);
+  --brand-light: oklch(88% 0.12  190);
+  --brand-dim:   color-mix(in srgb, var(--brand) 12%, transparent);
+  --brand-glow:  color-mix(in srgb, var(--brand) 28%, transparent);
+
+  --success:     oklch(65% 0.20 145);
+  --error:       oklch(60% 0.22  20);
+  --warning:     oklch(76% 0.18  75);
+
+  /* Typography */
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'Poppins', sans-serif;
+
+  /* Fluid type scale */
+  --text-xs:   clamp(0.7rem,  1.4vw,  0.8rem);
+  --text-sm:   clamp(0.82rem, 1.6vw,  0.9rem);
+  --text-base: clamp(0.9rem,  1.8vw,  1rem);
+  --text-lg:   clamp(1rem,    2.2vw,  1.25rem);
+  --text-xl:   clamp(1.2rem,  2.8vw,  1.6rem);
+  --text-2xl:  clamp(1.5rem,  3.5vw,  2.2rem);
+  --text-3xl:  clamp(1.75rem, 5vw,    3.2rem);
+  --text-hero: clamp(2.4rem,  8vw,    5.5rem);
+
+  /* Spacing (8pt grid) */
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2rem;
+  --sp-6: 3rem;
+  --sp-8: 4rem;
+
+  /* Radius */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   32px;
+  --radius-full: 9999px;
+
+  /* Easing */
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --spring-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Base Reset & Body ────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+html, body {
+  background-color: var(--bg) !important;
+  color: var(--text-1) !important;
+  font-family: var(--font-body) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Prevent headings from breaking in ugly spots */
+h1, h2, h3, h4, h5, h6,
+.title, .subtitle, .section-title {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Body text wraps gracefully */
+p, li, td, th {
+  overflow-wrap: break-word;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand) transparent;
+}
+*::-webkit-scrollbar        { width: 5px; }
+*::-webkit-scrollbar-track  { background: transparent; }
+*::-webkit-scrollbar-thumb  { background: var(--brand); border-radius: 99px; }
+
+/* ── Page Loader ───────────────────────────────────────────── */
+#pageloader {
+  background: var(--bg) !important;
+}
+
+/* ── Bulma overrides: Hero sections ──────────────────────── */
+.hero {
+  background-color: transparent !important;
+}
+.hero.is-dark, .hero.is-black, .hero.is-light {
+  background-color: transparent !important;
+}
+.hero .title,
+.hero .subtitle {
+  color: var(--text-1) !important;
+}
+
+/* Bulma: panels, boxes */
+.panel { background: var(--surface-1) !important; border: 1px solid var(--border); }
+.box   { background: var(--surface-1) !important; }
+
+/* ── Typography Overrides ─────────────────────────────────── */
+.title {
+  color: var(--text-1) !important;
+  font-family: var(--font-body) !important;
+}
+
+/* Display headings use Syne */
+.title.is-size-1,
+.title.is-size-2,
+h1.title,
+h2.title,
+.display-title {
+  font-family: var(--font-display) !important;
+  letter-spacing: -0.03em;
+}
+
+/* ── Scroll Reveal Animations ─────────────────────────────── */
+[data-animate] {
+  opacity: 0;
+  transition:
+    opacity  0.7s var(--ease-out-expo),
+    translate 0.7s var(--ease-out-expo);
+}
+
+[data-animate]:not(.in-view)           { translate: 0 2rem; }
+[data-animate="fade"]:not(.in-view)    { translate: 0 0; }
+[data-animate="left"]:not(.in-view)    { translate: -3rem 0; }
+[data-animate="right"]:not(.in-view)   { translate: 3rem 0; }
+[data-animate="scale"]:not(.in-view)   { scale: 0.94; translate: 0 0; }
+
+[data-animate].in-view {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+}
+
+/* CSS-native scroll animation (Chrome 115+) */
+@supports (animation-timeline: scroll()) {
+  [data-animate] {
+    animation: reveal-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 28%;
+  }
+  [data-animate="fade"]  { animation-name: reveal-fade; }
+  [data-animate="left"]  { animation-name: reveal-left; }
+  [data-animate="right"] { animation-name: reveal-right; }
+
+  @keyframes reveal-up    { from { opacity: 0; translate: 0 2rem; }  to { opacity: 1; translate: 0 0; scale: 1; } }
+  @keyframes reveal-fade  { from { opacity: 0; }                     to { opacity: 1; } }
+  @keyframes reveal-left  { from { opacity: 0; translate: -3rem 0; } to { opacity: 1; translate: 0 0; } }
+  @keyframes reveal-right { from { opacity: 0; translate: 3rem 0; }  to { opacity: 1; translate: 0 0; } }
+}
+
+/* ── Aurora Background ────────────────────────────────────── */
+.aurora-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.aurora-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 55% at 15% 35%,
+      oklch(78% 0.18 195 / 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 65% 45% at 85% 65%,
+      oklch(65% 0.22 255 / 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse 110% 80% at 50% 110%,
+      oklch(40% 0.15 280 / 0.10) 0%, transparent 55%);
+  background-size: 200% 200%;
+  animation: aurora-shift 14s ease-in-out infinite alternate;
+}
+
+.aurora-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes aurora-shift {
+  0%   { background-position: 0%   0%;   }
+  50%  { background-position: 100% 50%;  }
+  100% { background-position: 30%  100%; }
+}
+
+/* ── Grain Texture Overlay ────────────────────────────────── */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.035;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+  mix-blend-mode: overlay;
+}
+
+/* ── Glassmorphism ────────────────────────────────────────── */
+.glass-1 {
+  background: oklch(100% 0 0 / 0.04);
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+  border: 1px solid oklch(100% 0 0 / 0.08);
+}
+
+.glass-2 {
+  background: oklch(100% 0 0 / 0.07);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid oklch(100% 0 0 / 0.12);
+  box-shadow: 0 8px 32px oklch(0% 0 0 / 0.25);
+}
+
+/* ── Button System ────────────────────────────────────────── */
+.button {
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-md) !important;
+  transition:
+    background   0.2s ease,
+    box-shadow   0.2s ease,
+    transform    0.25s var(--spring-bounce),
+    border-color 0.2s ease !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, white 0%, transparent 65%);
+  opacity: 0;
+  transform: scale(0);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.button:active:not(:disabled)::after {
+  opacity: 0.15;
+  transform: scale(2.5);
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97) !important;
+  transition-duration: 0.08s !important;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/* Brand primary button */
+.button.is-success,
+.button.is-primary {
+  background: var(--brand) !important;
+  border-color: var(--brand) !important;
+  color: white !important;
+  box-shadow: 0 2px 12px var(--brand-dim) !important;
+}
+
+.button.is-success:hover,
+.button.is-primary:hover {
+  background: var(--brand-dark) !important;
+  border-color: var(--brand-dark) !important;
+  box-shadow: 0 6px 24px var(--brand-glow) !important;
+}
+
+/* Secondary button */
+.button.is-dark,
+.button.is-outlined {
+  background: var(--surface-2) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-1) !important;
+}
+
+.button.is-dark:hover,
+.button.is-outlined:hover {
+  background: var(--surface-3) !important;
+  border-color: var(--brand) !important;
+  color: var(--brand) !important;
+}
+
+/* Ghost buttons (Discord, Telegram) */
+.button.is-link,
+.button.is-info {
+  background: var(--surface-2) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-1) !important;
+}
+
+.button.is-link:hover,
+.button.is-info:hover {
+  background: var(--surface-3) !important;
+  border-color: var(--brand) !important;
+  color: var(--brand) !important;
+}
+
+/* ── Gradient Text ────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (forced-colors: active) {
+  .gradient-text { color: ButtonText; background: none; }
+}
+
+/* ── Stat Skeleton ────────────────────────────────────────── */
+.is-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-2) 25%,
+    var(--surface-3) 50%,
+    var(--surface-2) 75%
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite !important;
+  color: transparent !important;
+  border-radius: 6px !important;
+  pointer-events: none;
+}
+
+@keyframes skeleton-shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* ── Inputs ───────────────────────────────────────────────── */
+.input, .textarea, .select select {
+  background: var(--surface-2) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-1) !important;
+  font-family: var(--font-body) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.input::placeholder, .textarea::placeholder {
+  color: var(--text-3) !important;
+}
+
+.input:focus, .textarea:focus, .select select:focus {
+  border-color: var(--brand) !important;
+  box-shadow: 0 0 0 3px var(--brand-dim) !important;
+  outline: none !important;
+}
+
+/* ── Links ────────────────────────────────────────────────── */
+a {
+  color: var(--brand);
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+a:hover { color: var(--brand-light); }
+
+/* ── Section titles ───────────────────────────────────────── */
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-1);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+/* ── Mobile global fixes ──────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Section headings: smaller floor on mobile */
+  .section-title {
+    font-size: clamp(1.5rem, 7vw, 2.2rem);
+  }
+
+  /* Bulma hero body padding is too generous on mobile */
+  .hero-body {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  /* Buttons: full-width stacking handled per-component;
+     globally ensure text doesn't get cut */
+  .button {
+    white-space: normal !important;
+    height: auto !important;
+    min-height: 2.5em;
+  }
+
+  /* Prevent horizontal scroll from wide content */
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* Disable spring hover transforms on touch devices to avoid sticky states */
+@media (hover: none) {
+  .button:hover:not(:disabled) {
+    transform: none !important;
+  }
+
+  .stat-card:hover,
+  .pool-stat-card:hover,
+  .user-worker-card:hover,
+  .milestone-card:hover,
+  .donate-panel:hover,
+  .network-panel:hover {
+    transform: none !important;
+  }
+
+  .navbar-item:hover,
+  .navbar-link:hover {
+    transform: none !important;
+  }
+}
+
+/* ── Reduced Motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:    0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration:   0.01ms !important;
+  }
+  [data-animate] { opacity: 1 !important; translate: none !important; scale: 1 !important; }
+  .aurora-hero::before { animation: none !important; }
+}

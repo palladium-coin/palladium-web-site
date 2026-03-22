@@ -30,6 +30,9 @@
     <meta property="twitter:url" content="https://twitter.com/Palladium_coin">
     <meta property="twitter:title" content="Palladium">
     <meta property="twitter:description" content="Decentralize, PoW, Fast">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- CSS -->
     <link rel="preload" href="css/mystyles.css?v=3" as="style">
     <link rel="stylesheet" type="text/css" href="css/mystyles.css?v=3">
@@ -48,52 +51,55 @@
 </head>
 
 <body>
-    <section class="hero is-medium mt-5-mobile" data-aos="fade-right">
+    <!-- ── Hero ─────────────────────────────────────────────── -->
+    <section class="hero hero-main aurora-hero">
         <div class="hero-body">
             <div class="columns is-vcentered">
-                <div class="column is-2"></div>
-                <div class="column">
-                    <p class="title has-text-weight-bold is-size-1">
+                <div class="column is-2 is-hidden-mobile"></div>
+                <div class="column has-text-centered-mobile">
+                    <p class="title hero-title">
                         Palladium
                     </p>
-                    <p class="title is-size-4 has-text-weight-normal">
-                        Decentralized, PoW, Fast
+                    <p class="subtitle hero-subtitle mt-4">
+                        Decentralized · Proof&nbsp;of&nbsp;Work · Fast
                         <b id="devices"></b>
                     </p>
-                    <div class="buttons is-normal">
-                        <a href="https://github.com/palladium-coin/pallectrum/releases/latest" class="button is-success">
-                            <span>Download Wallet&nbsp;</span>
+                    <div class="buttons is-normal mt-5">
+                        <a href="https://github.com/palladium-coin/pallectrum/releases/latest" class="button is-success is-medium">
+                            <span class="icon"><i class="fas fa-download"></i></span>
+                            <span>Download Wallet</span>
                         </a>
-                     
                     </div>
                 </div>
                 <div class="column is-hidden-mobile">
                     <a href="https://twitter.com/Palladium_coin">
                         <div id="wavecontainer">
-                            <img src="assets/icons/palladium.png" id="waveduco"><!-- Change to Palladium png  --> 
-                         </div>
+                            <img src="assets/icons/palladium.png" id="waveduco" alt="Palladium logo">
+                        </div>
                     </a>
                 </div>
-                <div class="column is-2"></div>
+                <div class="column is-2 is-hidden-mobile"></div>
             </div>
         </div>
     </section>
+
+    <!-- ── What is Palladium ─────────────────────────────────── -->
     <section class="hero is-medium">
         <div class="hero-body" id="explore">
-            <div class="columns is-centered" data-aos="fade-left">
+            <div class="columns is-centered">
                 <div class="column is-2"></div>
                 <div class="column">
-                    <p class="title has-text-weight-bold is-size-2">
+                    <p class="title section-title" data-animate>
                         What is Palladium?
                     </p>
-                    <p class="title is-size-4 has-text-weight-normal">
-                        Palladium is a Bitcoin fork that uses the same cryptographic algorithms for transactions, ensuring proven security and reliability. However, Palladium stands out with its average block time of just 2 minutes, allowing for significantly faster transaction validation compared to Bitcoin's 10 minutes.
+                    <p class="section-body-text mt-4" data-animate>
+                        Palladium is a Bitcoin fork that uses the same cryptographic algorithms for transactions, ensuring proven security and reliability. With an average block time of just 2 minutes, transaction validation is significantly faster than Bitcoin's 10 minutes.
                     </p>
-                    <p class="title is-size-4 has-text-weight-normal">
-                        The maximum supply is 21,000,000 PLM and a halving occurs every 210,000 blocks mined. Network security is maintained through the SHA256 proof-of-work algorithm, the same one used by Bitcoin to ensure the integrity of the blockchain.
+                    <p class="section-body-text mt-3" data-animate>
+                        Maximum supply of 21,000,000 PLM with a halving every 210,000 blocks. Network security is maintained through the SHA-256 proof-of-work algorithm — the same one securing Bitcoin.
                     </p>
                     <!-- Halving Calculator -->
-                    <div class="halving-panel mt-6">
+                    <div class="halving-panel mt-6" data-animate>
                         <div class="halving-panel-header">Next Halving</div>
                         <div class="halving-panel-body">
                             <div class="columns is-centered">
@@ -130,36 +136,31 @@
         </div>
     </section>
 
+    <!-- ── Community ────────────────────────────────────────── -->
     <section class="hero is-medium community-section">
-        <div class="hero-body" data-aos="fade-up">
+        <div class="hero-body">
             <div class="columns is-centered">
                 <div class="column is-2"></div>
-                <div class="column">
-                    <p class="title has-text-weight-bold is-size-2 has-text-centered">
-                        Open Source & Community
+                <div class="column" data-animate>
+                    <p class="title section-title has-text-centered">
+                        Open Source &amp; Community
                     </p>
-                    <p class="title is-size-4 has-text-weight-normal has-text-centered mb-4">
+                    <p class="section-body-text has-text-centered mx-auto mt-4">
                         Palladium is completely <strong>open source</strong>, ensuring transparency and allowing anyone to contribute to its development. Join our growing community to stay updated and connect with other users.
                     </p>
-                    <div class="columns is-centered mt-3">
-                        <div class="column is-narrow">
-                            <div class="buttons is-centered">
-                                <a href="https://github.com/palladium-coin/palladiumcore" target="_blank" class="button is-dark is-medium">
-                                    <span class="icon">
-                                        <i class="fab fa-github"></i>
-                                    </span>
+                    <div class="columns is-centered mt-4">
+                        <div class="column is-narrow-tablet">
+                            <div class="buttons is-centered community-buttons">
+                                <a href="https://github.com/palladium-coin/palladiumcore" target="_blank" class="button is-dark">
+                                    <span class="icon"><i class="fab fa-github"></i></span>
                                     <span>View on GitHub</span>
                                 </a>
-                                <a href="https://discord.com/invite/z2T8qvzeGc" target="_blank" class="button is-link is-medium">
-                                    <span class="icon">
-                                        <i class="fab fa-discord"></i>
-                                    </span>
+                                <a href="https://discord.com/invite/z2T8qvzeGc" target="_blank" class="button is-link">
+                                    <span class="icon"><i class="fab fa-discord"></i></span>
                                     <span>Join Discord</span>
                                 </a>
-                                <a href="https://t.me/palladium_coin_com" target="_blank" class="button is-info is-medium">
-                                    <span class="icon">
-                                        <i class="fab fa-telegram"></i>
-                                    </span>
+                                <a href="https://t.me/palladium_coin_com" target="_blank" class="button is-info">
+                                    <span class="icon"><i class="fab fa-telegram"></i></span>
                                     <span>Join Telegram</span>
                                 </a>
                             </div>
@@ -171,8 +172,6 @@
         </div>
     </section>
 
-    <br>
-    
 </body>
 <script src="js/index.js"></script>
 

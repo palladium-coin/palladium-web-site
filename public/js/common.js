@@ -1,5 +1,22 @@
 // Common loader system for Palladium website
-// Automatically loads navbar, footer, and manages page loader
+// Automatically loads navbar, footer, manages page loader, and initialises design-system animations
+
+// Inject design-system.css as the first stylesheet on every page
+(function injectDesignSystem() {
+    const link = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.type = 'text/css';
+    link.href = '/css/design-system.css';
+    // Insert before any existing stylesheets so tokens are available first
+    const first = document.head ? document.head.firstChild : null;
+    if (first) {
+        document.head.insertBefore(link, first);
+    } else {
+        document.addEventListener('DOMContentLoaded', () =>
+            document.head.insertBefore(link, document.head.firstChild)
+        );
+    }
+}());
 
 class PalladiumLoader {
     constructor() {
@@ -72,7 +89,7 @@ class PalladiumLoader {
             // Create containers if they don't exist
             this.createContainers();
 
-            // Load navbar and footer in parallel con cache-busting
+            // Load navbar and footer in parallel with cache-busting
             const cacheBust = `?v=${Date.now()}`;
             const [navbarData, footerData] = await Promise.all([
                 this.fetchComponent('/partials/navbar.html' + cacheBust),
@@ -121,7 +138,7 @@ class PalladiumLoader {
     }
 
     async fetchComponent(url) {
-        // Evita che il browser/server servano versioni cacheate
+        // Force a fresh fetch — prevent browser/server from serving stale cached partials
         const response = await fetch(url, { cache: 'no-store' });
         if (!response.ok) {
             throw new Error(`Failed to fetch ${url}: ${response.status}`);
@@ -189,10 +206,69 @@ class PalladiumLoader {
     }
 }
 
-// Copy to clipboard function (manteniamo la funzionalità esistente)
+// Copy to clipboard utility
 function copy(text) {
     navigator.clipboard.writeText(text);
 }
 
 // Initialize the loader system
 new PalladiumLoader();
+
+// ── Scroll Reveal ───────────────────────────────────────────────────────────
+// Fallback for browsers without animation-timeline: view() (Safari < 17)
+function initScrollReveal() {
+    if (CSS.supports('animation-timeline: scroll()')) return; // native CSS handles it
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry, _, obs) => {
+            if (!entry.isIntersecting) return;
+            // Stagger siblings
+            const siblings = entry.target.parentElement
+                ? Array.from(entry.target.parentElement.querySelectorAll('[data-animate]'))
+                : [];
+            const idx = siblings.indexOf(entry.target);
+            setTimeout(() => entry.target.classList.add('in-view'), idx * 80);
+            obs.unobserve(entry.target);
+        });
+    // No negative rootMargin — fire immediately for elements already in view
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('[data-animate]').forEach(el => io.observe(el));
+}
+
+// ── Counter Animation ────────────────────────────────────────────────────────
+// Triggers on elements with data-count="<number>" when they enter the viewport
+function initCounters() {
+    function animateCounter(el) {
+        const target = parseInt(el.dataset.count, 10);
+        if (isNaN(target)) return;
+        const duration = parseInt(el.dataset.countDuration ?? '1800', 10);
+        const prefix   = el.dataset.countPrefix ?? '';
+        const suffix   = el.dataset.countSuffix ?? '';
+        const start    = performance.now();
+        const easeOut  = t => 1 - Math.pow(1 - t, 3);
+
+        function tick(now) {
+            const v = Math.floor(easeOut(Math.min((now - start) / duration, 1)) * target);
+            el.textContent = prefix + v.toLocaleString() + suffix;
+            if ((now - start) < duration) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    }
+
+    const counterObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            animateCounter(e.target);
+            counterObserver.unobserve(e.target);
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+}
+
+// Initialise animations after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    initScrollReveal();
+    initCounters();
+});

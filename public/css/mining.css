@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-/* ===== MINING PAGE SPECIFIC STYLES ===== */
-/* Navbar styles moved to css/navbar.css */
+/* ============================================================
+   MINING PAGE — Stat cards, mining panel, config rows
+   ============================================================ */
 
 .fix-link a {
     color: transparent;
@@ -13,96 +12,53 @@
 
 .exchange_box,
 figure {
-    transition: 0.2s all;
+    transition: transform 0.25s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
 figure:hover {
     transform: scale(1.05);
 }
 
-.button:hover {
-    transform: scale(1.05);
+a > figure {
+    transition: transform 0.25s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
-a>figure {
-    transition: 0.2s all;
-}
-
-a>figure:hover {
+a > figure:hover {
     transform: scale(1.1);
 }
 
-.button:hover:not(.is-link) {
-    transform: scale(1.1);
-}
-
-.icon-text>span {
+.icon-text > span {
     overflow-wrap: break-word !important;
     word-wrap: break-word !important;
     hyphens: auto !important;
 }
 
-#wavecontainer {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center
-}
+.hide { opacity: 0 !important; }
 
-#waveduco {
-    height: 12rem;
-    color: white;
-    z-index: 1;
-    position: absolute;
-    display: table;
-    margin: 0 auto;
-    animation: scale 2.73s ease-in-out infinite;
-}
-
-#devices {
-    transition: opacity 0.5s;
-}
-
-.hide {
-    opacity: 0 !important;
-}
-
-@keyframes scale {
-    0% {
-        transform: scale(1.3);
-    }
-
-    30% {
-        transform: scale(0.9);
-    }
-
-    85% {
-        transform: scale(1.3);
-    }
-
-    100% {
-        transform: scale(1.3);
-    }
-}
-
-/* ===== NETWORK STATS CARDS ===== */
+/* ── Network stat cards ───────────────────────────────────── */
 .stat-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(238, 90, 36, 0.2);
-    border-radius: 12px;
+    background: var(--surface-1, oklch(12% 0.045 245));
+    border: 1px solid oklch(78% 0.18 195 / 0.18);
+    border-radius: var(--radius-md, 12px);
     padding: 2rem 1.5rem;
     text-align: center;
-    transition: border-color 0.3s ease, background 0.3s ease;
+    transition:
+        border-color 0.25s ease,
+        background   0.25s ease,
+        transform    0.3s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1)),
+        box-shadow   0.25s ease;
 }
 
 .stat-card:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(238, 90, 36, 0.55);
+    background: var(--surface-2, oklch(16% 0.04 245));
+    border-color: oklch(78% 0.18 195 / 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px oklch(78% 0.18 195 / 0.12);
 }
 
 .stat-label {
-    color: #a0a0a0;
-    font-size: 0.85rem;
+    color: var(--text-2, #9ca3af);
+    font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -110,40 +66,42 @@ a>figure:hover {
 }
 
 .stat-value {
-    color: #EE5A24;
-    font-size: 2.2rem;
+    color: var(--brand, #00C8C8);
+    font-size: 2.1rem;
     font-weight: 700;
     line-height: 1.1;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-variant-numeric: tabular-nums;
 }
 
 .stat-loading {
     animation: stat-pulse 1.4s ease-in-out infinite;
+    color: var(--text-3, oklch(48% 0.012 230));
 }
 
 @keyframes stat-pulse {
     0%, 100% { opacity: 1; }
-    50%       { opacity: 0.3; }
+    50%       { opacity: 0.25; }
 }
 
-/* ===== SOLO MINING PANEL ===== */
+/* ── Mining panel ─────────────────────────────────────────── */
 .mining-panel {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(238, 90, 36, 0.25);
-    border-top: 3px solid #EE5A24;
-    border-radius: 12px;
+    background: var(--surface-1, oklch(12% 0.045 245));
+    border: 1px solid oklch(78% 0.18 195 / 0.2);
+    border-top: 3px solid var(--brand, #00C8C8);
+    border-radius: var(--radius-md, 12px);
     overflow: hidden;
 }
 
 .mining-panel-header {
-    background: rgba(238, 90, 36, 0.1);
+    background: oklch(78% 0.18 195 / 0.08);
     padding: 1rem 1.75rem;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    color: #EE5A24;
-    letter-spacing: 0.08em;
+    color: var(--brand, #00C8C8);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    border-bottom: 1px solid rgba(238, 90, 36, 0.2);
+    border-bottom: 1px solid oklch(78% 0.18 195 / 0.18);
 }
 
 .mining-config-grid {
@@ -155,7 +113,7 @@ a>figure:hover {
     align-items: center;
     justify-content: space-between;
     padding: 0.9rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid var(--border, oklch(28% 0.03 245));
     gap: 1rem;
 }
 
@@ -164,8 +122,8 @@ a>figure:hover {
 }
 
 .config-label {
-    color: #a0a0a0;
-    font-size: 0.85rem;
+    color: var(--text-2, #9ca3af);
+    font-size: 0.82rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -174,37 +132,38 @@ a>figure:hover {
 
 .config-value {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    color: #f0f0f0;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
+    color: var(--text-1, #f0f0f0);
+    background: var(--surface-2, oklch(16% 0.04 245));
+    border: 1px solid var(--border, oklch(28% 0.03 245));
+    border-radius: var(--radius-sm, 6px);
     padding: 0.3rem 0.8rem;
     text-align: right;
 }
 
 .config-value--dim {
-    color: #888;
+    color: var(--text-3, oklch(48% 0.012 230));
     font-style: italic;
 }
 
+/* ── Info note block ──────────────────────────────────────── */
 .mining-note {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
     margin: 0.25rem 1.75rem 1.5rem;
     padding: 1rem 1.25rem;
-    background: rgba(72, 145, 228, 0.07);
-    border: 1px solid rgba(72, 145, 228, 0.2);
-    border-radius: 8px;
-    color: #b0ccee;
+    background: oklch(78% 0.18 195 / 0.06);
+    border: 1px solid oklch(78% 0.18 195 / 0.18);
+    border-radius: var(--radius-sm, 6px);
+    color: var(--text-2, #9ca3af);
     font-size: 0.88rem;
     line-height: 1.65;
 }
 
 .mining-note-icon {
-    color: #4891e4;
+    color: var(--brand, #00C8C8);
     font-size: 1.1rem;
     margin-top: 0.15rem;
     flex-shrink: 0;
@@ -216,7 +175,7 @@ a>figure:hover {
 }
 
 .mining-note-title {
-    color: #e5effc;
+    color: var(--text-1, #f0f0f0);
     font-size: 0.86rem;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -231,13 +190,13 @@ a>figure:hover {
 .mining-note-endpoints {
     margin-top: 0.75rem;
     padding-top: 0.65rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid var(--border, oklch(28% 0.03 245));
     display: grid;
     gap: 0.45rem;
 }
 
 .mining-note-endpoints-title {
-    color: #d7e6fb;
+    color: var(--text-1, #f0f0f0);
     font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -251,13 +210,13 @@ a>figure:hover {
     justify-content: space-between;
     gap: 0.8rem;
     padding: 0.45rem 0.6rem;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(72, 145, 228, 0.25);
-    border-radius: 6px;
+    background: oklch(9% 0.04 245 / 0.5);
+    border: 1px solid oklch(78% 0.18 195 / 0.18);
+    border-radius: var(--radius-sm, 6px);
 }
 
 .mining-note-endpoint-label {
-    color: #b6cef0;
+    color: var(--text-2, #9ca3af);
     font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -266,17 +225,10 @@ a>figure:hover {
 }
 
 .mining-note-endpoint-url {
-    color: #f3f7ff;
+    color: var(--text-1, #f0f0f0);
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.8rem;
     word-break: break-all;
-}
-
-@media (max-width: 768px) {
-    .mining-note-endpoint-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
 }
 
 .pool-dashboard-action {
@@ -286,14 +238,61 @@ a>figure:hover {
 }
 
 .pool-dashboard-button {
-    border-radius: 10px;
-    font-weight: 700;
+    border-radius: var(--radius-md, 12px) !important;
+    font-weight: 700 !important;
     letter-spacing: 0.02em;
     min-width: 250px;
 }
 
-/* Responsive Video */
+/* Responsive video */
 video {
     width: 100%;
     height: auto;
+}
+
+@media (max-width: 768px) {
+    .mining-note-endpoint-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Config rows: stack label + value vertically on small screens */
+    .config-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+
+    .config-label {
+        white-space: normal;
+    }
+
+    .config-value {
+        text-align: left;
+        font-size: 0.82rem;
+        word-break: break-all;
+        width: 100%;
+    }
+
+    .mining-config-grid {
+        padding: 0.5rem 1rem;
+    }
+
+    .mining-note {
+        margin: 0.25rem 1rem 1.25rem;
+        padding: 0.85rem 1rem;
+    }
+
+    .pool-dashboard-action {
+        padding: 0 1rem 1.25rem;
+    }
+
+    .pool-dashboard-button {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .stat-value {
+        font-size: 1.7rem;
+    }
 }

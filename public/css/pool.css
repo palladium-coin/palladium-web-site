@@ -1,36 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* ============================================================
+   POOL PAGE — Stat cards, user search, worker cards
+   ============================================================ */
 
 .pool-brand-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-display, 'Syne', sans-serif);
     font-size: clamp(2.6rem, 5.2vw, 4.25rem);
-    font-weight: 700;
+    font-weight: 800;
     line-height: 1.05;
+    background: linear-gradient(135deg, var(--brand, #00C8C8), var(--brand-light, oklch(88% 0.12 190)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .pool-page-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body, 'Poppins', sans-serif);
     font-size: clamp(1.7rem, 3vw, 2.5rem);
     font-weight: 600;
     line-height: 1.12;
+    color: var(--text-1, #f0f0f0);
 }
 
+/* ── Pool meta bar ────────────────────────────────────────── */
 .pool-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     align-items: stretch;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(238, 90, 36, 0.25);
-    border-radius: 12px;
+    background: var(--surface-1, oklch(12% 0.045 245));
+    border: 1px solid oklch(78% 0.18 195 / 0.2);
+    border-radius: var(--radius-md, 12px);
     padding: 1.2rem;
 }
 
 .pool-meta-item {
     flex: 1 1 200px;
     min-width: 180px;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
+    background: oklch(9% 0.04 245 / 0.5);
+    border: 1px solid var(--border, oklch(28% 0.03 245));
+    border-radius: var(--radius-sm, 6px);
     padding: 0.8rem 0.9rem;
 }
 
@@ -39,13 +47,13 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #8f9eb0;
+    color: var(--text-2, #9ca3af);
     margin-bottom: 0.2rem;
 }
 
 .pool-meta-value {
     font-size: 0.95rem;
-    color: #f5f5f5;
+    color: var(--text-1, #f0f0f0);
     font-weight: 600;
     word-break: break-word;
 }
@@ -61,10 +69,11 @@
     gap: 0.5rem;
 }
 
+/* ── User search ──────────────────────────────────────────── */
 .pool-user-search {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(238, 90, 36, 0.25);
-    border-radius: 12px;
+    background: var(--surface-1, oklch(12% 0.045 245));
+    border: 1px solid oklch(78% 0.18 195 / 0.2);
+    border-radius: var(--radius-md, 12px);
     padding: 1rem 1.2rem;
 }
 
@@ -74,7 +83,7 @@
 }
 
 .pool-user-search-label {
-    color: #d6dde8;
+    color: var(--text-1, #f0f0f0);
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -90,26 +99,28 @@
 .pool-user-search-input {
     flex: 1;
     min-width: 0;
-    background: rgba(0, 0, 0, 0.28);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
-    color: #f0f0f0;
+    background: var(--surface-2, oklch(16% 0.04 245));
+    border: 1px solid var(--border-strong, oklch(36% 0.03 245));
+    border-radius: var(--radius-sm, 6px);
+    color: var(--text-1, #f0f0f0);
     padding: 0.6rem 0.75rem;
     font-size: 0.95rem;
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .pool-user-search-input:focus {
     outline: none;
-    border-color: rgba(238, 90, 36, 0.65);
-    box-shadow: 0 0 0 2px rgba(238, 90, 36, 0.15);
+    border-color: var(--brand, #00C8C8);
+    box-shadow: 0 0 0 3px oklch(78% 0.18 195 / 0.15);
 }
 
 .pool-user-search-input::placeholder {
-    color: #8f9eb0;
+    color: var(--text-3, oklch(48% 0.012 230));
 }
 
 .pool-user-search-error {
-    color: #ffb8b8;
+    color: var(--error, oklch(60% 0.22 20));
     font-size: 0.84rem;
     font-weight: 600;
 }
@@ -118,11 +129,12 @@
     display: none;
 }
 
+/* ── Error banner ─────────────────────────────────────────── */
 .pool-error {
-    border: 1px solid rgba(255, 80, 80, 0.5);
-    background: rgba(170, 30, 30, 0.2);
-    color: #ffd3d3;
-    border-radius: 8px;
+    border: 1px solid oklch(60% 0.22 20 / 0.5);
+    background: oklch(60% 0.22 20 / 0.1);
+    color: oklch(85% 0.08 20);
+    border-radius: var(--radius-sm, 6px);
     padding: 0.85rem 1rem;
     margin-bottom: 1.25rem;
     font-weight: 500;
@@ -132,23 +144,30 @@
     display: none;
 }
 
+/* ── Stat cards ───────────────────────────────────────────── */
 .pool-stat-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(238, 90, 36, 0.2);
-    border-radius: 12px;
+    background: var(--surface-1, oklch(12% 0.045 245));
+    border: 1px solid oklch(78% 0.18 195 / 0.18);
+    border-radius: var(--radius-md, 12px);
     padding: 1.2rem 1rem;
     text-align: center;
     height: 100%;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    transition:
+        border-color 0.25s ease,
+        background   0.25s ease,
+        transform    0.3s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1)),
+        box-shadow   0.25s ease;
 }
 
 .pool-stat-card:hover {
-    border-color: rgba(238, 90, 36, 0.5);
-    background: rgba(255, 255, 255, 0.07);
+    border-color: oklch(78% 0.18 195 / 0.5);
+    background: var(--surface-2, oklch(16% 0.04 245));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px oklch(78% 0.18 195 / 0.12);
 }
 
 .pool-stat-label {
-    color: #9ca3af;
+    color: var(--text-2, #9ca3af);
     font-size: 0.76rem;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -157,14 +176,16 @@
 }
 
 .pool-stat-value {
-    color: #EE5A24;
+    color: var(--brand, #00C8C8);
     font-size: 1.85rem;
     font-weight: 700;
     line-height: 1.12;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-variant-numeric: tabular-nums;
     word-break: break-word;
 }
 
+/* ── Worker cards ─────────────────────────────────────────── */
 .user-workers-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -172,22 +193,28 @@
 }
 
 .user-workers-empty {
-    color: #9ca3af;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+    color: var(--text-2, #9ca3af);
+    background: var(--surface-1, oklch(12% 0.045 245));
+    border: 1px dashed var(--border, oklch(28% 0.03 245));
+    border-radius: var(--radius-sm, 6px);
     padding: 1rem 1.1rem;
 }
 
 .user-worker-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(238, 90, 36, 0.2);
-    border-radius: 10px;
+    background: var(--surface-1, oklch(12% 0.045 245));
+    border: 1px solid oklch(78% 0.18 195 / 0.18);
+    border-radius: var(--radius-sm, 6px);
     padding: 0.9rem 1rem;
+    transition: border-color 0.2s ease, transform 0.25s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+.user-worker-card:hover {
+    border-color: oklch(78% 0.18 195 / 0.4);
+    transform: translateY(-2px);
 }
 
 .user-worker-title {
-    color: #f3f5f7;
+    color: var(--text-1, #f0f0f0);
     font-size: 0.95rem;
     font-weight: 700;
     margin-bottom: 0.65rem;
@@ -199,7 +226,7 @@
     justify-content: space-between;
     gap: 0.65rem;
     padding: 0.35rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid var(--border, oklch(28% 0.03 245));
 }
 
 .user-worker-row:first-of-type {
@@ -207,20 +234,22 @@
 }
 
 .user-worker-label {
-    color: #9ca3af;
+    color: var(--text-2, #9ca3af);
     font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
 
 .user-worker-value {
-    color: #f0f0f0;
+    color: var(--text-1, #f0f0f0);
     font-size: 0.82rem;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-variant-numeric: tabular-nums;
     text-align: right;
     word-break: break-all;
 }
 
+/* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 768px) {
     .pool-meta {
         padding: 1rem;

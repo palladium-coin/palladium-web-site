@@ -1,16 +1,16 @@
-/* ===================================
-   SIMPLE MODERN FOOTER STYLES
-   =================================== */
+/* ============================================================
+   FOOTER — Design system tokens, brand orange accents
+   ============================================================ */
 
-/* Sticky footer — keeps footer at the bottom on short pages */
+/* ── Sticky footer layout ─────────────────────────────────── */
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* Main content section expands to fill available space */
-body > section {
+body > section,
+body > main {
     flex: 1 0 auto;
 }
 
@@ -18,47 +18,51 @@ body > section {
     flex-shrink: 0;
 }
 
-/* Main Footer Container */
+/* ── Main footer container ────────────────────────────────── */
 .modern-footer {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    color: #ffffff;
-    padding: 40px 0 20px 0;
-    margin-top: 60px;
+    background: var(--surface-1, oklch(12% 0.045 245));
+    border-top: 1px solid var(--border, oklch(28% 0.03 245));
+    color: var(--text-1, #f0f0f0);
+    padding: 3rem 0 1.5rem;
+    margin-top: 4rem;
 }
 
-/* Footer Content Grid */
+/* ── Footer content grid ──────────────────────────────────── */
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
+    gap: 2rem;
     max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 20px;
-    margin-bottom: 30px;
+    margin: 0 auto 2rem;
+    padding: 0 1.5rem;
 }
 
-/* Footer Sections */
+/* ── Footer section headings ──────────────────────────────── */
 .footer-section h3 {
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 700;
-    margin-bottom: 15px;
-    color: #4a9eff;
+    margin-bottom: 1rem;
+    color: var(--brand, #00C8C8);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
 }
 
 .footer-section h4 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 15px;
-    color: #ffffff;
+    margin-bottom: 1rem;
+    color: var(--text-1, #f0f0f0);
 }
 
 .footer-section p {
-    color: #b8b8b8;
+    color: var(--text-2, #9ca3af);
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.6;
+    font-size: 0.9rem;
 }
 
-/* Footer Links */
+/* ── Footer links ─────────────────────────────────────────── */
 .footer-links {
     list-style: none;
     padding: 0;
@@ -66,36 +70,39 @@ body > section {
 }
 
 .footer-links li {
-    margin-bottom: 8px;
+    margin-bottom: 0.6rem;
 }
 
 .footer-links a {
-    color: #b8b8b8;
+    color: var(--text-2, #9ca3af);
     text-decoration: none;
-    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+    display: inline-block;
 }
 
 .footer-links a:hover {
-    color: #4a9eff;
+    color: var(--brand, #00C8C8);
+    padding-left: 0.25rem;
 }
 
-/* Contact Links */
+/* ── Generic links inside footer sections ─────────────────── */
 .footer-section a {
-    color: #b8b8b8;
+    color: var(--text-2, #9ca3af);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
 }
 
 .footer-section a:hover {
-    color: #4a9eff;
+    color: var(--brand, #00C8C8);
 }
 
-/* Social Media Icons */
+/* ── Social icons ─────────────────────────────────────────── */
 .social-icons {
     display: flex;
-    gap: 15px;
+    gap: 0.75rem;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
 .social-icon {
@@ -104,88 +111,84 @@ body > section {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: #333;
+    background: var(--surface-2, oklch(16% 0.04 245));
+    border: 1px solid var(--border, oklch(28% 0.03 245));
     border-radius: 50%;
-    color: #b8b8b8;
+    color: var(--text-2, #9ca3af);
     text-decoration: none;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    transition:
+        color      0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform  0.25s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
 .social-icon:hover {
-    color: white;
-    transform: translateY(-2px);
+    color: var(--brand, #00C8C8);
+    background: var(--surface-3, oklch(22% 0.035 245));
+    border-color: var(--brand, #00C8C8);
+    transform: translateY(-3px);
 }
 
-.social-icon.twitter:hover {
-    background: #1da1f2;
-}
-
-.social-icon.discord:hover {
-    background: #7289da;
-}
-
-.social-icon.github:hover {
-    background: #333;
-}
-
-/* Footer Divider */
+/* ── Footer divider ───────────────────────────────────────── */
 .footer-divider {
     height: 1px;
-    background: #333;
-    margin: 0 20px 20px 20px;
+    background: var(--border, oklch(28% 0.03 245));
+    margin: 0 1.5rem 1.5rem;
 }
 
-/* Footer Bottom */
+/* ── Footer bottom bar ────────────────────────────────────── */
 .footer-bottom {
     text-align: center;
-    padding: 0 20px;
+    padding: 0 1.5rem;
 }
 
 .footer-bottom p {
     margin: 0;
-    color: #888;
-    font-size: 0.9rem;
+    color: var(--text-3, oklch(48% 0.012 230));
+    font-size: 0.85rem;
 }
 
 .footer-bottom a {
-    color: #4a9eff;
+    color: var(--brand, #00C8C8);
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .footer-bottom a:hover {
-    text-decoration: underline;
+    color: var(--brand-light, oklch(88% 0.12 190));
 }
 
-/* Responsive Design */
+/* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 768px) {
     .modern-footer {
-        padding: 30px 0 15px 0;
-        margin-top: 40px;
+        padding: 2rem 0 1rem;
+        margin-top: 2.5rem;
     }
-    
+
     .footer-content {
         grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 0 15px;
+        gap: 1.5rem;
+        padding: 0 1rem;
     }
-    
+
     .social-icons {
-        gap: 12px;
+        gap: 0.6rem;
     }
-    
+
     .social-icon {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
     }
 }
 
-/* Legacy Footer Compatibility */
+/* ── Legacy footer compatibility ──────────────────────────── */
 .footer {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    padding: 40px 0;
+    background: var(--surface-1, oklch(12% 0.045 245));
+    color: var(--text-1, #f0f0f0);
+    padding: 2.5rem 0;
 }
 
 .footercontent ul {
@@ -194,22 +197,22 @@ body > section {
 }
 
 .footercontent ul li {
-    margin-bottom: 10px;
+    margin-bottom: 0.6rem;
 }
 
 .footercontent ul li a {
-    color: #b8b8b8;
+    color: var(--text-2, #9ca3af);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
 }
 
 .footercontent ul li a:hover {
-    color: #4a9eff;
+    color: var(--brand, #00C8C8);
 }
 
 #copyright {
     text-align: center;
-    padding: 20px 0;
-    border-top: 1px solid #333;
-    color: #888;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--border, oklch(28% 0.03 245));
+    color: var(--text-3, oklch(48% 0.012 230));
 }
