@@ -1,261 +1,201 @@
 # Palladium Website
 
-Updated and improved version of the Palladium website.
+Static website for Palladium, a decentralized Proof of Work cryptocurrency.
+Built with vanilla HTML, CSS, and JavaScript.
 
-## 📋 Description
+## Architecture
 
-This is a static website for Palladium, a decentralized Proof of Work cryptocurrency. The site is built with vanilla HTML, CSS, and JavaScript and is served using Caddy web server in a Docker container.
-
-## 🚀 Local Development
-
-### Prerequisites
-
-Before getting started, make sure you have installed:
-
-**For Docker-based development:**
-- [Docker](https://www.docker.com/get-started) (version 20.10 or higher)
-- [Docker Compose](https://docs.docker.com/compose/install/) (usually included with Docker Desktop)
-
-**For Python-based development:**
-- [Python](https://www.python.org/downloads/) (version 3.6 or higher recommended)
-
-**General:**
-- A code editor (VS Code, Sublime Text, etc.)
-
-### Step-by-Step Guide
-
-#### 1. Clone the Repository
-
-```bash
-git clone <repository-url>
-cd palladium-web-site
+```
+Browser
+  │
+  ├─ static files ──► Caddy (prod) / live-server (dev)
+  │                        serving public/
+  │
+  └─ /api/* ──────────────► palladium-stack (Flask on port 8080)
+                             API key injected by Caddy server-side
 ```
 
-#### 2. Start the Development Server
+In **development**, `public/js/config.js` is generated from `.env` so the browser knows where to reach the API.
+In **production**, Caddy serves the site and proxies `/api/*` — `API_BASE_URL` is not needed.
 
-There are three ways to start the local server:
+Pool data (`public/pool-data/`) is:
+- **Dev**: synced from `POOL_LOG_DIR` every 30 seconds by a background script (optional)
+- **Prod**: mounted read-only from `POOL_LOG_DIR` directly into the container
 
-##### Option A: With Docker Compose (Recommended)
+---
 
-```bash
-# Build and start the container
-docker-compose up --build
+## Prerequisites
 
-# Or run in background
-docker-compose up -d --build
-```
+| | Dev | Prod |
+|---|---|---|
+| Node.js + npm | required | not needed |
+| Docker + Docker Compose | not needed | required |
+| palladium-stack running | for API calls | must be on `palladium-net` network |
 
-The site will be available at:
-- **HTTP**: http://localhost
-- **HTTPS**: https://localhost (with self-signed certificate)
+---
 
-##### Option B: Docker Only
+## Development
 
-```bash
-# Build the image
-docker build -t palladium-web .
-
-# Start the container
-docker run -p 80:80 -p 443:443 palladium-web
-```
-
-##### Option C: Python HTTP Server (Simple Development)
-
-For quick development without Docker, you can use Python's built-in HTTP server:
+### 1. Install dependencies
 
 ```bash
-# Python 3 (recommended)
-python -m http.server 8000
+npm install
 ```
 
-The site will be available at:
-- **HTTP**: http://localhost:8000
+### 2. Configure environment
 
-**Note**: This method serves static files only and doesn't include HTTPS or the advanced features provided by Caddy (like security headers, compression, etc.).
+```bash
+cp .env.example .env
+```
 
-#### 3. Development and File Modification
+Edit `.env`:
 
-1. **Edit files**: You can modify any HTML, CSS, or JS file in the project directory
+| Variable | Value |
+|---|---|
+| `API_BASE_URL` | `http://localhost:8080` (palladium-stack running locally) |
+| `API_KEY` | must match `API_KEY` in palladium-stack's `.env` |
+| `POOL_LOG_DIR` | path to ckpool logs — leave **empty** to disable pool data |
 
-2. **Reload changes**:
+### 3. Start the dev server
 
-   **For Docker-based development:**
-   ```bash
-   # Stop the container
-   docker-compose down
-   
-   # Rebuild and restart
-   docker-compose up --build
-   ```
+```bash
+npm run dev
+```
 
-   **For Python HTTP server:**
-   ```bash
-   # Simply refresh your browser - changes are reflected immediately
-   # No server restart needed for static file changes
-   ```
+This will:
+1. Generate `public/js/config.js` from `.env`
+2. If `POOL_LOG_DIR` is set: sync pool logs to `public/pool-data/` once, then every 30s
+3. Start [live-server](https://github.com/tapio/live-server) on **http://localhost:3000** with auto-reload
 
-#### 4. Project Structure
+### 4. Pool data (optional)
+
+To test pool dashboard pages with real data, point `POOL_LOG_DIR` to the ckpool log directory:
+
+```bash
+# in .env
+POOL_LOG_DIR=/home/user/palladium-stack/logs
+```
+
+If `public/pool-data/` is corrupted or contains recursive junk, clean it first:
+
+```bash
+rm -rf public/pool-data
+```
+
+### 5. Project structure
 
 ```
 palladium-web-site/
-├── css/                    # Stylesheets
-│   ├── index.css          # Homepage styles
-│   ├── navbar.css         # Navigation styles
+├── public/                  # Static site root (served as-is)
+│   ├── css/                 # Stylesheets
+│   ├── js/
+│   │   ├── config.js        # Generated at runtime — do not edit manually
+│   │   └── ...
+│   ├── pool-data/           # Pool log data (synced in dev, mounted in prod)
+│   ├── index.html
 │   └── ...
-├── js/                     # JavaScript files
-│   ├── index.js           # Homepage scripts
-│   ├── common.js          # Common functions
-│   └── ...
-├── icons/                  # Project icons
-├── favicons/              # Favicon and app icons
-├── index.html             # Homepage
-├── donate.html            # Donations page
-├── mining.html            # Mining page
-├── roadmap.html           # Project roadmap
-├── get_started.html       # Getting started guide
-├── Dockerfile             # Docker configuration
-├── docker-compose.yml     # Container orchestration
-└── Caddyfile             # Caddy server configuration
+├── scripts/
+│   ├── dev.sh               # Dev server orchestration
+│   ├── sync-pool-data.sh    # Pool log sync (dev only)
+│   └── generate-config.js   # Generates public/js/config.js from .env
+├── .env                     # Local config — not in git
+├── .env.example             # Template
+├── Caddyfile                # Production web server config
+├── docker-compose.yml       # Production container orchestration
+└── package.json
 ```
 
-#### 5. Useful Development Commands
+### Available npm scripts
 
-**For Docker-based development:**
+| Script | Description |
+|---|---|
+| `npm run dev` | Start full dev environment (config gen + pool sync + live-server) |
+| `npm run generate-config` | Regenerate `public/js/config.js` from `.env` |
+| `npm run sync-pool-data` | Sync pool logs once |
+| `npm run sync-pool-data:watch` | Sync pool logs every 30s (foreground) |
+
+---
+
+## Production Deployment
+
+### Prerequisites
+
+- Docker and Docker Compose installed on the server
+- Ports **80** and **443** open and reachable from the internet
+- A domain pointing to the server
+- **palladium-stack** already running on the same host, connected to the `palladium-net` Docker network
+
+### 1. Configure environment
+
 ```bash
-# View container logs
+cp .env.example .env
+```
+
+Edit `.env`:
+
+| Variable | Value |
+|---|---|
+| `CADDY_HOST` | your domain, e.g. `palladiumblockchain.net` |
+| `API_KEY` | must match `API_KEY` in palladium-stack's `.env` |
+| `POOL_LOG_DIR` | **required** — absolute path to ckpool logs on the host |
+
+`API_BASE_URL` is not needed in production (leave empty).
+
+### 2. Create the shared Docker network
+
+Only needed once. This network is shared between this container and palladium-stack:
+
+```bash
+docker network create palladium-net
+```
+
+### 3. Start the container
+
+```bash
+docker-compose up -d --build
+```
+
+Caddy will automatically obtain and renew HTTPS certificates via Let's Encrypt.
+
+### 4. What Caddy handles in production
+
+| Feature | Details |
+|---|---|
+| HTTPS | Auto via Let's Encrypt |
+| `www` redirect | `www.CADDY_HOST` → `CADDY_HOST` |
+| API proxy | `/api/*` → `palladium-dashboard:8080`, injects `X-API-Key` header |
+| Static files | Served from `public/` |
+| Pool data | `POOL_LOG_DIR` mounted read-only at `/srv/pool-data` — no sync script |
+| Security headers | HSTS, X-Frame-Options, X-Content-Type-Options, etc. |
+| Compression | gzip + zstd |
+
+### 5. Useful commands
+
+```bash
+# View logs
 docker-compose logs -f
 
-# Stop all services
+# Stop
 docker-compose down
 
-# Remove containers and volumes
-docker-compose down -v
-
-# Access running container
-docker-compose exec web sh
+# Rebuild after code changes
+docker-compose up -d --build
 
 # Check container status
 docker-compose ps
 ```
 
-**For Python HTTP server:**
-```bash
-# Start server on different port
-python -m http.server 3000
+---
 
-# Start server and bind to specific address
-python -m http.server 8000 --bind 127.0.0.1
+## Dev vs Prod: key differences
 
-# Check if Python is installed and version
-python --version
-
-# Stop server: Ctrl+C in the terminal
-```
-
-#### 6. Configuration Modification
-
-- **Server**: Modify `Caddyfile` to change server configuration
-- **Domains**: To test with custom domains, add entries to the system hosts file
-- **Ports**: Modify `docker-compose.yml` to change exposed ports
-
-#### 7. Debug and Troubleshooting
-
-**Docker-related issues:**
-
-**Issue**: Site doesn't load
-```bash
-# Check if container is running
-docker ps
-
-# Check logs for errors
-docker-compose logs web
-```
-
-**Issue**: Changes not visible
-```bash
-# Rebuild image forcing cache refresh
-docker-compose build --no-cache
-docker-compose up
-```
-
-**Issue**: Permission errors (Linux/Mac)
-```bash
-# Ensure Docker has necessary permissions
-sudo chown -R $USER:$USER .
-```
-
-**Python-related issues:**
-
-**Issue**: Python command not found
-```bash
-# Try different Python commands
-python3 -m http.server 8000
-py -m http.server 8000
-
-# Check Python installation
-python --version
-python3 --version
-```
-
-**Issue**: Port already in use
-```bash
-# Use a different port
-python -m http.server 8080
-
-# Or find and kill process using the port (Windows)
-netstat -ano | findstr :8000
-taskkill /PID <process_id> /F
-```
-
-**Issue**: Permission denied on port 80/443
-```bash
-# Use ports above 1024 (no admin rights needed)
-python -m http.server 8000
-```
-
-### 🔧 Advanced Configuration
-
-#### Development with Live Reload
-
-For a better development experience with automatic reloading, you can mount local files:
-
-```yaml
-# Add to docker-compose.yml under volumes:
-- .:/srv:ro  # Mount current directory as read-only
-```
-
-#### Environment Variables
-
-You can customize behavior using environment variables:
-
-```bash
-# Set custom domain
-export CADDY_HOST=localhost
-
-# Start with custom configuration
-docker-compose up
-```
-
-## 🌐 Production Deployment
-
-For production deployment, the site is configured to:
-- Serve on `palladiumblockchain.net`
-- Automatic redirect from `www.palladiumblockchain.net`
-- Automatic SSL certificates via Let's Encrypt
-- Configured security headers
-
-## 📝 Developer Notes
-
-- The site is completely static, requires no database
-- Uses Caddy to serve files and handle HTTPS
-- File changes require container rebuild
-- For optimal production performance, consider using a CDN
-
-## 🤝 Contributing
-
-1. Fork the project
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Test changes locally following this guide
-4. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-5. Push to the branch (`git push origin feature/AmazingFeature`)
-6. Open a Pull Request
+| | Dev | Prod |
+|---|---|---|
+| Server | live-server (Node.js) | Caddy (Docker) |
+| Port | 3000 | 80 / 443 |
+| HTTPS | No | Yes (auto Let's Encrypt) |
+| Live reload | Yes | No |
+| `API_BASE_URL` | `http://localhost:8080` | empty (Caddy proxies) |
+| `POOL_LOG_DIR` | optional | required |
+| Pool data source | synced by script every 30s | volume mount (read-only) |
+| `public/js/config.js` | generated by `dev.sh` | generated by Dockerfile at build time |

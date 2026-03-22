@@ -67,8 +67,8 @@ POOL_LOG_DIR="${POOL_LOG_DIR%\'}"
 POOL_LOG_DIR="${POOL_LOG_DIR#\'}"
 
 if [[ -z "$POOL_LOG_DIR" ]]; then
-  echo "[sync-pool-data] POOL_LOG_DIR is empty in $ENV_FILE" >&2
-  exit 1
+  echo "[sync-pool-data] POOL_LOG_DIR not set — skipping pool sync"
+  exit 0
 fi
 
 if [[ ! -d "$POOL_LOG_DIR" ]]; then
