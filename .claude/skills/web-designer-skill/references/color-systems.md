@@ -1,164 +1,298 @@
-# Color Systems — Guida Avanzata
+# Color Systems — Advanced Reference
 
-## Principi Fondamentali
+## Core Principle: Never Use Pure Colors
 
-### Non usare mai colori puri
 ```css
-/* ❌ Evita */
+/* ❌ Avoid */
 --bg: #ffffff;
 --text: #000000;
 
-/* ✅ Usa near-white e near-black */
---bg: #f8f7f5;        /* warm off-white */
---bg: #0d0d12;        /* cool near-black */
---text: #1a1a2e;      /* warm dark */
---text: #e8e8f0;      /* cool light */
+/* ✅ Use perceptually nuanced values */
+--bg: #f8f7f5;        /* warm off-white — feels lighter */
+--bg: #0d0d12;        /* cool near-black — prevents eye strain */
+--text: #1a1a2e;      /* warm dark with slight hue */
+--text: #e8e8f0;      /* cool light — easier on dark backgrounds */
 ```
 
-## Palette Generation Method
+---
 
-### Metodo HSL per palette coerenti
+## Color Space Hierarchy
+
+Choose the right color space for the task:
+
+| Space | Use for | Why |
+|---|---|---|
+| `oklch` | Design tokens, palette generation | Perceptually uniform L — same L = same perceived brightness across hues |
+| `color-mix()` in oklch | Tints, shades, transparent overlays | Uniform mixing — no muddy gray zones |
+| `hsl` | Legacy support, quick prototyping | Intuitive but non-uniform lightness |
+| `srgb` | Alpha blending, browser default | Fine for rgba() overlay patterns |
+
+---
+
+## OKLCH Palette Generation
+
+OKLCH is superior to HSL for palettes: identical `L` values produce identical perceived brightness across all hues.
+
 ```css
-/* Definisci hue base, poi crea varianti */
+/* Full brand scale — change only the hue number for a completely different palette */
+/* Hue reference: 0/360=red  30=orange  60=yellow  120=green  185=teal  250=blue  290=violet */
 :root {
-  --hue: 240;          /* blue-violet */
-  --sat: 70%;
-
-  --color-50:  hsl(var(--hue), 60%, 97%);
-  --color-100: hsl(var(--hue), 55%, 94%);
-  --color-200: hsl(var(--hue), 50%, 86%);
-  --color-300: hsl(var(--hue), var(--sat), 74%);
-  --color-400: hsl(var(--hue), var(--sat), 62%);
-  --color-500: hsl(var(--hue), var(--sat), 50%);  /* primary */
-  --color-600: hsl(var(--hue), var(--sat), 40%);
-  --color-700: hsl(var(--hue), var(--sat), 30%);
-  --color-800: hsl(var(--hue), var(--sat), 20%);
-  --color-900: hsl(var(--hue), 50%, 12%);
-  --color-950: hsl(var(--hue), 40%, 7%);
+  --brand-50:   oklch(96% 0.04  30);   /* near-white tinted */
+  --brand-100:  oklch(92% 0.08  30);
+  --brand-200:  oklch(85% 0.13  30);
+  --brand-300:  oklch(75% 0.17  30);
+  --brand-400:  oklch(68% 0.20  30);
+  --brand-500:  oklch(62% 0.22  30);   /* BASE — approx #EE5A24 orange */
+  --brand-600:  oklch(54% 0.20  30);
+  --brand-700:  oklch(45% 0.17  30);
+  --brand-800:  oklch(36% 0.13  30);
+  --brand-900:  oklch(26% 0.08  30);
+  --brand-950:  oklch(16% 0.04  30);
 }
 ```
 
-## Palette Collaudate per Contesti
+---
 
-### Dark Luxury (SaaS, Tech, Portfolio)
+## Proven Palettes by Context
+
+### Dark Tech / Crypto (Deep Navy + Cyan)
 ```css
 :root {
-  --surface-base:    #08080e;
-  --surface-raised:  #0f0f1a;
-  --surface-overlay: #1a1a28;
-  --border:          rgba(255, 255, 255, 0.08);
-  --border-strong:   rgba(255, 255, 255, 0.15);
-  --primary:         #7c6ff7;      /* soft violet */
-  --primary-glow:    rgba(124, 111, 247, 0.3);
-  --accent:          #f7936f;      /* warm coral */
-  --text:            #e8e8f5;
-  --text-muted:      #7878a0;
-  --text-subtle:     #4a4a6a;
+  --bg:          oklch(9%  0.04  245);   /* deep cool near-black */
+  --surface-1:   oklch(12% 0.045 245);   /* card base */
+  --surface-2:   oklch(16% 0.04  245);   /* elevated card */
+  --surface-3:   oklch(22% 0.035 245);   /* hover / active */
+  --border:      oklch(28% 0.03  245);   /* subtle dividers */
+  --border-strong: oklch(36% 0.03 245);
+  --text-1:      oklch(95% 0.006 240);   /* primary text */
+  --text-2:      oklch(68% 0.012 230);   /* muted text */
+  --text-3:      oklch(48% 0.012 230);   /* subtle text */
+  --brand:       oklch(78% 0.18  195);   /* cyan */
+  --brand-dark:  oklch(62% 0.18  195);
+  --brand-light: oklch(88% 0.12  190);
 }
 ```
 
-### Minimal Light (Agency, Portfolio, Corporate)
+### Dark Luxury (SaaS, Fintech, Portfolio)
 ```css
 :root {
-  --surface-base:    #fafaf8;
-  --surface-raised:  #f3f2ef;
-  --surface-overlay: #eae9e4;
-  --border:          rgba(0, 0, 0, 0.07);
-  --border-strong:   rgba(0, 0, 0, 0.14);
-  --primary:         #1a1a2e;      /* deep navy */
-  --accent:          #d4541f;      /* terracotta */
-  --text:            #1a1a2e;
-  --text-muted:      #6b6b85;
-  --text-subtle:     #a0a0b8;
+  --surface-base:    oklch(8%  0.015 250);
+  --surface-raised:  oklch(11% 0.015 250);
+  --surface-overlay: oklch(16% 0.015 250);
+  --border:          oklch(100% 0 0 / 0.08);
+  --border-strong:   oklch(100% 0 0 / 0.15);
+  --primary:         oklch(68% 0.20 280);   /* soft violet */
+  --accent:          oklch(72% 0.18 35);    /* warm coral */
+  --text:            oklch(92% 0.005 250);
+  --text-muted:      oklch(55% 0.012 240);
+  --text-subtle:     oklch(38% 0.012 240);
+}
+```
+
+### Minimal Light (Agency, Corporate)
+```css
+:root {
+  --surface-base:    oklch(98% 0.003 80);   /* warm off-white */
+  --surface-raised:  oklch(94% 0.006 80);
+  --surface-overlay: oklch(89% 0.008 80);
+  --border:          oklch(0% 0 0 / 0.07);
+  --border-strong:   oklch(0% 0 0 / 0.14);
+  --primary:         oklch(22% 0.015 250);  /* deep navy */
+  --accent:          oklch(52% 0.20 35);    /* terracotta */
+  --text:            oklch(22% 0.015 250);
+  --text-muted:      oklch(50% 0.012 240);
 }
 ```
 
 ### Aurora/Vibrant (Creative, Music, Art)
 ```css
 :root {
-  --surface-base:    #060610;
-  --primary:         #00d4ff;      /* electric cyan */
-  --secondary:       #ff006e;      /* hot pink */
-  --tertiary:        #8b5cf6;      /* violet */
-  --accent:          #ffd60a;      /* bright yellow */
-  
-  /* Mesh gradient background */
-  --gradient-mesh: 
-    radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(255, 0, 110, 0.15) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 60%);
+  --surface-base:    oklch(7% 0.02 250);
+  --primary:         oklch(78% 0.20 200);   /* electric cyan */
+  --secondary:       oklch(65% 0.28 340);   /* hot pink */
+  --tertiary:        oklch(60% 0.22 280);   /* violet */
+  --accent:          oklch(85% 0.20 85);    /* bright yellow */
+
+  --gradient-mesh:
+    radial-gradient(ellipse at 20% 50%, oklch(78% 0.20 200 / 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, oklch(65% 0.28 340 / 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 80%, oklch(60% 0.22 280 / 0.15) 0%, transparent 60%);
 }
 ```
 
 ### Warm Editorial (Blog, Publisher, Luxury Brand)
 ```css
 :root {
-  --surface-base:    #fdf6ec;
-  --surface-raised:  #f5ead6;
-  --primary:         #2d1b0e;      /* espresso */
-  --accent:          #c8902a;      /* amber gold */
-  --accent-2:        #8b3a3a;      /* burgundy */
-  --text:            #2d1b0e;
-  --text-muted:      #7a5c3e;
+  --surface-base:    oklch(97% 0.008 75);   /* warm parchment */
+  --surface-raised:  oklch(92% 0.012 75);
+  --primary:         oklch(18% 0.04 60);    /* espresso */
+  --accent:          oklch(62% 0.18 75);    /* amber gold */
+  --accent-2:        oklch(42% 0.18 20);    /* burgundy */
+  --text:            oklch(18% 0.04 60);
+  --text-muted:      oklch(48% 0.025 65);
 }
 ```
+
+---
+
+## CSS Color Functions — Modern Toolkit
+
+### `color-mix()` — Automated Tints and Shades
+
+Never manually calculate color variants. Let the browser do it:
+
+```css
+:root {
+  --brand: oklch(62% 0.22 30);
+
+  /* Tints (toward white) */
+  --brand-100: color-mix(in oklch, var(--brand) 10%, white);
+  --brand-200: color-mix(in oklch, var(--brand) 20%, white);
+  --brand-300: color-mix(in oklch, var(--brand) 40%, white);
+
+  /* Shades (toward black) */
+  --brand-700: color-mix(in oklch, var(--brand) 70%, black);
+  --brand-800: color-mix(in oklch, var(--brand) 50%, black);
+  --brand-900: color-mix(in oklch, var(--brand) 25%, black);
+
+  /* Transparent overlays */
+  --brand-glass:  color-mix(in srgb, var(--brand) 12%, transparent);
+  --brand-subtle: color-mix(in srgb, var(--brand) 18%, transparent);
+}
+```
+
+**Why `oklch` in color-mix?** Produces perceptually uniform blends — no desaturated gray zones you get in srgb.
+
+### Relative Color Syntax — Derive Variants from Base
+
+```css
+:root {
+  --brand: hsl(18 85% 52%);
+
+  /* Dark: same hue/sat, lightness -15% */
+  --brand-dark:  hsl(from var(--brand) h s calc(l - 15%));
+
+  /* Muted: same hue, reduced saturation */
+  --brand-muted: hsl(from var(--brand) h calc(s - 30%) l);
+
+  /* Complementary: hue rotated 180° */
+  --brand-comp:  hsl(from var(--brand) calc(h + 180) s l);
+
+  /* Analogous: hue rotated 30° */
+  --brand-warm:  hsl(from var(--brand) calc(h - 30) s l);
+}
+```
+
+---
+
+## Semantic Color System
+
+Map functional meaning onto palette values — keep design decisions in one place:
+
+```css
+:root {
+  /* Status colors — WCAG AA on dark background */
+  --color-success:  oklch(65% 0.20 145);   /* green */
+  --color-warning:  oklch(78% 0.20 80);    /* amber */
+  --color-error:    oklch(60% 0.22 20);    /* red */
+  --color-info:     oklch(68% 0.18 240);   /* blue */
+
+  /* Transparent status fills (for badges, alerts) */
+  --color-success-bg: oklch(65% 0.20 145 / 0.12);
+  --color-warning-bg: oklch(78% 0.20 80  / 0.12);
+  --color-error-bg:   oklch(60% 0.22 20  / 0.12);
+  --color-info-bg:    oklch(68% 0.18 240 / 0.12);
+}
+```
+
+---
+
+## Contrast Ratios — WCAG Requirements
+
+```css
+/* Test your color combinations */
+/* WCAG AA: 4.5:1 for normal text, 3:1 for large text (18px+ or 14px bold+) */
+/* WCAG AAA: 7:1 for normal text */
+
+/* oklch(95% 0.006 240) on oklch(9% 0.04 245) ≈ 17:1 — AAA */
+/* oklch(68% 0.012 230) on oklch(9% 0.04 245) ≈ 6:1 — AA */
+/* oklch(48% 0.012 230) on oklch(9% 0.04 245) ≈ 3.5:1 — AA large only */
+
+/* Chroma (saturation) drops with lightness — at L=85%+, chroma max ≈ 0.12-0.15 */
+/* At L=50%, you can push chroma to 0.25-0.30 */
+```
+
+---
 
 ## Glassmorphism Recipe
+
+Works **only** when there is texture, gradient, or image behind it — never on solid flat backgrounds.
+
 ```css
-.glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+/* Depth 1 — Card backgrounds, secondary elements */
+.glass-1 {
+  background: oklch(100% 0 0 / 0.04);
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+  border: 1px solid oklch(100% 0 0 / 0.08);
+  border-radius: var(--radius-lg);
 }
 
-/* Light glassmorphism */
-.glass-light {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+/* Depth 2 — Main panels, overlays */
+.glass-2 {
+  background: oklch(100% 0 0 / 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid oklch(100% 0 0 / 0.14);
+  box-shadow: 0 8px 32px oklch(0% 0 0 / 0.25);
+  border-radius: var(--radius-lg);
+}
+
+/* Depth 3 — Tooltips, popovers, foreground elements */
+.glass-3 {
+  background: oklch(100% 0 0 / 0.15);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid oklch(100% 0 0 / 0.2);
+  box-shadow: 0 16px 48px oklch(0% 0 0 / 0.35);
+  border-radius: var(--radius-md);
+}
+
+/* Dark glassmorphism variant — for light backgrounds */
+.glass-dark {
+  background: oklch(0% 0 0 / 0.06);
+  backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid oklch(0% 0 0 / 0.1);
 }
 ```
 
-## Gradienti Moderni (non cliché)
-```css
-/* ✅ Gradienti sofisticati */
+---
 
-/* Gradient con hue shift */
-.gradient-shift {
+## Gradient Patterns — Sophisticated, Not Clichéd
+
+```css
+/* ✅ Sophisticated gradients */
+
+/* Hue-shifted gradient — feels organic, not flat */
+.gradient-hue-shift {
   background: linear-gradient(
     135deg,
-    hsl(240, 70%, 55%) 0%,
-    hsl(280, 65%, 50%) 50%,
-    hsl(320, 70%, 55%) 100%
+    oklch(62% 0.22 30)  0%,      /* brand orange */
+    oklch(60% 0.22 340) 50%,     /* shifted to magenta */
+    oklch(58% 0.22 280) 100%     /* to violet */
   );
 }
 
-/* Gradient mesh (usa come background layer) */
+/* Mesh gradient — layered radial gradients */
 .gradient-mesh {
   background:
-    radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.4) 0%, transparent 50%),
-    radial-gradient(circle at 70% 80%, rgba(244, 114, 182, 0.4) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.2) 0%, transparent 70%),
-    #0a0a14;
+    radial-gradient(circle at 30% 20%, oklch(62% 0.22 30  / 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, oklch(65% 0.20 340 / 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, oklch(60% 0.18 200 / 0.2) 0%, transparent 70%),
+    var(--bg);
 }
 
-/* Conic gradient per accenti */
-.gradient-conic {
-  background: conic-gradient(
-    from 180deg at 50% 50%,
-    #7c3aed 0deg,
-    #2563eb 120deg,
-    #059669 240deg,
-    #7c3aed 360deg
-  );
-}
-
-/* ❌ Gradienti da non usare MAI */
+/* ❌ Overused gradients — never use these */
 /* linear-gradient(135deg, #667eea 0%, #764ba2 100%) */
 /* linear-gradient(to right, #f093fb, #f5576c) */
 /* linear-gradient(to right, #4facfe 0%, #00f2fe 100%) */
@@ -166,86 +300,9 @@
 
 ---
 
-## Tecniche Colore Moderne (CSS Level 4-5)
-
-### `color-mix()` — Tints e shades automatici
-
-Non calcolare mai manualmente le varianti di un colore. Usare `color-mix()`:
+## Aurora / Animated Mesh Gradient
 
 ```css
-:root {
-  --brand: oklch(62% 0.22 30);   /* il tuo colore base */
-
-  /* Tints (verso bianco) */
-  --brand-100: color-mix(in oklch, var(--brand) 10%, white);
-  --brand-200: color-mix(in oklch, var(--brand) 20%, white);
-  --brand-300: color-mix(in oklch, var(--brand) 40%, white);
-
-  /* Shades (verso nero) */
-  --brand-700: color-mix(in oklch, var(--brand) 70%, black);
-  --brand-800: color-mix(in oklch, var(--brand) 50%, black);
-  --brand-900: color-mix(in oklch, var(--brand) 25%, black);
-
-  /* Semi-trasparenti */
-  --brand-glass:  color-mix(in srgb, var(--brand) 12%, transparent);
-  --brand-subtle: color-mix(in srgb, var(--brand) 18%, transparent);
-}
-```
-
-**Perché `oklch`?** Produce mix percettivamente uniformi — la luminosità rimane coerente lungo tutta la scala, senza le zone di grigio spento che si ottengono in `srgb`.
-
-### Relative Color Syntax
-
-Derivi varianti dal token base senza calcoli manuali:
-
-```css
-:root {
-  --brand: hsl(18 85% 52%);
-
-  /* Variante scura: stessa hue/sat, lightness -15% */
-  --brand-dark:  hsl(from var(--brand) h s calc(l - 15%));
-
-  /* Variante muted: stessa hue, saturazione ridotta */
-  --brand-muted: hsl(from var(--brand) h calc(s - 30%) l);
-
-  /* Complementare: hue ruotata di 180° */
-  --brand-comp:  hsl(from var(--brand) calc(h + 180) s l);
-
-  /* Analogo: hue ruotata di 30° */
-  --brand-warm:  hsl(from var(--brand) calc(h - 30) s l);
-}
-```
-
-### Palette OKLCH — Luminosità percettivamente uniforme
-
-OKLCH è superiore a HSL per palette: lo stesso valore di `l` produce la stessa luminosità percepita tra hue diverse.
-
-```css
-/* Scale OKLCH per brand arancione (hue ≈ 30) */
-:root {
-  --brand-50:   oklch(96% 0.04  30);   /* quasi bianco tintato */
-  --brand-100:  oklch(92% 0.08  30);
-  --brand-200:  oklch(85% 0.13  30);
-  --brand-300:  oklch(75% 0.17  30);
-  --brand-400:  oklch(68% 0.20  30);
-  --brand-500:  oklch(62% 0.22  30);   /* BASE — es. #EE5A24 */
-  --brand-600:  oklch(54% 0.20  30);
-  --brand-700:  oklch(45% 0.17  30);
-  --brand-800:  oklch(36% 0.13  30);
-  --brand-900:  oklch(26% 0.08  30);
-  --brand-950:  oklch(16% 0.04  30);
-}
-
-/* Cambia solo hue per una palette completamente diversa */
-/* Blu:     hue 250 | Viola:  hue 290 | Verde: hue 145 | Teal: hue 185 */
-```
-
----
-
-## Aurora / Mesh Gradient — Pattern CSS
-
-```css
-/* Aurora background a 3 layer — regola hue in base al brand */
 .aurora-bg {
   background:
     radial-gradient(ellipse 80% 50% at 20% 40%,
@@ -272,12 +329,11 @@ OKLCH è superiore a HSL per palette: lo stesso valore di `l` produce la stessa 
 
 ---
 
-## Grain Texture CSS-only
+## Grain Texture — CSS-Only Depth
 
-Aggiunge profondità e premium feel su qualsiasi sfondo. Nessun file immagine richiesto.
+Adds premium tactile feel to any background. No image file required.
 
 ```css
-/* Applica il grain come pseudo-elemento al container */
 .grain { position: relative; isolation: isolate; }
 
 .grain::after {
@@ -286,7 +342,7 @@ Aggiunge profondità e premium feel su qualsiasi sfondo. Nessun file immagine ri
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  /* Intensità: 0.025 sottile | 0.04 standard | 0.07 forte */
+  /* Intensity: 0.025 subtle | 0.04 standard | 0.07 heavy */
   opacity: 0.04;
   border-radius: inherit;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
@@ -300,7 +356,7 @@ Aggiunge profondità e premium feel su qualsiasi sfondo. Nessun file immagine ri
 ## Neon Glow System
 
 ```css
-/* Testo neon */
+/* Text neon */
 .neon-text {
   color: var(--brand);
   text-shadow:
@@ -309,7 +365,7 @@ Aggiunge profondità e premium feel su qualsiasi sfondo. Nessun file immagine ri
     0 0 42px color-mix(in srgb, var(--brand) 60%, transparent);
 }
 
-/* Bordo neon su box */
+/* Box neon border */
 .neon-border {
   border: 1px solid var(--brand);
   box-shadow:
@@ -318,7 +374,7 @@ Aggiunge profondità e premium feel su qualsiasi sfondo. Nessun file immagine ri
     inset 0 0 5px color-mix(in srgb, var(--brand) 15%, transparent);
 }
 
-/* Neon animato (pulsante) */
+/* Pulsing neon animation */
 .neon-pulse {
   animation: neon-flicker 2.5s ease-in-out infinite alternate;
 }
@@ -339,5 +395,83 @@ Aggiunge profondità e premium feel su qualsiasi sfondo. Nessun file immagine ri
 
 @media (prefers-reduced-motion: reduce) {
   .neon-pulse { animation: none; }
+}
+```
+
+---
+
+## Dark Mode Toggle — CSS-Only Pattern
+
+```css
+/* Single source of truth via [data-theme] on <html> */
+:root,
+[data-theme="dark"] {
+  --bg:       oklch(9%  0.04 245);
+  --surface-1: oklch(12% 0.045 245);
+  --text-1:   oklch(95% 0.006 240);
+  --text-2:   oklch(68% 0.012 230);
+}
+
+[data-theme="light"] {
+  --bg:       oklch(98% 0.003 80);
+  --surface-1: oklch(94% 0.006 80);
+  --text-1:   oklch(18% 0.04 60);
+  --text-2:   oklch(48% 0.025 65);
+}
+
+/* Respect OS preference by default */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg:       oklch(98% 0.003 80);
+    --surface-1: oklch(94% 0.006 80);
+    --text-1:   oklch(18% 0.04 60);
+    --text-2:   oklch(48% 0.025 65);
+  }
+}
+```
+
+```javascript
+// Toggle with localStorage persistence
+function toggleTheme() {
+  const current = document.documentElement.dataset.theme ?? 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('theme', next);
+}
+
+// Apply on page load before render (prevents flash)
+;(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+```
+
+---
+
+## Forced Colors Mode — Accessibility
+
+Always provide fallbacks for Windows High Contrast / forced-colors mode:
+
+```css
+@media (forced-colors: active) {
+  /* Gradient text fallback */
+  .gradient-text {
+    color: ButtonText;
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+  }
+
+  /* Custom borders must use system colors */
+  .card {
+    border: 1px solid ButtonText;
+  }
+
+  /* Brand-colored elements */
+  .badge {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
 }
 ```

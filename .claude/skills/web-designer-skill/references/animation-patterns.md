@@ -1,17 +1,57 @@
-# Animation Patterns — Libreria CSS/JS
+# Animation Patterns — CSS & JavaScript Library
 
-## Page Load — Staggered Reveal (il più importante)
+## Core Principle: Motion Hierarchy
+
+Not every element should animate. Establish a clear hierarchy:
+
+| Priority | What animates | Duration | Easing |
+|---|---|---|---|
+| **P1** | Hero elements, primary CTA | 0.6–0.9s | ease-out-expo |
+| **P2** | Section reveals on scroll | 0.5–0.7s | ease-out-expo |
+| **P3** | Card hover, button feedback | 0.15–0.35s | spring-bounce |
+| **P4** | Form states, badges, tooltips | 0.1–0.2s | ease |
+| **P5** | Skeleton loaders, spinners | continuous | linear |
+
+---
+
+## Easing Reference — Spring Physics
+
+Replace generic `ease` and `ease-in-out` with physically credible curves:
 
 ```css
-/* Elementi da animare al caricamento */
-.hero-title    { animation: fadeUp 0.8s var(--ease-out-expo) both; }
-.hero-sub      { animation: fadeUp 0.8s var(--ease-out-expo) 0.1s both; }
-.hero-cta      { animation: fadeUp 0.8s var(--ease-out-expo) 0.2s both; }
-.hero-visual   { animation: fadeIn 1s ease 0.3s both; }
-.nav           { animation: slideDown 0.6s var(--ease-out-expo) both; }
+:root {
+  /* Bounce — buttons, cards, elements that "spring" */
+  --spring-bounce:  cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Smooth — fluid transitions without overshoot */
+  --spring-smooth:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Snappy — fast feedback (click, toggle) */
+  --spring-snappy:  cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+  /* Expo out — entrance animations */
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Quart in-out — page transitions */
+  --ease-inout-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+```
+
+---
+
+## Page Load — Staggered Reveal
+
+The most impactful animation. Everything above the fold should reveal in sequence:
+
+```css
+.nav        { animation: slideDown 0.6s var(--ease-out-expo) both; }
+.hero-title { animation: fadeUp 0.8s var(--ease-out-expo) 0.05s both; }
+.hero-sub   { animation: fadeUp 0.8s var(--ease-out-expo) 0.15s both; }
+.hero-cta   { animation: fadeUp 0.8s var(--ease-out-expo) 0.25s both; }
+.hero-img   { animation: fadeIn 1s ease 0.35s both; }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -21,75 +61,131 @@
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-20px); }
+  from { opacity: 0; transform: translateY(-16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* Scale reveal — for images and cards */
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 ```
+
+---
 
 ## Scroll Animations — Intersection Observer
 
 ```javascript
-// Setup universale
-const observerConfig = { threshold: 0.1, rootMargin: '0px 0px -80px 0px' };
+function initScrollReveal() {
+  const config = { threshold: 0.1, rootMargin: '0px 0px -80px 0px' };
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      // Stagger per gruppi di elementi
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      // Stagger siblings within the same parent
       const siblings = entry.target.parentElement?.querySelectorAll('[data-animate]');
       const index = siblings ? Array.from(siblings).indexOf(entry.target) : 0;
-      
+
       setTimeout(() => {
         entry.target.classList.add('in-view');
-      }, index * 80);   // 80ms stagger tra elementi fratelli
-    }
-  });
-}, observerConfig);
+      }, index * 80);   // 80ms stagger between siblings
+    });
+  }, config);
 
-document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
-```
-
-```css
-/* Varianti di animazione — applica con data-animate="tipo" */
-[data-animate] {
-  opacity: 0;
-  transition: opacity 0.7s var(--ease-out-expo),
-              transform 0.7s var(--ease-out-expo);
+  document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 }
 
-/* Default: fade up */
-[data-animate].in-view { opacity: 1; transform: none; }
-[data-animate]:not(.in-view) { transform: translateY(24px); }
-
-/* Fade in semplice */
-[data-animate="fade"]:not(.in-view) { transform: none; }
-
-/* Slide from left */
-[data-animate="left"]:not(.in-view) { transform: translateX(-40px); }
-
-/* Slide from right */
-[data-animate="right"]:not(.in-view) { transform: translateX(40px); }
-
-/* Scale up */
-[data-animate="scale"]:not(.in-view) { transform: scale(0.92); }
+document.addEventListener('DOMContentLoaded', initScrollReveal);
 ```
 
-## Hover Effects — Card
+```css
+/* Base state — all animate targets start hidden */
+[data-animate] {
+  opacity: 0;
+  transition:
+    opacity  0.65s var(--ease-out-expo),
+    transform 0.65s var(--ease-out-expo);
+}
+
+/* Reveal state */
+[data-animate].in-view {
+  opacity: 1;
+  transform: none;
+}
+
+/* Animation variants via data-animate="type" */
+[data-animate]:not(.in-view)              { transform: translateY(24px); }   /* default: fade up */
+[data-animate="fade"]:not(.in-view)       { transform: none; }
+[data-animate="left"]:not(.in-view)       { transform: translateX(-40px); }
+[data-animate="right"]:not(.in-view)      { transform: translateX(40px); }
+[data-animate="scale"]:not(.in-view)      { transform: scale(0.92); }
+[data-animate="scale-down"]:not(.in-view) { transform: scale(1.06); }
+[data-animate="blur"]:not(.in-view)       { transform: translateY(16px); filter: blur(8px); }
+
+/* Blur variant needs filter in transition */
+[data-animate="blur"] {
+  transition:
+    opacity  0.7s var(--ease-out-expo),
+    transform 0.7s var(--ease-out-expo),
+    filter   0.7s var(--ease-out-expo);
+}
+[data-animate="blur"].in-view { filter: none; }
+
+/* Disable for prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+```
+
+---
+
+## Card Hover Effects
 
 ```css
-/* Card con lift e glow */
+/* Standard card lift + glow */
 .card {
-  transition: 
-    transform 0.3s var(--ease-out-expo),
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
+  transition:
+    transform   0.3s var(--ease-out-expo),
+    box-shadow  0.3s ease,
+    border-color 0.25s ease;
 }
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 0 0 1px var(--primary);
+  box-shadow:
+    0 20px 60px oklch(0% 0 0 / 0.2),
+    0 0 0 1px var(--brand);
 }
 
-/* Card con gradient reveal */
+/* Spring lift — more playful, uses bounce easing */
+.card-spring {
+  transition:
+    transform  0.4s var(--spring-bounce),
+    box-shadow 0.3s ease;
+}
+.card-spring:hover {
+  transform: translateY(-8px) rotate(-0.5deg);
+}
+.card-spring:active {
+  transform: translateY(-2px) scale(0.98);
+  transition-duration: 0.1s;
+}
+
+/* Gradient reveal on hover */
 .card-gradient {
   position: relative;
   overflow: hidden;
@@ -98,23 +194,21 @@ document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: linear-gradient(135deg, var(--brand), oklch(65% 0.20 280));
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-.card-gradient:hover::before { opacity: 0.08; }
-
-/* Magnetic card effect (JS richiesto) */
+.card-gradient:hover::before { opacity: 0.07; }
 ```
 
 ```javascript
-// Magnetic hover effect per card premium
-document.querySelectorAll('.card-magnetic').forEach(card => {
+// 3D tilt effect — magnetic card
+document.querySelectorAll('.card-tilt').forEach(card => {
   card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 15;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 15;
-    card.style.transform = `perspective(1000px) rotateX(${-y}deg) rotateY(${x}deg) translateZ(10px)`;
+    const rect  = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 12;
+    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 12;
+    card.style.transform = `perspective(800px) rotateX(${-y}deg) rotateY(${x}deg) translateZ(8px)`;
   });
   card.addEventListener('mouseleave', () => {
     card.style.transform = '';
@@ -122,41 +216,46 @@ document.querySelectorAll('.card-magnetic').forEach(card => {
 });
 ```
 
-## Buttons
+---
+
+## Button Animations
 
 ```css
-/* Bottone primario moderno */
-.btn-primary {
+/* Solid primary button — full state system */
+.btn {
   position: relative;
   overflow: hidden;
-  padding: 0.75em 1.75em;
-  background: var(--primary);
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background  0.2s ease,
+    box-shadow  0.2s ease,
+    transform   0.15s var(--spring-bounce);
 }
-.btn-primary::after {
+
+/* Ripple on click */
+.btn::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0);
-  transition: background 0.2s ease;
+  background: radial-gradient(circle at center, white 0%, transparent 65%);
+  opacity: 0;
+  transform: scale(0);
+  border-radius: inherit;
 }
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(var(--primary-rgb), 0.4);
+.btn:active::after {
+  opacity: 0.18;
+  transform: scale(2.5);
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
-.btn-primary:hover::after { background: rgba(255,255,255,0.08); }
-.btn-primary:active { transform: translateY(0); }
 
-/* Bottone outline con shimmer */
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.08s;
+}
+
+/* Outline button with shimmer sweep */
 .btn-outline {
   position: relative;
-  padding: 0.75em 1.75em;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-full);
-  background: transparent;
   overflow: hidden;
 }
 .btn-outline::before {
@@ -164,138 +263,63 @@ document.querySelectorAll('.card-magnetic').forEach(card => {
   position: absolute;
   top: 0; left: -100%;
   width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  background: linear-gradient(90deg, transparent, oklch(100% 0 0 / 0.06), transparent);
   transition: left 0.5s ease;
 }
 .btn-outline:hover::before { left: 100%; }
 ```
 
-## Loader / Skeleton
+---
+
+## Skeleton / Loading States
 
 ```css
-/* Skeleton screen — mai il classico spinner */
+/* Skeleton screen — always prefer over spinners */
 .skeleton {
   background: linear-gradient(
     90deg,
-    var(--surface-raised) 25%,
-    var(--surface-overlay) 50%,
-    var(--surface-raised) 75%
+    var(--surface-2, oklch(16% 0.04 245)) 25%,
+    var(--surface-3, oklch(22% 0.035 245)) 50%,
+    var(--surface-2, oklch(16% 0.04 245)) 75%
   );
   background-size: 200% 100%;
-  animation: skeleton-loading 1.5s infinite;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--radius-md, 8px);
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* Preset shapes */
+.skeleton-text    { height: 1em;   margin-bottom: 0.5em; }
+.skeleton-title   { height: 1.6em; width: 55%; }
+.skeleton-avatar  { width: 3rem; height: 3rem; border-radius: 50%; }
+.skeleton-card    { height: 180px; }
+.skeleton-button  { height: 2.5rem; width: 8rem; border-radius: 9999px; }
+
+/* Pulsing variant — simpler, lower GPU cost */
+.skeleton-pulse {
+  animation: pulse 1.4s ease-in-out infinite;
+  background: var(--surface-2);
   border-radius: var(--radius-md);
 }
-
-@keyframes skeleton-loading {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-```
-
-## Cursor Personalizzato
-
-```javascript
-// Custom cursor per siti premium
-const cursor = document.createElement('div');
-cursor.className = 'custom-cursor';
-document.body.appendChild(cursor);
-
-document.addEventListener('mousemove', (e) => {
-  cursor.style.translate = `${e.clientX}px ${e.clientY}px`;
-});
-
-document.querySelectorAll('a, button, [data-cursor="pointer"]').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
-```
-
-```css
-.custom-cursor {
-  position: fixed;
-  top: -8px; left: -8px;
-  width: 16px; height: 16px;
-  background: var(--primary);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transition: width 0.3s, height 0.3s, background 0.3s, top 0.3s, left 0.3s;
-  transition-timing-function: var(--ease-out-expo);
-  mix-blend-mode: difference;
-}
-.custom-cursor.hover {
-  top: -20px; left: -20px;
-  width: 40px; height: 40px;
-  background: white;
-}
-```
-
-## Scroll Progress Bar
-
-```javascript
-const progressBar = document.querySelector('.scroll-progress');
-document.addEventListener('scroll', () => {
-  const scrolled = window.scrollY;
-  const total = document.documentElement.scrollHeight - window.innerHeight;
-  progressBar.style.transform = `scaleX(${scrolled / total})`;
-});
-```
-
-```css
-.scroll-progress {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 2px;
-  background: var(--primary);
-  transform: scaleX(0);
-  transform-origin: left;
-  z-index: 100;
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
 }
 ```
 
 ---
 
-## Spring Physics — Easing Avanzato
-
-Sostituisci `ease` e `ease-in-out` generici con curve spring per animazioni fisicamente credibili:
+## Stagger Lists
 
 ```css
-:root {
-  /* Bounce — per bottoni, card, elementi che "rimbalzano" */
-  --spring-bounce:  cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  /* Smooth — per transizioni fluide senza rimbalzo */
-  --spring-smooth:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-  /* Snappy — per feedback rapido (click, toggle) */
-  --spring-snappy:  cubic-bezier(0.68, -0.55, 0.27, 1.55);
-
-  /* Expo out — per animazioni di entrata */
-  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* Quart in-out — per transizioni di pagina */
-  --ease-inout-quart: cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-/* Esempio uso: */
-.btn-spring {
-  transition:
-    transform 0.4s var(--spring-bounce),
-    box-shadow 0.3s ease;
-}
-.btn-spring:hover  { transform: translateY(-3px) scale(1.02); }
-.btn-spring:active { transform: scale(0.97); transition-duration: 0.1s; }
-```
-
----
-
-## Stagger List — CSS e JS
-
-```css
-/* CSS-only: usa :nth-child per stagger fisso */
+/* CSS-only: nth-child for fixed-length lists */
 .stagger-list > * {
   opacity: 0;
-  animation: fadeUp 0.5s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1)) both;
+  animation: fadeUp 0.5s var(--spring-bounce) both;
 }
 .stagger-list > *:nth-child(1) { animation-delay: 0.05s; }
 .stagger-list > *:nth-child(2) { animation-delay: 0.10s; }
@@ -306,24 +330,29 @@ Sostituisci `ease` e `ease-in-out` generici con curve spring per animazioni fisi
 ```
 
 ```javascript
-// JS: stagger dinamico per liste di lunghezza arbitraria
-function applyStagger(selector, delayStep = 50) {
+// JS: dynamic stagger for arbitrary list lengths
+function applyStagger(selector, delayStep = 60) {
   document.querySelectorAll(selector).forEach((el, i) => {
-    el.style.setProperty('--stagger-delay', `${i * delayStep}ms`);
     el.style.animationDelay = `${i * delayStep}ms`;
   });
 }
-// Usa con: applyStagger('.card-grid .card');
+
+// Usage:
+// applyStagger('.feature-grid .card');
 ```
 
 ---
 
 ## Magnetic Element
 
-Elementi che si attraggono magneticamente verso il cursore — ideale per CTA principali e logo.
+Elements that pull toward the cursor — ideal for primary CTAs and logo.
 
 ```javascript
 function initMagnetic(selector = '[data-magnetic]') {
+  // Only on pointer devices (not touch)
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   document.querySelectorAll(selector).forEach(el => {
     const strength = parseFloat(el.dataset.magneticStrength ?? '0.3');
 
@@ -333,8 +362,8 @@ function initMagnetic(selector = '[data-magnetic]') {
       const cy = rect.top  + rect.height / 2;
       const dx = (e.clientX - cx) * strength;
       const dy = (e.clientY - cy) * strength;
-      el.style.transform    = `translate(${dx}px, ${dy}px)`;
-      el.style.transition   = 'transform 0.1s linear';
+      el.style.transform  = `translate(${dx}px, ${dy}px)`;
+      el.style.transition = 'transform 0.1s linear';
     });
 
     el.addEventListener('mouseleave', () => {
@@ -344,31 +373,71 @@ function initMagnetic(selector = '[data-magnetic]') {
   });
 }
 
-// Disabilita su touch device
-if (window.matchMedia('(pointer: fine)').matches) {
-  document.addEventListener('DOMContentLoaded', initMagnetic);
-}
+document.addEventListener('DOMContentLoaded', initMagnetic);
 ```
 
 ```html
-<!-- Uso: -->
+<!-- Usage: -->
 <button data-magnetic data-magnetic-strength="0.25">Get Started</button>
 ```
 
 ---
 
-## View Transitions API — Navigazione Fluida
-
-Transizioni native browser tra pagine senza librerie.
+## Number Counter Animation
 
 ```javascript
-// Intercetta i link interni
+function animateCounter(el) {
+  const target   = parseFloat(el.dataset.target);
+  const duration = parseInt(el.dataset.duration ?? '1500', 10);
+  const prefix   = el.dataset.prefix ?? '';
+  const suffix   = el.dataset.suffix ?? '';
+  const decimals = parseInt(el.dataset.decimals ?? '0', 10);
+  const start    = performance.now();
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function tick(now) {
+    const elapsed = Math.min((now - start) / duration, 1);
+    const value   = easeOutCubic(elapsed) * target;
+    el.textContent = prefix + value.toFixed(decimals) + suffix;
+    if (elapsed < 1) requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+// Trigger only when visible
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(e.target);
+      counterObserver.unobserve(e.target);   // fire only once
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+```
+
+```html
+<!-- Usage: -->
+<span data-count data-target="12500" data-suffix=" MH/s" data-duration="2000">0</span>
+<span data-count data-target="99.8" data-decimals="1" data-suffix="%" data-duration="1200">0</span>
+```
+
+---
+
+## View Transitions API — Smooth Page Navigation
+
+```javascript
+// Intercept internal links for animated page transitions
 document.addEventListener('click', async e => {
   const link = e.target.closest('a[href]');
   if (!link) return;
 
   const url = new URL(link.href);
-  if (url.origin !== location.origin) return; // solo link interni
+  if (url.origin !== location.origin) return;  // external links only
+  if (link.target === '_blank') return;
 
   e.preventDefault();
 
@@ -384,12 +453,14 @@ document.addEventListener('click', async e => {
     document.body.innerHTML = doc.body.innerHTML;
     document.title          = doc.title;
     history.pushState({}, '', link.href);
+    // Re-init scripts if needed
+    document.dispatchEvent(new Event('DOMContentLoaded'));
   });
 });
 ```
 
 ```css
-/* Animazione di transizione pagina */
+/* Page transition animation */
 ::view-transition-old(root) {
   animation: vt-out 0.25s var(--ease-inout-quart, cubic-bezier(0.76, 0, 0.24, 1)) both;
 }
@@ -397,92 +468,127 @@ document.addEventListener('click', async e => {
   animation: vt-in  0.25s var(--ease-inout-quart, cubic-bezier(0.76, 0, 0.24, 1)) both;
 }
 
-@keyframes vt-out {
-  to { opacity: 0; translate: -1.5rem 0; }
-}
-@keyframes vt-in {
-  from { opacity: 0; translate: 1.5rem 0; }
-}
+@keyframes vt-out { to   { opacity: 0; translate: -1.5rem 0; } }
+@keyframes vt-in  { from { opacity: 0; translate:  1.5rem 0; } }
 
-/* Hero element con shared transition */
-.hero-image {
-  view-transition-name: hero-img;
-}
+/* Named element with shared transition */
+.hero-image { view-transition-name: hero-img; }
 ::view-transition-group(hero-img) {
   animation-duration: 0.4s;
   animation-timing-function: var(--ease-out-expo);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none; }
+}
 ```
 
 ---
 
-## Number Counter Animato
+## Scroll Progress Bar
 
 ```javascript
-function animateCounter(el) {
-  const target   = parseInt(el.dataset.target, 10);
-  const duration = parseInt(el.dataset.duration ?? '1500', 10);
-  const prefix   = el.dataset.prefix ?? '';
-  const suffix   = el.dataset.suffix ?? '';
-  const start    = performance.now();
-
-  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-  function tick(now) {
-    const elapsed = Math.min((now - start) / duration, 1);
-    const value   = Math.floor(easeOutCubic(elapsed) * target);
-    el.textContent = prefix + value.toLocaleString('it-IT') + suffix;
-    if (elapsed < 1) requestAnimationFrame(tick);
-  }
-
-  requestAnimationFrame(tick);
+const progressBar = document.querySelector('.scroll-progress');
+if (progressBar) {
+  document.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.transform = `scaleX(${scrolled / total})`;
+  }, { passive: true });
 }
-
-// Trigger solo quando visibile
-const counterObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      animateCounter(e.target);
-      counterObserver.unobserve(e.target); // una sola volta
-    }
-  });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
 ```
 
-```html
-<!-- Uso: -->
-<span data-target="12500" data-suffix="+" data-duration="2000">0</span>
-<span data-target="99" data-suffix="%" data-duration="1200">0</span>
+```css
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 1000;
+  box-shadow: 0 0 6px var(--brand);
+}
 ```
 
 ---
 
-## Shimmer Skeleton — Token-Aware
+## Animated Border Gradient
 
 ```css
-/* Versione aggiornata che usa i token di colore del design system */
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--surface-2, #1a1a28) 25%,
-    var(--surface-3, #242438) 50%,
-    var(--surface-2, #1a1a28) 75%
+@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.border-animated {
+  position: relative;
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+}
+
+.border-animated::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--angle),
+    var(--brand),
+    oklch(65% 0.20 280),
+    oklch(70% 0.18 160),
+    var(--brand)
   );
-  background-size: 200% 100%;
-  animation: shimmer 1.6s ease-in-out infinite;
-  border-radius: 6px;
+  z-index: -1;
+  animation: rotate-border 4s linear infinite;
 }
 
-@keyframes shimmer {
-  from { background-position: 200% 0; }
-  to   { background-position: -200% 0; }
+.border-animated::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(var(--radius-lg) - 1px);
+  background: var(--surface-2);
+  z-index: -1;
 }
 
-/* Preset tipici */
-.skeleton-text   { height: 1em;   margin-bottom: 0.5em; }
-.skeleton-title  { height: 1.5em; width: 60%; }
-.skeleton-avatar { width: 3rem; height: 3rem; border-radius: 50%; }
-.skeleton-card   { height: 180px; }
+@keyframes rotate-border { to { --angle: 360deg; } }
+
+/* Hover-only variant */
+.border-animated-hover::before {
+  animation: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.border-animated-hover:hover::before {
+  opacity: 1;
+  animation: rotate-border 3s linear infinite;
+}
+```
+
+---
+
+## Animation Performance Rules
+
+```css
+/* ✅ GPU composited — always smooth */
+.animate-good {
+  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* ❌ Causes layout recalculation — avoid for animations */
+/* .animate-bad { transition: width, height, top, left, margin, padding ... } */
+
+/* ✅ will-change — only on elements that animate constantly */
+.constantly-animated {
+  will-change: transform;
+}
+/* Remove after animation ends */
+.constantly-animated.done {
+  will-change: auto;
+}
+/* ❌ Never apply to static elements or large containers */
+/* Max 5-6 elements per page with active will-change */
 ```

@@ -1,6 +1,101 @@
-# Layout Patterns — Grid e Composizioni Moderne
+# Layout Patterns — Modern Grid & Composition
 
-## Bento Grid (stile Apple 2024)
+## Core Layout Philosophy
+
+Layout is not decoration — it is the skeleton of communication. Every layout decision affects reading order, visual hierarchy, and cognitive load. Use CSS Grid for page-level structure and Flexbox for component-level alignment. Never use floats or positioning hacks.
+
+---
+
+## Spacing System — 8pt Grid
+
+All spacing should be multiples of 8px. This creates visual consistency without manual calculation:
+
+```css
+:root {
+  --space-0:  0;
+  --space-1:  4px;    /* 0.5 unit — only for tight micro-spacing */
+  --space-2:  8px;    /* 1 unit */
+  --space-3:  12px;   /* 1.5 units */
+  --space-4:  16px;   /* 2 units — base gap */
+  --space-5:  20px;
+  --space-6:  24px;   /* 3 units */
+  --space-8:  32px;   /* 4 units — section inner padding */
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;   /* 8 units — between major sections */
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;  /* 16 units — hero padding */
+}
+```
+
+---
+
+## Hero Layouts
+
+### Full-Bleed Hero (Centered)
+```css
+.hero-full {
+  min-height: 100svh;    /* svh avoids mobile toolbar covering content */
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-8) var(--space-4);
+}
+
+.hero-full__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-full__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 900px;
+}
+```
+
+### Split Hero (50/50)
+```css
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100svh;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+@media (max-width: 768px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: var(--space-16) 0;
+  }
+  .hero-split__visual { order: -1; }  /* Image above text on mobile */
+}
+```
+
+### Asymmetric Hero (60/40)
+```css
+.hero-asymmetric {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  min-height: 85svh;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-16) 0;
+}
+```
+
+---
+
+## Bento Grid (Apple-Style)
+
+Asymmetric grid where cards have different visual weights:
 
 ```css
 .bento-grid {
@@ -10,23 +105,82 @@
   gap: 16px;
 }
 
-/* Esempio: layout 4 card con pesi diversi */
-.bento-hero    { grid-column: span 8; grid-row: span 3; }
-.bento-tall    { grid-column: span 4; grid-row: span 3; }
-.bento-wide    { grid-column: span 6; grid-row: span 2; }
-.bento-small   { grid-column: span 3; grid-row: span 1; }
+/* Weight assignments */
+.bento-hero   { grid-column: span 8; grid-row: span 3; }
+.bento-tall   { grid-column: span 4; grid-row: span 3; }
+.bento-wide   { grid-column: span 6; grid-row: span 2; }
+.bento-medium { grid-column: span 4; grid-row: span 2; }
+.bento-small  { grid-column: span 3; grid-row: span 1; }
 
-/* Responsive: collassa su mobile */
+/* Mobile: all cards stack full-width */
 @media (max-width: 768px) {
   .bento-grid > * { grid-column: span 12 !important; }
 }
 ```
 
-## Masonry Layout (CSS puro)
+---
+
+## Responsive Card Grid
+
+Auto-fill with minimum card width — no media queries needed:
+
+```css
+/* Cards fill space, min 280px, max 1fr */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+/* Fixed column counts at breakpoints */
+.card-grid--2col {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+}
+
+/* 3 columns on desktop, 2 on tablet, 1 on mobile */
+.card-grid--3col {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) { .card-grid--3col { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .card-grid--3col { grid-template-columns: 1fr; } }
+```
+
+---
+
+## Subgrid — Internal Card Alignment
+
+When multiple cards in a grid need internal elements aligned across all cards:
+
+```css
+.card-grid-aligned {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Each card spans 3 rows: header / body / footer */
+.card {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;   /* inherits row tracks from parent grid */
+  padding: 1.5rem;
+  gap: 0.75rem;
+}
+
+.card__header { /* row 1 — same height across all cards */ }
+.card__body   { /* row 2 — grows uniformly */ }
+.card__footer { align-self: end; /* row 3 — always pinned to bottom */ }
+```
+
+**Browser support**: Chrome 117+, Firefox 71+, Safari 16+. Fallback: `display: flex; flex-direction: column` with `flex: 1` on body.
+
+---
+
+## Masonry Layout (CSS-Only)
 
 ```css
 .masonry {
-  columns: 3 300px;
+  columns: 3 300px;    /* 3 columns minimum, 300px minimum width */
   column-gap: 1.5rem;
 }
 
@@ -36,37 +190,156 @@
 }
 ```
 
-## Split Layout Hero
+---
+
+## Sticky Story — Scroll Narrative
+
+Left panel stays fixed while content on the right scrolls. Ideal for feature showcases and onboarding:
 
 ```css
-.split-hero {
+.sticky-story {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 100svh;
+  gap: 4rem;
+  align-items: start;
 }
 
-.split-hero__content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: var(--space-16) var(--space-8);
-}
-
-.split-hero__visual {
-  position: relative;
+.sticky-story__visual {
+  position: sticky;
+  top: calc(50vh - 200px);    /* centered in viewport */
+  height: 400px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
+  transition: all 0.5s var(--ease-out-expo);
 }
 
-@media (max-width: 900px) {
-  .split-hero { grid-template-columns: 1fr; }
-  .split-hero__visual { min-height: 40svh; }
+.sticky-story__steps > * {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  padding: var(--space-8) 0;
+}
+
+.sticky-story__steps > * + * {
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .sticky-story { grid-template-columns: 1fr; }
+  .sticky-story__visual { position: relative; top: auto; height: 250px; }
 }
 ```
 
-## Sticky Scroll Sections
+```javascript
+function initStickyStory(selector = '.sticky-story') {
+  const container = document.querySelector(selector);
+  if (!container) return;
+
+  const steps  = container.querySelectorAll('.sticky-story__steps > *');
+  const visual = container.querySelector('.sticky-story__visual');
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        steps.forEach(s => s.classList.remove('is-active'));
+        e.target.classList.add('is-active');
+        const img = e.target.dataset.visual;
+        if (img && visual) visual.style.backgroundImage = `url(${img})`;
+      }
+    });
+  }, { threshold: 0.5 });
+
+  steps.forEach(s => io.observe(s));
+}
+```
+
+---
+
+## Feature Grid with Connectors
 
 ```css
-/* Pattern "sticky sidebar + scrolling content" */
+/* Grid where borders create a connected "table" appearance */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+.feature-card {
+  padding: var(--space-8) var(--space-6);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.feature-card:nth-child(3n)      { border-right: none; }
+.feature-card:nth-last-child(-n+3) { border-bottom: none; }
+
+@media (max-width: 768px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .feature-card { border-right: none; }
+  .feature-card:last-child { border-bottom: none; }
+}
+```
+
+---
+
+## Testimonials Marquee (Infinite Scroll)
+
+```css
+.marquee {
+  display: flex;
+  overflow: hidden;
+  /* Fade edges */
+  mask: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  gap: 1.5rem;
+  animation: marquee 30s linear infinite;
+  flex-shrink: 0;
+}
+
+/* Duplicate content for seamless loop */
+.marquee__track--clone { animation-delay: -15s; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-100% - 1.5rem)); }
+}
+
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+}
+```
+
+---
+
+## Full-Bleed Element
+
+Make an element break out of its container:
+
+```css
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+/* Safer version using logical properties */
+.full-bleed {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+```
+
+---
+
+## Sticky Sidebar Layout
+
+```css
 .sticky-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -78,22 +351,21 @@
   position: sticky;
   top: var(--space-8);
   max-height: calc(100svh - 4rem);
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .sticky-layout { grid-template-columns: 1fr; }
+  .sticky-panel { position: relative; top: auto; max-height: none; }
 }
 ```
 
-## Full-bleed Section
+---
+
+## Overlay Grid (Text Over Image)
 
 ```css
-/* Elemento che sfonda il container */
-.full-bleed {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-}
-```
-
-## Overlay Grid (testo sopra immagine)
-
-```css
+/* Grid stacking technique — no absolute positioning needed */
 .overlay-grid {
   display: grid;
   grid-template-areas: "content";
@@ -110,99 +382,32 @@
 }
 
 .overlay-grid__content {
-  position: relative;  /* sopra l'immagine */
+  position: relative;
   z-index: 1;
   background: linear-gradient(
     to top,
-    rgba(0,0,0,0.8) 0%,
+    oklch(0% 0 0 / 0.8) 0%,
     transparent 60%
   );
-}
-```
-
-## Feature Grid con Connectors
-
-```css
-/* Grid di feature con icone grandi e linee di connessione */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;    /* No gap, usiamo border */
-}
-
-.feature-card {
-  padding: var(--space-8) var(--space-6);
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.feature-card:nth-child(3n) { border-right: none; }
-.feature-card:nth-last-child(-n+3) { border-bottom: none; }
-
-@media (max-width: 768px) {
-  .features-grid { grid-template-columns: 1fr; }
-  .feature-card { border-right: none; }
-}
-```
-
-## Testimonials Marquee (scroll infinito)
-
-```css
-.marquee {
   display: flex;
-  overflow: hidden;
-  mask: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-
-.marquee__track {
-  display: flex;
-  gap: 1.5rem;
-  animation: marquee 30s linear infinite;
-  flex-shrink: 0;
-}
-
-/* Duplica il contenuto per loop senza gap */
-.marquee__track--clone { animation-delay: -15s; }
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(calc(-100% - 1.5rem)); }
-}
-
-.marquee:hover .marquee__track { animation-play-state: paused; }
-```
-
-## Horizontal Scroll Section
-
-```css
-.h-scroll-container {
-  overflow: hidden;
-}
-
-.h-scroll-track {
-  display: flex;
-  gap: 2rem;
-  transition: transform 0.6s var(--ease-out-expo);
-  will-change: transform;
-}
-
-.h-scroll-item {
-  flex-shrink: 0;
-  width: min(400px, 80vw);
+  align-items: flex-end;
+  padding: var(--space-6);
 }
 ```
 
-## Navbar Patterns
+---
+
+## Navbar — Glassmorphism Sticky
 
 ```css
-/* Glassmorphism sticky nav */
 .nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(var(--surface-base-rgb), 0.8);
+  background: oklch(9% 0.04 245 / 0.88);
   backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--brand);
   transition: background 0.3s ease;
 }
 
@@ -216,42 +421,35 @@
   padding-inline: var(--space-4);
 }
 
-/* Nav links */
-.nav__links {
-  display: flex;
-  gap: var(--space-1);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
 .nav__link {
   padding: 0.4em 0.8em;
   border-radius: var(--radius-full);
-  color: var(--text-muted);
+  color: var(--text-2);
   font-size: var(--text-sm);
   font-weight: 500;
   transition: color 0.2s, background 0.2s;
   text-decoration: none;
 }
-
 .nav__link:hover {
-  color: var(--text);
-  background: var(--surface-overlay);
+  color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
 }
 
-.nav__link.active {
-  color: var(--text);
-  background: var(--surface-raised);
+/* Mobile: 44px minimum touch target */
+@media (max-width: 1023px) {
+  .nav__link { min-height: 44px; padding: 0.75rem 1.25rem; }
 }
 ```
 
-## Footer Moderno
+---
+
+## Footer
 
 ```css
 .footer {
   padding: var(--space-16) 0 var(--space-6);
   border-top: 1px solid var(--border);
+  background: var(--surface-1);
 }
 
 .footer__grid {
@@ -261,177 +459,82 @@
   margin-bottom: var(--space-8);
 }
 
-.footer__brand { 
-  /* Logo + tagline + social */
-}
-
 .footer__bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: var(--space-4);
   border-top: 1px solid var(--border);
-  color: var(--text-subtle);
+  color: var(--text-3);
   font-size: var(--text-sm);
 }
 
 @media (max-width: 768px) {
   .footer__grid { grid-template-columns: 1fr 1fr; }
   .footer__brand { grid-column: span 2; }
+  .footer__bottom { flex-direction: column; gap: var(--space-3); text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__brand { grid-column: span 1; }
 }
 ```
 
 ---
 
-## Subgrid — Card con Allineamento Interno
-
-Quando più card in griglia devono avere heading/body/footer allineati tra loro:
+## Container Queries — Component-Level Responsiveness
 
 ```css
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+/* Declare the container on the wrapper */
+.card-wrapper {
+  container-type: inline-size;
+  container-name: card;
 }
 
-/* Ogni card occupa 3 righe: header / content / footer */
+/* Card adapts to its container width, not viewport */
 .card {
-  display: grid;
-  grid-row: span 3;
-  grid-template-rows: subgrid;  /* eredita la riga dalla griglia padre */
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  gap: 0.75rem;
-}
-
-.card__header { /* row 1 — stesso livello in tutte le card */ }
-.card__body   { /* row 2 — si estende in modo uniforme */ }
-.card__footer { align-self: end; /* row 3 — sempre al fondo */ }
-```
-
-**Compatibilità**: Chrome 117+, Firefox 71+, Safari 16+. Per browser più vecchi, usa `display: flex; flex-direction: column` con `flex: 1` sul body.
-
----
-
-## Hero Full-Bleed Moderno
-
-```css
-/* min-height: 100svh usa "small viewport height" — evita il problema
-   della toolbar mobile che copre il contenuto */
-.hero-full {
-  min-height: 100svh;
-  display: grid;
-  place-items: center;
-  position: relative;
-  overflow: hidden;
-  padding: var(--space-8) var(--space-4);
-}
-
-/* Layer sfondo: aurora/gradiente separato dal contenuto */
-.hero-full__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-full__content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  max-width: 900px;
-}
-
-/* Split hero 50/50 */
-.hero-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 100svh;
-  align-items: center;
-  gap: var(--space-8);
-}
-
-@media (max-width: 768px) {
-  .hero-split {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    padding: var(--space-8) 0;
-  }
-}
-```
-
----
-
-## Sticky Story — Scroll Narrativo
-
-Layout in cui il pannello sinistro rimane fisso mentre il contenuto a destra scorre.
-Ideale per feature showcase, onboarding, storytelling di prodotto.
-
-```css
-.sticky-story {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
-}
-
-/* Il pannello visivo rimane centrato verticalmente nel viewport */
-.sticky-story__visual {
-  position: sticky;
-  top: calc(50vh - 200px);   /* centrato: metà schermo meno metà altezza */
-  height: 400px;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  transition: all 0.5s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
-}
-
-/* I "passi" della storia scorrono normalmente */
-.sticky-story__steps > * {
-  min-height: 60vh;
   display: flex;
-  align-items: center;
-  padding: var(--space-8) 0;
+  flex-direction: column;
+  padding: 1rem;
 }
 
-.sticky-story__steps > * + * {
-  border-top: 1px solid var(--border);
-}
-
-@media (max-width: 768px) {
-  .sticky-story {
-    grid-template-columns: 1fr;
+@container card (min-width: 400px) {
+  .card {
+    flex-direction: row;
+    padding: 1.5rem;
   }
-  .sticky-story__visual {
-    position: relative;
-    top: auto;
-    height: 250px;
+}
+
+@container card (min-width: 600px) {
+  .card__title {
+    font-size: 1.5rem;
   }
 }
 ```
 
-```javascript
-// Aggiorna il pannello visivo in base allo step attivo
-function initStickyStory(containerSelector = '.sticky-story') {
-  const container = document.querySelector(containerSelector);
-  if (!container) return;
+---
 
-  const steps  = container.querySelectorAll('.sticky-story__steps > *');
-  const visual = container.querySelector('.sticky-story__visual');
+## Responsive Design Principles
 
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        steps.forEach(s => s.classList.remove('is-active'));
-        e.target.classList.add('is-active');
-        // Aggiorna il contenuto del pannello visivo
-        const img = e.target.dataset.visual;
-        if (img && visual) visual.style.backgroundImage = `url(${img})`;
-      }
-    });
-  }, { threshold: 0.5 });
+1. **Mobile-first** — write base styles for small screens, override upward
+2. **Breakpoints as design decisions** — add a breakpoint only when the layout actually breaks, not at arbitrary screen sizes
+3. **Use `min()`, `max()`, `clamp()`** — fluid values eliminate many breakpoints
+4. **Test at 320px, 375px, 768px, 1024px, 1440px** — these represent real device densities
+5. **Minimum 44px touch targets** — WCAG 2.5.5
 
-  steps.forEach(s => io.observe(s));
+```css
+/* Fluid container — no breakpoints needed */
+.container {
+  width: min(90%, 1280px);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 5vw, 2rem);
+}
+
+/* Fluid columns — auto-layout from 1 to 4 columns */
+.fluid-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
 }
 ```

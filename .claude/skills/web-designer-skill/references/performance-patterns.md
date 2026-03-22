@@ -1,30 +1,36 @@
-# Performance Patterns — Core Web Vitals e Ottimizzazione
+# Performance Patterns — Core Web Vitals & Optimization
 
-Questi pattern garantiscono che i siti belli siano anche veloci. Un sito lento non è un bel sito.
+A slow site is not a beautiful site. These patterns ensure visual quality never costs performance.
+
+**Targets:**
+- **LCP** (Largest Contentful Paint): < 2.5s
+- **CLS** (Cumulative Layout Shift): < 0.1
+- **INP** (Interaction to Next Paint): < 200ms
+- **FCP** (First Contentful Paint): < 1.8s
 
 ---
 
 ## LCP — Largest Contentful Paint
 
-L'LCP è l'immagine o il blocco di testo più grande visibile al caricamento. Target: < 2.5s.
+The LCP is the largest image or text block visible at load. It must arrive fast.
 
-### Hero Image: massima priorità
+### Hero Image: Maximum Priority
 
 ```html
-<!-- Preload esplicito + priorità alta -->
+<!-- Preload + high priority — eliminates render-blocking delay -->
 <link rel="preload" as="image" href="hero.webp" fetchpriority="high">
 
-<!-- L'immagine hero NON deve avere loading="lazy" -->
+<!-- Hero image: NEVER use loading="lazy" -->
 <img
   src="hero.webp"
-  alt="Descrizione significativa"
+  alt="Meaningful description"
   width="1200"
   height="800"
   fetchpriority="high"
   decoding="async"
 >
 
-<!-- Immagine responsive con srcset -->
+<!-- Responsive hero with srcset -->
 <img
   src="hero-800.webp"
   srcset="hero-400.webp 400w, hero-800.webp 800w, hero-1600.webp 1600w"
@@ -36,118 +42,109 @@ L'LCP è l'immagine o il blocco di testo più grande visibile al caricamento. Ta
 >
 ```
 
-### Font: preconnect prima di tutto
+### Font Preconnect — Must Be First in `<head>`
 
 ```html
-<!-- Questi due link DEVONO essere tra i primissimi nel <head> -->
+<!-- These two MUST be among the first links in <head> -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<!-- Poi il font stesso -->
-<link href="https://fonts.googleapis.com/css2?family=..." rel="stylesheet">
+<!-- Then the font itself -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 ```
 
 ---
 
 ## CLS — Cumulative Layout Shift
 
-Target: < 0.1. Ogni elemento che si sposta durante il caricamento peggiora il CLS.
+Every element that shifts during load worsens CLS. Reserve space in advance.
 
-### Riserva spazio per contenuto dinamico
+### Reserve Space for Dynamic Content
 
 ```css
-/* Usa aspect-ratio per media — previene il reflow */
+/* Use aspect-ratio — prevents reflow as images load */
 .media-container {
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: var(--surface-2); /* placeholder mentre carica */
+  background: var(--surface-2);  /* placeholder while loading */
 }
 
 .avatar {
   aspect-ratio: 1;
   width: 3rem;
   border-radius: 50%;
-  background: var(--surface-2);
+  background: var(--surface-2);  /* placeholder */
 }
 
-/* Riserva spazio per numeri che cambiano */
+/* Reserve width for numbers that update dynamically */
 .stat-value {
-  min-width: 5ch;          /* evita layout shift quando il numero si aggiorna */
-  font-variant-numeric: tabular-nums;  /* cifre a larghezza fissa */
+  min-width: 5ch;
+  font-variant-numeric: tabular-nums;  /* fixed-width digits — prevents layout shift */
 }
 ```
 
-### Font size-adjust — elimina FOUT layout shift
+### Font `size-adjust` — Eliminates FOUT Layout Shift
 
 ```css
-/* Dichiarala con size-adjust per far combaciare le metriche
-   del web font con il font di sistema di fallback */
 @font-face {
   font-family: 'Poppins';
   src: url('/fonts/poppins.woff2') format('woff2');
   font-display: swap;
-  size-adjust: 100%;     /* Regola finché il testo non "salta" al caricamento */
-  ascent-override: 95%;
+  size-adjust: 100%;       /* Tune until text doesn't jump on font load */
+  ascent-override: 95%;    /* Fine-tune line height to match fallback */
 }
 
-/* font-display: swap — mostra subito il fallback, poi swappa
-   font-display: optional — non swappa se non già in cache */
+/* font-display: swap — show fallback immediately, then swap
+   font-display: optional — never swap (best CLS, worst FOUT) */
 ```
 
 ---
 
-## GPU Compositing — Animazioni Fluide
+## GPU Compositing — Smooth Animations
 
-Solo `opacity`, `transform` (translate/scale/rotate), e `filter` vengono eseguiti sulla GPU.
-**Mai** animare `left`, `top`, `width`, `height`, `margin`, `padding`.
+Only `opacity`, `transform` (translate/scale/rotate), and `filter` run on the GPU. **Never** animate `left`, `top`, `width`, `height`, `margin`, `padding`.
 
 ```css
-/* ✅ GPU composited — 60fps garantito */
+/* ✅ GPU composited — guaranteed 60fps */
 .smooth-move {
-  translate: 0 0;
   transition: translate 0.3s ease;
 }
 .smooth-move:hover { translate: 0 -4px; }
 
-/* ❌ Causa layout recalculation — evita */
+/* ❌ Triggers layout recalculation — avoid for animation */
 .bad-move {
   position: relative;
-  top: 0;
-  transition: top 0.3s ease;
+  transition: top 0.3s ease;  /* top causes layout recalc every frame */
 }
 .bad-move:hover { top: -4px; }
 ```
 
-### `will-change` — usa con parsimonia
+### `will-change` — Use Sparingly
 
 ```css
-/* ✅ Solo su elementi che si animano frequentemente */
-.animated-card {
-  will-change: transform;
-}
+/* ✅ Only on elements that animate frequently */
+.carousel-slide { will-change: transform; }
 
-/* Rimuovi will-change quando l'animazione finisce */
-.animated-card.animation-done {
-  will-change: auto;
-}
+/* Remove after animation ends */
+.carousel-slide.stopped { will-change: auto; }
 
-/* ❌ MAI su tutto o su sezioni statiche */
-/* * { will-change: transform; }  DISTRUGGE le performance */
-/* section { will-change: transform; }  peggiora il GPU usage */
+/* ❌ Never on everything — destroys GPU memory */
+/* * { will-change: transform; }  — catastrophic */
+/* section { will-change: transform; }  — wasted GPU */
 
-/* Massimo 5-6 elementi per pagina con will-change attivo */
+/* Max 5-6 elements per page with active will-change */
 ```
 
 ---
 
-## Event Listeners — Passive e Debounce
+## Efficient Event Listeners
 
 ```javascript
-// ✅ Passive listener per scroll — non blocca lo scroll del browser
-window.addEventListener('scroll', onScroll, { passive: true });
-window.addEventListener('touchstart', onTouch, { passive: true });
+// ✅ Passive listeners — tell browser scroll won't be blocked
+window.addEventListener('scroll',     onScroll, { passive: true });
+window.addEventListener('touchstart', onTouch,  { passive: true });
 
-// ✅ Debounce per operazioni costose su resize
+// ✅ Debounce expensive operations on resize
 function debounce(fn, wait = 100) {
   let timer;
   return function (...args) {
@@ -160,7 +157,7 @@ window.addEventListener('resize', debounce(() => {
   recalculateLayout();
 }, 150));
 
-// ✅ requestAnimationFrame per aggiornamenti visivi
+// ✅ requestAnimationFrame for visual updates
 let ticking = false;
 window.addEventListener('scroll', () => {
   if (!ticking) {
@@ -171,31 +168,37 @@ window.addEventListener('scroll', () => {
     ticking = true;
   }
 }, { passive: true });
+
+// ✅ Event delegation — one listener instead of many
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  handleAction(btn.dataset.action, btn);
+});
 ```
 
 ---
 
 ## Critical CSS — Inline Above-the-Fold
 
-Per siti vanilla HTML (no bundler), il pattern più efficace per LCP veloce:
+For vanilla HTML sites (no bundler), the most effective pattern for fast LCP:
 
 ```html
 <head>
-  <!-- 1. Critical CSS inline: tutto ciò che è visibile senza scroll -->
+  <!-- 1. Critical CSS inline — everything visible without scroll -->
   <style>
-    /* Reset minimo, nav, hero, font declarations */
     *, *::before, *::after { box-sizing: border-box; margin: 0; }
-    :root { --brand: oklch(62% 0.22 30); --surface-1: hsl(220 13% 9%); }
-    body { font-family: 'Poppins', system-ui, sans-serif; background: var(--surface-1); }
-    .nav { ... }
-    .hero { ... }
+    :root { --brand: oklch(78% 0.18 195); --bg: oklch(9% 0.04 245); }
+    body  { font-family: 'Poppins', system-ui, sans-serif; background: var(--bg); color: oklch(95% 0.006 240); }
+    .navbar { position: sticky; top: 0; /* minimal navbar styles */ }
+    .hero   { /* minimal hero styles */ }
   </style>
 
   <!-- 2. Font preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- 3. Il resto del CSS caricato in modo non bloccante -->
+  <!-- 3. Rest of CSS loaded non-blocking -->
   <link rel="preload" href="/css/main.css" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="/css/main.css"></noscript>
@@ -204,29 +207,27 @@ Per siti vanilla HTML (no bundler), il pattern più efficace per LCP veloce:
 
 ---
 
-## Lazy Loading Immagini
+## Lazy Loading Images
 
 ```html
-<!-- Tutte le immagini SOTTO la fold: loading="lazy" -->
+<!-- All images BELOW the fold: loading="lazy" -->
 <img src="photo.webp" alt="..." width="800" height="600"
      loading="lazy" decoding="async">
 ```
 
 ```javascript
-// Lazy loading con IntersectionObserver per browser non supportati
-// o per immagini con effetti di reveal
+// IntersectionObserver lazy loading — for reveal effects
 const imgObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
-    if (e.isIntersecting) {
-      const img = e.target;
-      img.src = img.dataset.src;
-      if (img.dataset.srcset) img.srcset = img.dataset.srcset;
-      img.classList.add('loaded');
-      imgObserver.unobserve(img);
-    }
+    if (!e.isIntersecting) return;
+    const img = e.target;
+    img.src = img.dataset.src;
+    if (img.dataset.srcset) img.srcset = img.dataset.srcset;
+    img.classList.add('loaded');
+    imgObserver.unobserve(img);
   });
 }, {
-  rootMargin: '200px 0px',  // pre-carica 200px prima che l'immagine entri in viewport
+  rootMargin: '200px 0px',   // pre-load 200px before entering viewport
   threshold: 0,
 });
 
@@ -234,31 +235,31 @@ document.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(im
 ```
 
 ```css
-/* Fade in immagini al caricamento */
 img[data-src] {
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-img.loaded {
-  opacity: 1;
-}
+img.loaded { opacity: 1; }
 ```
 
 ---
 
-## Bundle e Script — Caricamento Ottimizzato
+## Script Loading Strategy
 
 ```html
-<!-- Script non critico: defer o async -->
+<!-- Non-critical: defer (executes after DOM parsed, in order) -->
+<script src="/js/animations.js" defer></script>
 <script src="/js/analytics.js" defer></script>
+
+<!-- Independent non-critical: async (executes when downloaded, no order) -->
 <script src="/js/chat-widget.js" async></script>
 
-<!-- Script critico (interattività iniziale): defer con priorità -->
+<!-- Critical interactive JS: defer (not async — preserves execution order) -->
 <script src="/js/main.js" defer></script>
 
-<!-- Inline script piccoli che devono girare subito: ok in <head> -->
+<!-- Tiny inline scripts that must run immediately (theme, feature detection): OK in <head> -->
 <script>
-  // Solo: dark mode init, viewport fix, feature detection
+  // Apply saved theme before first paint to prevent flash
   const theme = localStorage.getItem('theme');
   if (theme) document.documentElement.dataset.theme = theme;
 </script>
@@ -266,20 +267,120 @@ img.loaded {
 
 ---
 
-## Formato Immagini
+## Image Format Guide
 
-| Formato | Usa per | Note |
+| Format | Use for | Notes |
 |---|---|---|
-| **WebP** | Foto, screenshot | 25-35% più piccolo di JPEG |
-| **AVIF** | Foto di alta qualità | 50% più piccolo di JPEG, supporto crescente |
-| **SVG** | Icone, loghi, illustrazioni | Infinitamente scalabile |
-| **PNG** | Immagini con trasparenza complessa | Solo se SVG non è possibile |
+| **WebP** | Photos, screenshots, UI images | 25-35% smaller than JPEG |
+| **AVIF** | High-quality photos | 50% smaller than JPEG — growing support |
+| **SVG** | Icons, logos, illustrations | Infinitely scalable, tiny file size |
+| **PNG** | Complex transparency | Only when SVG not possible |
+| **GIF** | Short looping animations | Use MP4/WebM instead — much smaller |
 
 ```html
-<!-- Picture element: AVIF → WebP → JPEG fallback -->
+<!-- Responsive image: AVIF → WebP → JPEG fallback -->
 <picture>
   <source srcset="hero.avif" type="image/avif">
   <source srcset="hero.webp" type="image/webp">
   <img src="hero.jpg" alt="..." width="1200" height="800" fetchpriority="high">
 </picture>
 ```
+
+---
+
+## INP — Interaction to Next Paint
+
+Users expect < 100ms response to input. Long tasks block the main thread.
+
+```javascript
+// ✅ Break up long tasks with scheduler.yield() or setTimeout
+async function processLargeDataset(items) {
+  for (let i = 0; i < items.length; i++) {
+    processItem(items[i]);
+
+    // Yield to browser every 50 items — allows input handling
+    if (i % 50 === 0) {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    }
+  }
+}
+
+// ✅ Use Web Workers for heavy computation (sorting, parsing, crypto)
+const worker = new Worker('/js/heavy-compute.js');
+worker.postMessage({ data: largeArray });
+worker.onmessage = e => updateUI(e.data);
+
+// ✅ Virtualize long lists — only render visible items
+// If rendering > 200 items: use virtual scrolling
+```
+
+---
+
+## CSS Containment
+
+Tell the browser which elements are independent — improves paint and layout performance:
+
+```css
+/* Full containment — nothing inside affects anything outside */
+.widget {
+  contain: strict;
+  /* = contain: size layout style paint — safest for isolated widgets */
+}
+
+/* Layout containment — internal layout doesn't affect page flow */
+.card {
+  contain: layout;
+}
+
+/* Paint containment — prevents painting outside bounds */
+.panel {
+  contain: paint;
+  /* Also creates stacking context — useful for z-index isolation */
+}
+
+/* content-visibility — skip rendering off-screen sections entirely */
+.below-fold-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;   /* estimated height to prevent CLS */
+}
+```
+
+---
+
+## Reduced Motion — Always Respect
+
+```css
+/* Wrap all decorative animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Preserve meaningful UI transitions */
+  .btn,
+  .nav__link {
+    transition-duration: 0.15s !important;  /* fast but not instant */
+  }
+}
+```
+
+---
+
+## Performance Budget
+
+Before shipping, verify:
+
+| Metric | Budget | Check with |
+|---|---|---|
+| Total page weight | < 500KB transferred | Chrome DevTools Network |
+| Hero image | < 150KB | Compress at squoosh.app |
+| Total JS | < 200KB | Bundle analyzer |
+| CSS | < 50KB | DevTools Coverage tab |
+| LCP element | Loaded in < 2.5s | Lighthouse |
+| Layout shifts | CLS < 0.1 | Lighthouse |
+| Unused CSS | < 20% | DevTools Coverage |

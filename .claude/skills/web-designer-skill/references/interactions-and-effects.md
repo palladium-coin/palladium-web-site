@@ -1,15 +1,29 @@
 # Interactions & Visual Effects
 
-Libreria di effetti visivi avanzati e micro-interazioni. Copia-incolla ready.
+Advanced visual effects and micro-interactions. Copy-paste ready.
 
 ---
 
-## 1. Glassmorphism — Sistema a 3 livelli di profondità
+## Design Principle: Every Element Has 5 States
 
-Non un flat glass layer. Usa profondità progressive per creare gerarchia visiva reale.
+Before implementing an interactive element, define all five states:
+
+| State | When | What changes |
+|---|---|---|
+| **Default** | At rest | Base appearance |
+| **Hover** | Mouse over (pointer devices only) | Lift, color, cursor hint |
+| **Focus-visible** | Keyboard navigation | Branded focus ring — never remove outline entirely |
+| **Active** | During click/tap | Scale down, immediate feedback |
+| **Disabled** | Not interactive | 40-50% opacity, cursor: not-allowed |
+
+---
+
+## 1. Glassmorphism — 3-Depth System
+
+Use depth levels progressively to create real visual hierarchy. Glassmorphism works **only** over texture, gradient, or image — never on solid flat backgrounds.
 
 ```css
-/* Livello 1 — Card background, elementi secondari */
+/* Depth 1 — Card backgrounds, secondary elements */
 .glass-1 {
   background: oklch(100% 0 0 / 0.04);
   backdrop-filter: blur(8px) saturate(150%);
@@ -18,7 +32,7 @@ Non un flat glass layer. Usa profondità progressive per creare gerarchia visiva
   border-radius: var(--radius-lg);
 }
 
-/* Livello 2 — Modal, drawer, overlay principali */
+/* Depth 2 — Modal, drawer, main overlays */
 .glass-2 {
   background: oklch(100% 0 0 / 0.08);
   backdrop-filter: blur(20px) saturate(180%);
@@ -28,7 +42,7 @@ Non un flat glass layer. Usa profondità progressive per creare gerarchia visiva
   border-radius: var(--radius-lg);
 }
 
-/* Livello 3 — Tooltip, popover, elementi in primo piano */
+/* Depth 3 — Tooltip, popover, foreground elements */
 .glass-3 {
   background: oklch(100% 0 0 / 0.15);
   backdrop-filter: blur(40px) saturate(200%);
@@ -38,7 +52,7 @@ Non un flat glass layer. Usa profondità progressive per creare gerarchia visiva
   border-radius: var(--radius-md);
 }
 
-/* Variante dark — per sfondi chiari */
+/* Dark glassmorphism — for light backgrounds */
 .glass-dark {
   background: oklch(0% 0 0 / 0.06);
   backdrop-filter: blur(12px) saturate(160%);
@@ -46,65 +60,132 @@ Non un flat glass layer. Usa profondità progressive per creare gerarchia visiva
 }
 ```
 
-**Regola**: Mai usare glassmorphism su sfondi piatti solidi — funziona solo quando sotto c'è texture, gradiente o immagine.
-
 ---
 
-## 2. SVG Filters — Effetti avanzati
+## 2. Button States — Complete System
 
-### Gooey Effect (blob che si fondono)
-
-```html
-<!-- Metti questo SVG nascosto in fondo al body -->
-<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
-  <defs>
-    <filter id="goo">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
-      <feColorMatrix in="blur" mode="matrix"
-        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
-        result="goo"/>
-      <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
-    </filter>
-  </defs>
-</svg>
-```
+Every button must have: default, hover, active, focus-visible, loading, disabled.
 
 ```css
-/* Applica il filtro al container */
-.goo-container {
-  filter: url(#goo);
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background  0.2s ease,
+    box-shadow  0.2s ease,
+    transform   0.15s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-/* Esempio: menu con blob */
-.blob-nav {
-  filter: url(#goo);
-  background: var(--surface-2);
-  padding: 0.5rem;
-  border-radius: 999px;
-  display: flex;
-  gap: 0;
+/* Ripple on click */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, white 0%, transparent 65%);
+  opacity: 0;
+  transform: scale(0);
+  border-radius: inherit;
 }
-.blob-nav a {
-  padding: 0.5rem 1.2rem;
-  border-radius: 999px;
-  transition: background 0.3s;
+.btn:active::after {
+  opacity: 0.18;
+  transform: scale(2.5);
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
-.blob-nav a:hover {
+
+.btn:hover:not(:disabled)  { transform: translateY(-1px); }
+.btn:active:not(:disabled) { transform: translateY(0) scale(0.98); transition-duration: 0.08s; }
+
+/* Branded focus ring — keyboard accessibility */
+.btn:focus-visible {
+  outline: 2.5px solid var(--brand);
+  outline-offset: 3px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- Variants --- */
+.btn-primary {
   background: var(--brand);
+  color: white;
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--brand) 30%, transparent);
 }
-```
-
-### Frosted Glow su elementi
-
-```css
-.glow-element {
-  filter: drop-shadow(0 0 12px var(--brand)) drop-shadow(0 0 24px oklch(from var(--brand) l c h / 0.4));
+.btn-primary:hover:not(:disabled) {
+  background: color-mix(in oklch, var(--brand) 85%, black);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--brand) 35%, transparent);
 }
 
-/* SVG icon glow */
-.icon-glow {
-  filter: drop-shadow(0 0 6px currentColor);
+.btn-secondary {
+  background: var(--surface-2);
+  color: var(--text-1);
+  border: 1.5px solid var(--border);
 }
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-1);
+  border: 1.5px solid transparent;
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+
+.btn-danger {
+  background: oklch(60% 0.22 20);
+  color: white;
+}
+.btn-danger:hover:not(:disabled) {
+  background: oklch(52% 0.22 20);
+  box-shadow: 0 6px 20px oklch(60% 0.22 20 / 0.35);
+}
+
+/* --- Loading state --- */
+.btn[data-loading] {
+  pointer-events: none;
+  color: transparent;
+}
+.btn[data-loading]::before {
+  content: '';
+  position: absolute;
+  width: 1.1em; height: 1.1em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin 0.6s linear infinite;
+  color: white;
+}
+.btn-secondary[data-loading]::before,
+.btn-ghost[data-loading]::before { color: var(--text-1); }
+
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+/* --- Sizes --- */
+.btn-sm { padding: 0.4rem 0.9rem;  font-size: 0.8rem; }
+.btn-lg { padding: 0.85rem 1.8rem; font-size: 1rem; }
+.btn-xl { padding: 1rem 2.2rem;    font-size: 1.1rem; }
 ```
 
 ---
@@ -121,9 +202,7 @@ Non un flat glass layer. Usa profondità progressive per creare gerarchia visiva
 ```
 
 ```css
-.field-float {
-  position: relative;
-}
+.field-float { position: relative; }
 
 .field-float input {
   width: 100%;
@@ -138,9 +217,7 @@ Non un flat glass layer. Usa profondità progressive per creare gerarchia visiva
   outline: none;
 }
 
-.field-float input:focus {
-  border-color: var(--brand);
-}
+.field-float input:focus { border-color: var(--brand); }
 
 .field-float label {
   position: absolute;
@@ -153,7 +230,7 @@ Non un flat glass layer. Usa profondità progressive per creare gerarchia visiva
   transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease, translate 0.2s ease;
 }
 
-/* Label flottante: placeholder=" " è necessario per :not(:placeholder-shown) */
+/* placeholder=" " is required for :not(:placeholder-shown) to work */
 .field-float input:focus ~ label,
 .field-float input:not(:placeholder-shown) ~ label {
   top: 0.55rem;
@@ -164,35 +241,26 @@ Non un flat glass layer. Usa profondità progressive per creare gerarchia visiva
   color: var(--brand);
 }
 
-/* Stato errore */
+/* Error state */
 .field-float.is-error input {
   border-color: oklch(60% 0.22 20);
   animation: field-shake 0.4s ease;
 }
 .field-float.is-error label { color: oklch(60% 0.22 20); }
 
-.field-float .field-error-msg {
-  font-size: 0.75rem;
-  color: oklch(60% 0.22 20);
-  margin-top: 0.3rem;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-/* Stato successo */
-.field-float.is-valid input { border-color: oklch(65% 0.2 140); }
+/* Success state */
+.field-float.is-valid input { border-color: oklch(65% 0.20 145); }
 
 @keyframes field-shake {
   0%, 100% { translate: 0; }
   20%       { translate: -6px 0; }
-  40%       { translate: 6px 0; }
+  40%       { translate:  6px 0; }
   60%       { translate: -4px 0; }
-  80%       { translate: 4px 0; }
+  80%       { translate:  4px 0; }
 }
 ```
 
-### Search Input con icona animata
+### Search Input with Animated Icon
 
 ```css
 .search-wrap {
@@ -234,203 +302,51 @@ Non un flat glass layer. Usa profondità progressive per creare gerarchia visiva
 
 ---
 
-## 4. Button States — Sistema Completo
-
-Ogni bottone deve avere: default, hover, active, focus-visible, loading, disabled.
+## 4. Neon Glow System
 
 ```css
-.btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1.4rem;
-  border: none;
-  border-radius: var(--radius-md);
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  overflow: hidden;
-  text-decoration: none;
-  white-space: nowrap;
-  transition:
-    background 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.15s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-/* Ripple effect on click */
-.btn::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, white 0%, transparent 65%);
-  opacity: 0;
-  transform: scale(0);
-  border-radius: inherit;
-}
-.btn:active::after {
-  opacity: 0.18;
-  transform: scale(2.5);
-  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
-}
-
-/* Hover lift */
-.btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-}
-.btn:active:not(:disabled) {
-  transform: translateY(0) scale(0.98);
-  transition-duration: 0.08s;
-}
-
-/* Focus ring branded */
-.btn:focus-visible {
-  outline: 2.5px solid var(--brand);
-  outline-offset: 3px;
-}
-
-/* Disabled */
-.btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* --- Varianti --- */
-
-.btn-primary {
-  background: var(--brand);
-  color: white;
-  box-shadow: 0 1px 3px oklch(from var(--brand) l c h / 0.3);
-}
-.btn-primary:hover:not(:disabled) {
-  background: color-mix(in oklch, var(--brand) 85%, black);
-  box-shadow: 0 6px 20px oklch(from var(--brand) l c h / 0.35);
-}
-
-.btn-secondary {
-  background: var(--surface-2);
-  color: var(--text-1);
-  border: 1.5px solid var(--border);
-}
-.btn-secondary:hover:not(:disabled) {
-  background: var(--surface-3, var(--surface-2));
-  border-color: var(--brand);
-  color: var(--brand);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--text-1);
-  border: 1.5px solid transparent;
-}
-.btn-ghost:hover:not(:disabled) {
-  background: var(--surface-2);
-  border-color: var(--border);
-}
-
-.btn-danger {
-  background: oklch(60% 0.22 20);
-  color: white;
-}
-.btn-danger:hover:not(:disabled) {
-  background: oklch(52% 0.22 20);
-  box-shadow: 0 6px 20px oklch(60% 0.22 20 / 0.35);
-}
-
-/* --- Loading state --- */
-.btn[data-loading] {
-  pointer-events: none;
-  color: transparent;
-}
-.btn[data-loading]::before {
-  content: '';
-  position: absolute;
-  width: 1.1em;
-  height: 1.1em;
-  border: 2px solid currentColor;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: btn-spin 0.6s linear infinite;
-  color: white;
-}
-.btn-secondary[data-loading]::before,
-.btn-ghost[data-loading]::before {
-  color: var(--text-1);
-}
-
-@keyframes btn-spin {
-  to { transform: rotate(360deg); }
-}
-
-/* --- Sizes --- */
-.btn-sm { padding: 0.4rem 0.9rem; font-size: 0.8rem; }
-.btn-lg { padding: 0.85rem 1.8rem; font-size: 1rem; }
-.btn-xl { padding: 1rem 2.2rem; font-size: 1.1rem; }
-```
-
----
-
-## 5. Neon Glow — Sistema
-
-```css
-:root {
-  --neon-brand: var(--brand, #ee5a24);
-}
-
-/* Testo neon */
 .neon-text {
-  color: var(--neon-brand);
+  color: var(--brand);
   text-shadow:
-    0 0 7px  var(--neon-brand),
-    0 0 10px var(--neon-brand),
-    0 0 21px var(--neon-brand),
-    0 0 42px oklch(from var(--neon-brand) l c h / 0.6);
+    0 0 7px  var(--brand),
+    0 0 10px var(--brand),
+    0 0 21px var(--brand),
+    0 0 42px color-mix(in srgb, var(--brand) 60%, transparent);
 }
 
-/* Bordo neon */
 .neon-border {
-  border: 1px solid var(--neon-brand);
+  border: 1px solid var(--brand);
   box-shadow:
-    0 0 5px  oklch(from var(--neon-brand) l c h / 0.4),
-    0 0 20px oklch(from var(--neon-brand) l c h / 0.25),
-    inset 0 0 5px oklch(from var(--neon-brand) l c h / 0.15);
+    0 0 5px  color-mix(in srgb, var(--brand) 40%, transparent),
+    0 0 20px color-mix(in srgb, var(--brand) 25%, transparent),
+    inset 0 0 5px color-mix(in srgb, var(--brand) 15%, transparent);
 }
 
-/* Neon pulsante */
-.neon-pulse {
-  animation: neon-flicker 2s ease-in-out infinite alternate;
-}
+.neon-pulse { animation: neon-flicker 2s ease-in-out infinite alternate; }
 
 @keyframes neon-flicker {
   0%, 100% {
     text-shadow:
-      0 0 7px var(--neon-brand),
-      0 0 21px var(--neon-brand),
-      0 0 42px oklch(from var(--neon-brand) l c h / 0.6);
+      0 0 7px var(--brand), 0 0 21px var(--brand),
+      0 0 42px color-mix(in srgb, var(--brand) 60%, transparent);
   }
   50% {
     text-shadow:
-      0 0 4px var(--neon-brand),
-      0 0 12px var(--neon-brand),
-      0 0 24px oklch(from var(--neon-brand) l c h / 0.4);
+      0 0 4px var(--brand), 0 0 12px var(--brand),
+      0 0 24px color-mix(in srgb, var(--brand) 40%, transparent);
   }
 }
+
+@media (prefers-reduced-motion: reduce) { .neon-pulse { animation: none; } }
 ```
 
 ---
 
-## 6. Parallax con CSS Variables
+## 5. Parallax with CSS Variables
 
-Zero layout thrash, GPU composited, passive listener.
+Zero layout thrash, GPU composited, passive listener:
 
 ```javascript
-// Inizializza una volta
 function initParallax() {
   let ticking = false;
 
@@ -447,27 +363,26 @@ function initParallax() {
   }, { passive: true });
 }
 
-// Chiama al DOMContentLoaded
 document.addEventListener('DOMContentLoaded', initParallax);
 ```
 
 ```css
-/* Usa --scroll-y in CSS con moltiplicatori di velocità */
+/* Use --scroll-y with different speed multipliers */
 .parallax-slow  { translate: 0 calc(var(--scroll-y, 0px) * -0.15); }
 .parallax-mid   { translate: 0 calc(var(--scroll-y, 0px) * -0.35); }
-.parallax-fast  { translate: 0 calc(var(--scroll-y, 0px) * -0.6);  }
-.parallax-bg    { translate: 0 calc(var(--scroll-y, 0px) * -0.08); } /* solo per sfondi */
+.parallax-fast  { translate: 0 calc(var(--scroll-y, 0px) * -0.6); }
+.parallax-bg    { translate: 0 calc(var(--scroll-y, 0px) * -0.08); }  /* background only */
 
-/* Parallax orizzontale per decorazioni */
+/* Horizontal parallax for decorative elements */
 .parallax-x-left  { translate: calc(var(--scroll-y, 0px) * -0.1) 0; }
 .parallax-x-right { translate: calc(var(--scroll-y, 0px) *  0.1) 0; }
 ```
 
 ---
 
-## 7. Canvas Aurora Background
+## 6. Canvas Aurora Background
 
-Classe JS leggera, zero dipendenze. Crea un cielo aurora animato come sfondo.
+Lightweight JS class, zero dependencies. Creates an animated aurora sky as background:
 
 ```html
 <canvas class="aurora-canvas" aria-hidden="true"></canvas>
@@ -483,11 +398,11 @@ Classe JS leggera, zero dipendenze. Crea un cielo aurora animato come sfondo.
   opacity: 0.6;
 }
 
-/* Versione CSS-only (alternativa leggera) */
+/* CSS-only alternative (lighter, no JS) */
 .aurora-css {
   background:
     radial-gradient(ellipse 80% 50% at 20% 40%,
-      oklch(62% 0.22 30 / 0.35) 0%, transparent 60%),
+      oklch(62% 0.22 30  / 0.35) 0%, transparent 60%),
     radial-gradient(ellipse 60% 40% at 80% 60%,
       oklch(65% 0.20 280 / 0.30) 0%, transparent 50%),
     radial-gradient(ellipse 100% 80% at 50% 100%,
@@ -500,6 +415,10 @@ Classe JS leggera, zero dipendenze. Crea un cielo aurora animato come sfondo.
   0%   { background-position: 0% 0%; }
   50%  { background-position: 100% 50%; }
   100% { background-position: 50% 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-css { animation: none; }
 }
 ```
 
@@ -532,11 +451,9 @@ class Aurora {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     orbs.forEach(orb => {
-      // move
       orb.x = ((orb.x + orb.vx) + 1) % 1;
       orb.y = ((orb.y + orb.vy) + 1) % 1;
 
-      // draw radial gradient
       const gx = orb.x * canvas.width;
       const gy = orb.y * canvas.height;
       const gr = canvas.width * orb.size;
@@ -551,50 +468,43 @@ class Aurora {
   start() {
     if (this._running) return;
     this._running = true;
-    const loop = () => {
-      if (!this._running) return;
-      this.draw();
-      requestAnimationFrame(loop);
-    };
+    const loop = () => { if (!this._running) return; this.draw(); requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
   }
 
   stop() { this._running = false; }
 }
 
-// Utilizzo
+// Usage:
 // const aurora = new Aurora(document.querySelector('.aurora-canvas'), {
-//   hues: [18, 260, 180],  // brand orange, purple, teal
+//   hues: [18, 260, 185],  // brand orange, purple, teal — match your palette
 //   speed: 0.0015,
 // });
 // aurora.start();
 
-// Pausa quando fuori viewport (performance)
+// Pause when off-screen (performance)
 // const io = new IntersectionObserver(([e]) => e.isIntersecting ? aurora.start() : aurora.stop());
 // io.observe(aurora.canvas);
 ```
 
 ---
 
-## 8. Custom Cursor
+## 7. Custom Cursor
 
-Solo su desktop (`pointer: fine`). Sempre rispettare `prefers-reduced-motion`.
+Only on desktop (`pointer: fine`). Always respect `prefers-reduced-motion`.
 
 ```html
-<!-- Inserisci prima di </body> -->
 <div class="cursor" aria-hidden="true"></div>
 <div class="cursor-ring" aria-hidden="true"></div>
 ```
 
 ```css
-/* Nascondi il cursore nativo solo su desktop */
 @media (pointer: fine) {
   * { cursor: none !important; }
 
   .cursor {
     position: fixed;
-    width: 9px;
-    height: 9px;
+    width: 9px; height: 9px;
     background: var(--brand);
     border-radius: 50%;
     pointer-events: none;
@@ -602,53 +512,34 @@ Solo su desktop (`pointer: fine`). Sempre rispettare `prefers-reduced-motion`.
     translate: -50% -50%;
     transition:
       transform 0.15s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1)),
-      width 0.3s ease,
-      height 0.3s ease,
-      opacity 0.3s ease;
+      width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
   }
 
   .cursor-ring {
     position: fixed;
-    width: 34px;
-    height: 34px;
-    border: 1.5px solid oklch(from var(--brand) l c h / 0.5);
+    width: 34px; height: 34px;
+    border: 1.5px solid color-mix(in srgb, var(--brand) 50%, transparent);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9998;
     translate: -50% -50%;
     transition:
-      left 0.08s linear,
-      top  0.08s linear,
-      width 0.3s ease,
-      height 0.3s ease,
-      border-color 0.3s ease,
-      opacity 0.3s ease;
+      left 0.08s linear, top 0.08s linear,
+      width 0.3s ease, height 0.3s ease,
+      border-color 0.3s ease, opacity 0.3s ease;
   }
 
-  /* Hover su link/bottoni: il dot scompare, il ring si espande */
+  /* On links/buttons: dot disappears, ring expands */
   body:has(a:hover) .cursor,
-  body:has(button:hover) .cursor {
-    opacity: 0;
-    transform: scale(0);
-  }
+  body:has(button:hover) .cursor { opacity: 0; transform: scale(0); }
   body:has(a:hover) .cursor-ring,
   body:has(button:hover) .cursor-ring {
-    width: 48px;
-    height: 48px;
+    width: 48px; height: 48px;
     border-color: var(--brand);
-    background: oklch(from var(--brand) l c h / 0.08);
-  }
-
-  /* Testo: cursore linea */
-  body:has(p:hover) .cursor,
-  body:has(input:hover) .cursor {
-    width: 2px;
-    height: 1.2em;
-    border-radius: 1px;
+    background: color-mix(in srgb, var(--brand) 8%, transparent);
   }
 }
 
-/* Disabilita completamente con reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   .cursor, .cursor-ring { display: none !important; }
 }
@@ -656,7 +547,6 @@ Solo su desktop (`pointer: fine`). Sempre rispettare `prefers-reduced-motion`.
 
 ```javascript
 function initCursor() {
-  // Solo su dispositivi con mouse preciso
   if (!window.matchMedia('(pointer: fine)').matches) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -664,24 +554,18 @@ function initCursor() {
   const ring   = document.querySelector('.cursor-ring');
   if (!cursor || !ring) return;
 
-  let mouseX = 0, mouseY = 0;
-
   document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = ring.style.left = `${mouseX}px`;
-    cursor.style.top  = cursor.style.top  = `${mouseY}px`;
-    ring.style.top = `${mouseY}px`;
+    const pos = `${e.clientX}px`;
+    cursor.style.left = ring.style.left = `${e.clientX}px`;
+    cursor.style.top  = `${e.clientY}px`;
+    ring.style.top    = `${e.clientY}px`;
   });
 
-  // Nascondi quando il mouse esce dalla finestra
   document.addEventListener('mouseleave', () => {
-    cursor.style.opacity = '0';
-    ring.style.opacity   = '0';
+    cursor.style.opacity = ring.style.opacity = '0';
   });
   document.addEventListener('mouseenter', () => {
-    cursor.style.opacity = '';
-    ring.style.opacity   = '';
+    cursor.style.opacity = ring.style.opacity = '';
   });
 }
 
@@ -690,16 +574,54 @@ document.addEventListener('DOMContentLoaded', initCursor);
 
 ---
 
-## 9. Grain Texture Overlay
+## 8. SVG Gooey Filter
 
-Aggiunge profondità e premium feel su sfondi piatti o gradienti.
+Blob elements that merge smoothly when they touch — creates liquid/organic feel:
+
+```html
+<!-- Hidden SVG — place once in body -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <filter id="goo">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+        result="goo"/>
+      <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+    </filter>
+  </defs>
+</svg>
+```
 
 ```css
-/* Applica come pseudo-elemento al container */
-.grain {
-  position: relative;
-  isolation: isolate;
+/* Apply filter to container */
+.goo-container { filter: url(#goo); }
+
+/* Gooey navigation pill */
+.blob-nav {
+  filter: url(#goo);
+  background: var(--surface-2);
+  padding: 0.5rem;
+  border-radius: 999px;
+  display: flex;
 }
+.blob-nav a {
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  transition: background 0.3s;
+}
+.blob-nav a:hover,
+.blob-nav a.active { background: var(--brand); }
+```
+
+---
+
+## 9. Grain Texture Overlay
+
+Adds premium tactile depth to any background:
+
+```css
+.grain { position: relative; isolation: isolate; }
 
 .grain::after {
   content: '';
@@ -707,24 +629,18 @@ Aggiunge profondità e premium feel su sfondi piatti o gradienti.
   inset: 0;
   pointer-events: none;
   z-index: 1;
+  /* Intensity: 0.025 subtle | 0.04 standard | 0.07 heavy */
   opacity: 0.04;
   border-radius: inherit;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
   mix-blend-mode: overlay;
 }
-
-/* Intensità: regola opacity */
-/* Sottile:  opacity: 0.025 */
-/* Standard: opacity: 0.04  */
-/* Forte:    opacity: 0.07  */
 ```
 
 ---
 
 ## 10. Animated Border Gradient
-
-Bordi animati con gradiente rotante via `@property`.
 
 ```css
 @property --angle {
@@ -746,10 +662,7 @@ Bordi animati con gradiente rotante via `@property`.
   border-radius: inherit;
   background: conic-gradient(
     from var(--angle),
-    var(--brand),
-    oklch(65% 0.20 280),
-    oklch(70% 0.18 160),
-    var(--brand)
+    var(--brand), oklch(65% 0.20 280), oklch(70% 0.18 160), var(--brand)
   );
   z-index: -1;
   animation: rotate-border 4s linear infinite;
@@ -764,18 +677,62 @@ Bordi animati con gradiente rotante via `@property`.
   z-index: -1;
 }
 
-@keyframes rotate-border {
-  to { --angle: 360deg; }
+@keyframes rotate-border { to { --angle: 360deg; } }
+
+/* Hover-only variant */
+.border-animated-hover::before { animation: none; opacity: 0; transition: opacity 0.3s; }
+.border-animated-hover:hover::before { opacity: 1; animation: rotate-border 3s linear infinite; }
+```
+
+---
+
+## 11. Tooltip
+
+```css
+[data-tooltip] {
+  position: relative;
 }
 
-/* Versione solo su hover */
-.border-animated-hover::before {
-  animation: none;
+[data-tooltip]::before,
+[data-tooltip]::after {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s;
+  translate: -50% 4px;
+  transition:
+    opacity 0.15s ease,
+    translate 0.15s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
 }
-.border-animated-hover:hover::before {
+
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  background: var(--surface-3, oklch(22% 0.035 245));
+  color: var(--text-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 6px);
+  padding: 0.35em 0.7em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px oklch(0% 0 0 / 0.25);
+  z-index: 100;
+}
+
+[data-tooltip]::after {
+  content: '';
+  border: 5px solid transparent;
+  border-top-color: var(--surface-3, oklch(22% 0.035 245));
+  bottom: calc(100% + 0px);
+  z-index: 101;
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::before,
+[data-tooltip]:focus-visible::after {
   opacity: 1;
-  animation: rotate-border 3s linear infinite;
+  translate: -50% 0;
 }
 ```
