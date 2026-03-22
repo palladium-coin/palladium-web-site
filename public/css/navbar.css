@@ -111,6 +111,17 @@
     .navbar-start {
         padding: 0.5rem 0;
     }
+
+    /* Download Wallet CTA in mobile menu */
+    .navbar-cta {
+        border-top: 1px solid oklch(28% 0.03 245);
+        padding: 1rem 1.25rem !important;
+    }
+
+    .navbar-cta .button {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 /* ── Download Wallet button ──────────────────────────────── */
