@@ -13,6 +13,9 @@
         0 4px 24px oklch(0% 0 0 / 0.35) !important;
     padding: 0.4rem 0;
     transition: background 0.3s ease, box-shadow 0.3s ease;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
 }
 
 /* ── Brand logo ──────────────────────────────────────────── */

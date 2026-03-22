@@ -1,73 +1,473 @@
 /* ============================================================
-   GET STARTED PAGE — Feature cards, download buttons
+   GET STARTED PAGE — Comparison card grid
    ============================================================ */
 
-/* ── Hero sections ────────────────────────────────────────── */
-.hero.is-small .hero-body {
-    padding: 2rem 1.5rem;
+/* ── Page wrapper ─────────────────────────────────────────── */
+.gs-section {
+    padding-top: 0;
+    padding-bottom: 4rem;
 }
 
-/* ── Checklist ────────────────────────────────────────────── */
-.custom-list {
+/* ── Aurora hero ──────────────────────────────────────────── */
+.gs-hero {
+    min-height: 26rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 1.5rem 4rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    border-radius: var(--radius-xl, 28px);
+    overflow: hidden;
+    position: relative;
+}
+
+.gs-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.gs-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--brand, #00C8C8);
+    margin-bottom: 1rem;
+}
+
+.gs-title {
+    font-family: var(--font-display, 'Syne', sans-serif);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text-1, #f0f0f0);
+    margin-bottom: 1rem;
+}
+
+.gs-accent {
+    color: var(--brand, #00C8C8);
+}
+
+.gs-subtitle {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--text-2, #9ca3af);
+    line-height: 1.65;
+    max-width: 55ch;
+    margin: 0 auto;
+}
+
+/* ── Section intro ────────────────────────────────────────── */
+.gs-intro {
+    margin: 3rem auto 2.5rem;
+    max-width: 640px;
+}
+
+.gs-intro-title {
+    font-family: var(--font-display, 'Syne', sans-serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--text-1, #f0f0f0);
+    margin-bottom: 0.75rem;
+}
+
+.gs-intro-sub {
+    font-size: 0.95rem;
+    color: var(--text-2, #9ca3af);
+    line-height: 1.6;
+}
+
+/* ── Comparison grid ──────────────────────────────────────── */
+.gs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    max-width: 920px;
+    margin-inline: auto;
+    margin-bottom: 3rem;
+}
+
+/* ── Cards ────────────────────────────────────────────────── */
+.gs-card {
+    background: var(--surface-1, oklch(12% 0.045 245));
+    border: 1px solid var(--border, oklch(28% 0.03 245));
+    border-radius: var(--radius-xl, 28px);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition:
+        transform  0.3s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1)),
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.gs-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px oklch(0% 0 0 / 0.35);
+}
+
+.gs-card--node {
+    border-top: 3px solid var(--brand, #00C8C8);
+}
+
+.gs-card--node:hover {
+    border-color: var(--brand, #00C8C8);
+    box-shadow:
+        0 16px 48px oklch(0% 0 0 / 0.3),
+        0 0 0 1px oklch(78% 0.18 195 / 0.2);
+}
+
+.gs-card--wallet {
+    border-top: 3px solid oklch(65% 0.20 145);
+}
+
+.gs-card--wallet:hover {
+    border-color: oklch(65% 0.20 145 / 0.6);
+    box-shadow:
+        0 16px 48px oklch(0% 0 0 / 0.3),
+        0 0 0 1px oklch(65% 0.20 145 / 0.15);
+}
+
+/* ── Card badge ───────────────────────────────────────────── */
+.gs-card-badge {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-full, 9999px);
+    background: oklch(78% 0.18 195 / 0.12);
+    color: var(--brand, #00C8C8);
+    border: 1px solid oklch(78% 0.18 195 / 0.3);
+}
+
+.gs-card-badge--wallet {
+    background: oklch(65% 0.20 145 / 0.1);
+    color: oklch(65% 0.20 145);
+    border-color: oklch(65% 0.20 145 / 0.3);
+}
+
+/* ── Card icon ────────────────────────────────────────────── */
+.gs-card-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: var(--radius-lg, 20px);
+    background: oklch(78% 0.18 195 / 0.12);
+    border: 1px solid oklch(78% 0.18 195 / 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: var(--brand, #00C8C8);
+    margin-bottom: 1.25rem;
+}
+
+.gs-card-icon--wallet {
+    background: oklch(65% 0.20 145 / 0.1);
+    border-color: oklch(65% 0.20 145 / 0.25);
+    color: oklch(65% 0.20 145);
+}
+
+/* ── Card content ─────────────────────────────────────────── */
+.gs-card-title {
+    font-family: var(--font-display, 'Syne', sans-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-1, #f0f0f0);
+    margin-bottom: 0.25rem;
+}
+
+.gs-card-type {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-3, oklch(48% 0.012 230));
+    margin-bottom: 1rem;
+}
+
+.gs-card-desc {
+    font-size: 0.9rem;
+    color: var(--text-2, #9ca3af);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+}
+
+/* ── Ideal for callout ────────────────────────────────────── */
+.gs-ideal {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    background: oklch(78% 0.18 195 / 0.06);
+    border-left: 3px solid var(--brand, #00C8C8);
+    padding: 0.6rem 0.875rem;
+    border-radius: 0 var(--radius-sm, 6px) var(--radius-sm, 6px) 0;
+    margin-bottom: 1.25rem;
+}
+
+.gs-card--wallet .gs-ideal {
+    background: oklch(65% 0.20 145 / 0.06);
+    border-color: oklch(65% 0.20 145);
+}
+
+.gs-ideal-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--brand, #00C8C8);
+    white-space: nowrap;
+}
+
+.gs-card--wallet .gs-ideal-label {
+    color: oklch(65% 0.20 145);
+}
+
+.gs-ideal-value {
+    font-size: 0.85rem;
+    color: var(--text-1, #f0f0f0);
+    font-weight: 500;
+}
+
+/* ── Feature list ─────────────────────────────────────────── */
+.gs-features {
     list-style: none;
-    padding-left: 0;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    flex: 1;
+}
+
+.gs-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding: 0.4rem 0;
+    font-size: 0.88rem;
+    color: var(--text-2, #9ca3af);
+    border-bottom: 1px solid var(--border, oklch(28% 0.03 245));
+    line-height: 1.45;
+}
+
+.gs-features li:last-child {
+    border-bottom: none;
+}
+
+.gs-features li .fas.fa-check {
+    color: var(--brand, #00C8C8);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+}
+
+.gs-card--wallet .gs-features li .fas.fa-check {
+    color: oklch(65% 0.20 145);
+}
+
+/* ── Card footer ──────────────────────────────────────────── */
+.gs-card-footer {
+    margin-top: auto;
+}
+
+.gs-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full, 9999px);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+        transform  0.25s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1)),
+        box-shadow 0.25s ease,
+        background 0.2s ease;
+}
+
+.gs-btn:hover {
+    transform: translateY(-2px);
+}
+
+.gs-btn--primary {
+    background: var(--brand, #00C8C8);
+    color: oklch(10% 0.02 245);
+    box-shadow: 0 4px 16px oklch(78% 0.18 195 / 0.35);
+}
+
+.gs-btn--primary:hover {
+    box-shadow: 0 8px 24px oklch(78% 0.18 195 / 0.5);
+}
+
+.gs-btn--wallet {
+    background: oklch(65% 0.20 145);
+    color: oklch(10% 0.02 245);
+    box-shadow: 0 4px 16px oklch(65% 0.20 145 / 0.35);
+}
+
+.gs-btn--wallet:hover {
+    box-shadow: 0 8px 24px oklch(65% 0.20 145 / 0.5);
+}
+
+.gs-card-note {
+    font-size: 0.75rem;
+    color: var(--text-3, oklch(48% 0.012 230));
+    text-align: center;
     margin-top: 0.75rem;
 }
 
-.custom-list li {
-    position: relative;
-    padding-left: 2rem;
-    margin-bottom: 0.5rem;
+.gs-card-note .fas {
+    margin-right: 0.3rem;
+}
+
+/* ── Comparison table ─────────────────────────────────────── */
+.gs-compare {
+    background: var(--surface-1, oklch(12% 0.045 245));
+    border: 1px solid var(--border, oklch(28% 0.03 245));
+    border-radius: var(--radius-xl, 28px);
+    overflow: hidden;
+    max-width: 920px;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+}
+
+.gs-compare-title {
+    font-family: var(--font-display, 'Syne', sans-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-1, #f0f0f0);
+    padding: 1.25rem 1.5rem 0.75rem;
+    margin-bottom: 0;
+}
+
+.gs-compare-table {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+}
+
+.gs-compare-head,
+.gs-compare-row {
+    display: contents;
+}
+
+.gs-compare-head > span,
+.gs-compare-row > span {
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border, oklch(28% 0.03 245));
+    font-size: 0.85rem;
+}
+
+.gs-compare-head > span {
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-3, oklch(48% 0.012 230));
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.gs-th--node {
+    color: var(--brand, #00C8C8) !important;
+    gap: 0.4rem;
+    justify-content: center;
+}
+
+.gs-th--wallet {
+    color: oklch(65% 0.20 145) !important;
+    gap: 0.4rem;
+    justify-content: center;
+}
+
+.gs-compare-label {
     color: var(--text-2, #9ca3af);
-    line-height: 1.5;
+    font-weight: 500;
 }
 
-.custom-list li::before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: var(--brand, #00C8C8);
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-/* ── "Ideal for" callout ──────────────────────────────────── */
-.ideal-for {
-    background: oklch(78% 0.18 195 / 0.08);
-    border-left: 4px solid var(--brand, #00C8C8);
-    padding: 0.75rem 1rem;
-    margin: 1rem 0;
-    border-radius: 0 var(--radius-sm, 6px) var(--radius-sm, 6px) 0;
+.gs-compare-cell {
+    justify-content: center;
     color: var(--text-1, #f0f0f0);
 }
 
-.ideal-for strong {
-    color: var(--text-1, #f0f0f0);
-    font-weight: 600;
+.gs-compare-row:last-child > span {
+    border-bottom: none;
 }
 
-/* ── Content text ─────────────────────────────────────────── */
-.content p {
-    color: var(--text-2, #9ca3af);
-    line-height: 1.65;
-    margin-bottom: 0.5rem;
+.gs-compare-row:nth-child(even) > span {
+    background: oklch(14% 0.04 245 / 0.5);
 }
 
-.content strong {
-    color: var(--text-1, #f0f0f0);
-    font-weight: 600;
+/* ── Tags ─────────────────────────────────────────────────── */
+.gs-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full, 9999px);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-/* ── Responsive ───────────────────────────────────────────── */
-@media screen and (max-width: 768px) {
-    .hero.is-small .hero-body {
-        padding: 1.5rem 1rem;
+.gs-tag--ok {
+    background: oklch(65% 0.20 145 / 0.12);
+    color: oklch(65% 0.20 145);
+    border: 1px solid oklch(65% 0.20 145 / 0.3);
+}
+
+.gs-tag--warn {
+    background: oklch(75% 0.15 55 / 0.12);
+    color: oklch(75% 0.15 55);
+    border: 1px solid oklch(75% 0.15 55 / 0.3);
+}
+
+.gs-icon-ok { color: oklch(65% 0.20 145); font-size: 1rem; }
+.gs-icon-no { color: oklch(55% 0.18 25);  font-size: 1rem; }
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .gs-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .gs-hero {
+        min-height: auto;
+        padding: 4rem 1.25rem 3rem;
+        border-radius: var(--radius-lg, 20px);
     }
 
-    .custom-list li {
-        margin-bottom: 0.4rem;
-        padding-left: 1.5rem;
-        font-size: 0.9rem;
+    .gs-card {
+        padding: 1.5rem;
+        border-radius: var(--radius-lg, 20px);
+    }
+
+    .gs-card-badge {
+        position: static;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    .gs-compare-table {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .gs-compare-head > span,
+    .gs-compare-row > span {
+        padding: 0.7rem 0.75rem;
+        font-size: 0.78rem;
+    }
+
+    .gs-compare-label {
+        font-size: 0.78rem;
     }
 }

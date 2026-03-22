@@ -14,22 +14,22 @@
     <link rel="icon" type="image/png" href="assets/icons/palladium.png">
     <link rel="shortcut icon" href="assets/icons/palladium.png">
     <!-- Primary Meta Tags -->
-    <title>Palladium Decentralize, PoW, Fast, Crypto, Coin, Mining</title>
-    <meta name="title" content="Palladium">
-    <meta name="description" content="Decentralize, PoW, Fast">
-    <meta name="keywords" content="palladium, palladium-coin, palladiumcoin, crypto, mining, blockchain, cryptocurrency, bitcoin, litecoin">
+    <title>Mining — Palladium</title>
+    <meta name="title" content="Mining — Palladium">
+    <meta name="description" content="Mine Palladium with SHA-256 ASICs through Poolladium, our official solo mining pool built on ckpool.">
+    <meta name="keywords" content="palladium, mining, SHA-256, ASIC, poolladium, ckpool, stratum, crypto">
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Palladium">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://palladium-coin.com/">
-    <meta property="og:title" content="Palladium">
-    <meta property="og:description" content="Decentralize, PoW, Fast">
+    <meta property="og:title" content="Mining — Palladium">
+    <meta property="og:description" content="Mine Palladium with SHA-256 ASICs through Poolladium.">
     <meta property="og:image" content="">
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://twitter.com/Palladium_coin">
-    <meta property="twitter:title" content="Palladium">
-    <meta property="twitter:description" content="Decentralize, PoW, Fast">
+    <meta property="twitter:title" content="Mining — Palladium">
+    <meta property="twitter:description" content="Mine Palladium with SHA-256 ASICs through Poolladium.">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,128 +49,132 @@
 </head>
 
 <body>
-    
-    <section class="section">
+    <section class="section mn-section">
         <div class="container">
-            <!-- Hero Section -->
-            <div class="hero aurora-hero">
-                <div class="hero-body mt-nav">
-                    <div class="has-text-centered mb-6" data-animate="fade">
-                        <h1 class="title is-1 has-text-white mb-4">
-                            <span class="has-text-primary">Mine</span> Palladium
-                        </h1>
-                        <h2 class="subtitle is-4 has-text-white-ter mb-5">
-                            Join the Palladium Network and Start Mining Today
-                        </h2>
-                        <div class="content is-medium has-text-white-ter">
-                            <p class="mb-4">
-                                Palladium uses the SHA-256d Proof-of-Work algorithm, the same cryptographic standard as Bitcoin. 
-                                This choice lets miners reuse existing SHA-256d ASICs without extra configuration, 
-                                leveraging proven hardware and familiar tooling already deployed in the Bitcoin network.
-                            </p>
-                            <p class="mb-4">
-                                Join our mining community and contribute to the network while earning PLM rewards through proven mining infrastructure.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Network Stats Section -->
-            <div class="network-stats-section mb-6">
-                <div class="columns is-centered">
-                    <div class="column is-4-desktop is-12-mobile">
-                        <div class="stat-card">
-                            <p class="stat-label"><i class="fas fa-cubes mr-2"></i>Block Height</p>
-                            <p class="stat-value stat-loading" id="stat-block-height">—</p>
-                        </div>
-                    </div>
-                    <div class="column is-4-desktop is-12-mobile">
-                        <div class="stat-card">
-                            <p class="stat-label"><i class="fas fa-bolt mr-2"></i>Network Hashrate</p>
-                            <p class="stat-value stat-loading" id="stat-hashrate">—</p>
-                        </div>
-                    </div>
-                    <div class="column is-4-desktop is-12-mobile">
-                        <div class="stat-card">
-                            <p class="stat-label"><i class="fas fa-tachometer-alt mr-2"></i>Difficulty</p>
-                            <p class="stat-value stat-loading" id="stat-difficulty">—</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Solo Mining Pool Section -->
-            <div class="solo-mining-section mb-6">
-                <div class="has-text-centered mb-5">
-                    <h2 class="title is-3 has-text-white mb-5">
-                        <i class="fas fa-pickaxe has-text-primary mr-3"></i>
-                        Poolladium (Solo Mode)
-                    </h2>
-                    <p class="subtitle is-5 has-text-white-ter">
-                        Poolladium works in solo mode and supports ASIC miners via Stratum protocol
+            <!-- ── Aurora hero ───────────────────────────────── -->
+            <div class="aurora-hero mn-hero grain">
+                <div class="mn-hero-inner has-text-centered" data-animate="fade">
+                    <p class="mn-eyebrow">SHA-256 Proof-of-Work</p>
+                    <h1 class="mn-title"><span class="mn-accent">Mine</span> Palladium</h1>
+                    <p class="mn-subtitle">
+                        Reuse your existing SHA-256 ASICs — same algorithm as Bitcoin, 2-minute blocks, solo payouts direct to your wallet.
                     </p>
                 </div>
+            </div>
 
-                <div class="columns is-centered">
-                    <div class="column is-7-desktop is-10-tablet is-12-mobile">
-                        <div class="mining-panel">
-                            <div class="mining-panel-header">
-                                <i class="fas fa-server mr-2"></i>Miner Configuration
-                            </div>
-                            <div class="mining-config-grid">
-                                <div class="config-row">
-                                    <span class="config-label"><i class="fas fa-network-wired mr-2"></i>Stratum URL</span>
-                                    <span class="config-value">palladiumblockchain.net</span>
-                                </div>
-                                <div class="config-row">
-                                    <span class="config-label"><i class="fas fa-plug mr-2"></i>Port</span>
-                                    <span class="config-value">3333</span>
-                                </div>
-                                <div class="config-row">
-                                    <span class="config-label"><i class="fas fa-broadcast-tower mr-2"></i>High Difficulty Port</span>
-                                    <span class="config-value">4444</span>
-                                </div>
-                                <div class="config-row">
-                                    <span class="config-label"><i class="fas fa-user mr-2"></i>Username</span>
-                                    <span class="config-value config-value--dim">&lt;your palladium address&gt;</span>
-                                </div>
-                                <div class="config-row">
-                                    <span class="config-label"><i class="fas fa-key mr-2"></i>Password</span>
-                                    <span class="config-value">x</span>
-                                </div>
-                            </div>
-                            <div class="mining-note">
-                                <div class="mining-note-icon"><i class="fas fa-info-circle"></i></div>
-                                <div class="mining-note-content">
-                                    <p class="mining-note-title">Solo Mining Policy</p>
-                                    <p class="mining-note-text">Coinbase rewards from valid blocks mined through Poolladium are paid directly to the configured payout address.</p>
-                                    <p class="mining-note-text">Poolladium is built on <strong>ckpool</strong>, implemented in C and assembly for high performance and low overhead.</p>
-                                    <div class="mining-note-endpoints">
-                                        <p class="mining-note-endpoints-title">Stratum Endpoints (Full URL)</p>
-                                        <div class="mining-note-endpoint-row">
-                                            <span class="mining-note-endpoint-label">Standard</span>
-                                            <code class="mining-note-endpoint-url">stratum+tcp://palladiumblockchain.net:3333</code>
-                                        </div>
-                                        <div class="mining-note-endpoint-row">
-                                            <span class="mining-note-endpoint-label">High Difficulty</span>
-                                            <code class="mining-note-endpoint-url">stratum+tcp://palladiumblockchain.net:4444</code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pool-dashboard-action">
-                                <a href="pool.html" class="button is-warning is-medium pool-dashboard-button">
-                                    <span class="icon"><i class="fas fa-chart-line"></i></span>
-                                    <span>Open Pool Dashboard</span>
-                                </a>
-                            </div>
+            <!-- ── Network stats ─────────────────────────────── -->
+            <div class="mn-stats-wrap" data-animate="fade">
+                <p class="mn-section-label"><i class="fas fa-signal"></i> Live Network Stats</p>
+                <div class="mn-stats">
+                    <div class="mn-stat">
+                        <p class="mn-stat-label"><i class="fas fa-cubes"></i> Block Height</p>
+                        <p class="mn-stat-value stat-loading" id="stat-block-height">—</p>
+                    </div>
+                    <div class="mn-stat">
+                        <p class="mn-stat-label"><i class="fas fa-bolt"></i> Network Hashrate</p>
+                        <p class="mn-stat-value stat-loading" id="stat-hashrate">—</p>
+                    </div>
+                    <div class="mn-stat">
+                        <p class="mn-stat-label"><i class="fas fa-tachometer-alt"></i> Difficulty</p>
+                        <p class="mn-stat-value stat-loading" id="stat-difficulty">—</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── How to start ──────────────────────────────── -->
+            <div class="mn-steps-wrap" data-animate="fade">
+                <p class="mn-section-label"><i class="fas fa-list-ol"></i> How to Start Mining</p>
+                <div class="mn-steps">
+                    <div class="mn-step">
+                        <div class="mn-step-num">1</div>
+                        <div class="mn-step-body">
+                            <h3 class="mn-step-title">Get a Palladium address</h3>
+                            <p class="mn-step-desc">Download PalladiumCore or Pallectrum and generate a receiving address. This is where your block rewards will land.</p>
+                            <a href="get_started.html" class="mn-step-link">Download wallet <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="mn-step">
+                        <div class="mn-step-num">2</div>
+                        <div class="mn-step-body">
+                            <h3 class="mn-step-title">Configure your miner</h3>
+                            <p class="mn-step-desc">Point your SHA-256 ASIC at <code>palladiumblockchain.net:3333</code>. Use your PLM address as username, <code>x</code> as password.</p>
+                        </div>
+                    </div>
+                    <div class="mn-step">
+                        <div class="mn-step-num">3</div>
+                        <div class="mn-step-body">
+                            <h3 class="mn-step-title">Track your stats</h3>
+                            <p class="mn-step-desc">Open the Poolladium dashboard to monitor your hashrate, submitted shares, and any blocks found.</p>
+                            <a href="pool.html" class="mn-step-link">Open dashboard <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
 
-        </div>
+            <!-- ── Pool dashboard CTA ───────────────────────── -->
+            <a href="pool.html" class="mn-cta-banner" data-animate="fade">
+                <div class="mn-cta-banner-text">
+                    <p class="mn-cta-banner-title"><i class="fas fa-chart-line"></i> Poolladium Dashboard</p>
+                    <p class="mn-cta-banner-sub">Track your hashrate, submitted shares, and blocks found in real time.</p>
+                </div>
+                <span class="mn-cta-banner-btn">Open Dashboard <i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <!-- ── Poolladium config panel ────────────────────── -->
+            <div class="mn-panel-wrap" data-animate="fade">
+                <div class="mn-panel-header-row">
+                    <div>
+                        <p class="mn-section-label"><i class="fas fa-server"></i> Poolladium — Solo Mode</p>
+                        <p class="mn-panel-sub">Built on ckpool (C &amp; assembly) · ASIC-ready · Stratum protocol</p>
+                    </div>
+                </div>
+
+                <div class="mn-panel">
+                    <div class="mn-panel-section-title">Miner Configuration</div>
+                    <div class="mn-config">
+                        <div class="mn-config-row">
+                            <span class="mn-config-label"><i class="fas fa-network-wired"></i> Stratum URL</span>
+                            <code class="mn-config-value">palladiumblockchain.net</code>
+                        </div>
+                        <div class="mn-config-row">
+                            <span class="mn-config-label"><i class="fas fa-plug"></i> Standard Port</span>
+                            <code class="mn-config-value">3333</code>
+                        </div>
+                        <div class="mn-config-row">
+                            <span class="mn-config-label"><i class="fas fa-broadcast-tower"></i> High Difficulty Port</span>
+                            <code class="mn-config-value">4444</code>
+                        </div>
+                        <div class="mn-config-row">
+                            <span class="mn-config-label"><i class="fas fa-user"></i> Username</span>
+                            <code class="mn-config-value mn-config-value--dim">&lt;your PLM address&gt;</code>
+                        </div>
+                        <div class="mn-config-row">
+                            <span class="mn-config-label"><i class="fas fa-key"></i> Password</span>
+                            <code class="mn-config-value">x</code>
+                        </div>
+                    </div>
+
+                    <div class="mn-panel-section-title mn-panel-section-title--spaced">Full Stratum Endpoints</div>
+                    <div class="mn-endpoints">
+                        <div class="mn-endpoint">
+                            <span class="mn-endpoint-label">Standard</span>
+                            <code class="mn-endpoint-url">stratum+tcp://palladiumblockchain.net:3333</code>
+                        </div>
+                        <div class="mn-endpoint">
+                            <span class="mn-endpoint-label">High Diff</span>
+                            <code class="mn-endpoint-url">stratum+tcp://palladiumblockchain.net:4444</code>
+                        </div>
+                    </div>
+
+                    <div class="mn-note">
+                        <i class="fas fa-info-circle mn-note-icon"></i>
+                        <p>Coinbase rewards from valid blocks are paid <strong>directly to your configured address</strong>. No pool fees apply in solo mode.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container -->
     </section>
 </body>
 <script src="js/config.js"></script>

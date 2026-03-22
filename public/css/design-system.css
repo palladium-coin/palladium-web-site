@@ -81,6 +81,7 @@ html, body {
   word-break: break-word;
 }
 
+
 /* Prevent headings from breaking in ugly spots */
 h1, h2, h3, h4, h5, h6,
 .title, .subtitle, .section-title {
