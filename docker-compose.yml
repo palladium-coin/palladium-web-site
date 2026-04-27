@@ -20,6 +20,11 @@ services:
       - API_KEY=${API_KEY}
     networks:
       - palladium
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "3"
     # If running behind a firewall/NAT, ensure port 443 is reachable from the Internet
 
 volumes:
