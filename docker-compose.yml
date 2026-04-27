@@ -19,7 +19,7 @@ services:
       - CADDY_HOST=${CADDY_HOST}
       - API_KEY=${API_KEY}
     networks:
-      - palladium-net
+      - palladium
     # If running behind a firewall/NAT, ensure port 443 is reachable from the Internet
 
 volumes:
@@ -27,5 +27,5 @@ volumes:
   caddy_config:
 
 networks:
-  palladium-net:
-    external: true
+  palladium:
+    name: palladium 
