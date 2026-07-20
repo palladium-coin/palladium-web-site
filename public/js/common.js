@@ -89,11 +89,12 @@ class PalladiumLoader {
             // Create containers if they don't exist
             this.createContainers();
 
-            // Load navbar and footer in parallel with cache-busting
+            // Load navbar, footer and the external-links map in parallel
             const cacheBust = `?v=${Date.now()}`;
-            const [navbarData, footerData] = await Promise.all([
+            const [navbarData, footerData, links] = await Promise.all([
                 this.fetchComponent('/partials/navbar.html' + cacheBust),
-                this.fetchComponent('/partials/footer.html' + cacheBust)
+                this.fetchComponent('/partials/footer.html' + cacheBust),
+                this.fetchLinks()
             ]);
 
             // Inject components
@@ -103,6 +104,9 @@ class PalladiumLoader {
             // Initialize navbar functionality
             this.initNavbarBurger();
             this.setActiveNavbarItem();
+
+            // Apply centralized external links (navbar/footer + static page markup)
+            this.applyLinks(links);
 
             // Hide loader after everything is loaded
             setTimeout(() => this.hideLoader(), 300);
@@ -158,6 +162,28 @@ class PalladiumLoader {
         if (container) {
             container.innerHTML = data;
         }
+    }
+
+    async fetchLinks() {
+        // links.json is the single source of truth for external URLs (repo, socials, explorer, ...)
+        // Markup keeps the current URL as a hardcoded fallback in href, so a fetch failure
+        // never breaks a link — it just goes stale until the next successful load.
+        try {
+            const response = await fetch('/links.json', { cache: 'no-store' });
+            if (!response.ok) throw new Error(`Failed to fetch links.json: ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            console.error('Error loading links.json:', error);
+            return null;
+        }
+    }
+
+    applyLinks(links) {
+        if (!links) return;
+        document.querySelectorAll('[data-link]').forEach(el => {
+            const url = links[el.dataset.link];
+            if (url) el.href = url;
+        });
     }
 
     initNavbarBurger() {
