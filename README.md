@@ -11,7 +11,7 @@ Browser
   ├─ static files ──► Caddy (prod) / live-server (dev)
   │                        serving public/
   │
-  └─ /api/* ──────────────► palladium-stack (Flask on port 8080)
+  └─ /api/* ──────────────► palladium-stack (Flask, port set via API_PORT)
                              API key injected by Caddy server-side
 ```
 
@@ -137,6 +137,7 @@ Edit `.env`:
 |---|---|
 | `CADDY_HOST` | your domain, e.g. `palladiumblockchain.net` |
 | `API_KEY` | must match `API_KEY` in palladium-stack's `.env` |
+| `API_PORT` | port palladium-stack's Flask app listens on inside its container (default `8080`) |
 | `POOL_LOG_DIR` | **required** — absolute path to ckpool logs on the host |
 
 `API_BASE_URL` is not needed in production (leave empty).
@@ -163,7 +164,7 @@ Caddy will automatically obtain and renew HTTPS certificates via Let's Encrypt.
 |---|---|
 | HTTPS | Auto via Let's Encrypt |
 | `www` redirect | `www.CADDY_HOST` → `CADDY_HOST` |
-| API proxy | `/api/*` → `palladium-dashboard:8080`, injects `X-API-Key` header |
+| API proxy | `/api/*` → `palladium-dashboard:${API_PORT}` (default `8080`), injects `X-API-Key` header |
 | Static files | Served from `public/` |
 | Pool data | `POOL_LOG_DIR` mounted read-only at `/srv/pool-data` — no sync script |
 | Security headers | HSTS, X-Frame-Options, X-Content-Type-Options, etc. |

@@ -18,6 +18,7 @@ services:
     environment:
       - CADDY_HOST=${CADDY_HOST}
       - API_KEY=${API_KEY}
+      - API_PORT=${API_PORT:-8080}
     networks:
       - palladium
     logging:

@@ -19,10 +19,10 @@ Dev requires a `.env` (copy from `.env.example`). `API_KEY` must match the palla
 
 ## Architecture
 
-The site depends on **palladium-stack**, a separate Flask backend on port 8080, for live blockchain data (block height, hashrate, peers, pool stats).
+The site depends on **palladium-stack**, a separate Flask backend, for live blockchain data (block height, hashrate, peers, pool stats).
 
 - **Dev**: the browser calls the API directly at `API_BASE_URL` with an `X-API-Key` header, both baked into the generated `public/js/config.js` ([scripts/generate-config.js](scripts/generate-config.js)).
-- **Prod**: Caddy serves `public/` and proxies `/api/*` to the `palladium-dashboard:8080` container (shared `palladium` Docker network), injecting the API key server-side. `API_BASE_URL` is empty; `config.js` is generated with `--prod` at Docker build time.
+- **Prod**: Caddy serves `public/` and proxies `/api/*` to the `palladium-dashboard:{$API_PORT:8080}` container (shared `palladium` Docker network), injecting the API key server-side. `API_PORT` (default `8080`) is the port Flask listens on inside the palladium-stack container — set it in `.env` if that changes. `API_BASE_URL` is empty; `config.js` is generated with `--prod` at Docker build time.
 
 All page JS builds requests with `apiUrl(CONFIG.ENDPOINTS.X)` and `apiHeaders()` from config.js.
 

@@ -1,10 +1,10 @@
 {$CADDY_HOST} {
     root * /srv
 
-    # Proxy API calls to the palladium-stack dashboard (Flask on port 8080)
+    # Proxy API calls to the palladium-stack dashboard (Flask, port set via API_PORT)
     handle /api/* {
         request_header X-API-Key {$API_KEY}
-        reverse_proxy palladium-dashboard:8080
+        reverse_proxy palladium-dashboard:{$API_PORT:8080}
     }
 
     file_server
