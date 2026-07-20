@@ -44,7 +44,7 @@ class PalladiumLoader {
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+                background: #0a0b0d;
                 z-index: 9999;
                 display: flex;
                 justify-content: center;
@@ -54,8 +54,8 @@ class PalladiumLoader {
                 <div id="loader" style="
                     width: 60px;
                     height: 60px;
-                    border: 4px solid rgba(238, 90, 36, 0.3);
-                    border-top: 4px solid #EE5A24;
+                    border: 4px solid rgba(224, 168, 76, 0.25);
+                    border-top: 4px solid #e0a84c;
                     border-radius: 50%;
                     animation: spin 1s linear infinite;
                 "></div>

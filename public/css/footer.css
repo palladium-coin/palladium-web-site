@@ -22,6 +22,7 @@ body > main {
 .modern-footer {
     background: var(--surface-1, oklch(12% 0.045 245));
     border-top: 1px solid var(--border, oklch(28% 0.03 245));
+    box-shadow: inset 0 1px 0 var(--metal-dim);
     color: var(--text-1, #f0f0f0);
     padding: 3rem 0 1.5rem;
     margin-top: 4rem;
@@ -42,7 +43,7 @@ body > main {
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     letter-spacing: 0.02em;
     text-transform: uppercase;
     font-size: 0.8rem;
@@ -82,7 +83,7 @@ body > main {
 }
 
 .footer-links a:hover {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     padding-left: 0.25rem;
 }
 
@@ -94,7 +95,7 @@ body > main {
 }
 
 .footer-section a:hover {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
 }
 
 /* ── Social icons ─────────────────────────────────────────── */
@@ -113,7 +114,7 @@ body > main {
     height: 40px;
     background: var(--surface-2, oklch(16% 0.04 245));
     border: 1px solid var(--border, oklch(28% 0.03 245));
-    border-radius: 50%;
+    border-radius: var(--radius-md, 14px);
     color: var(--text-2, #9ca3af);
     text-decoration: none;
     font-size: 1rem;
@@ -125,9 +126,9 @@ body > main {
 }
 
 .social-icon:hover {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     background: var(--surface-3, oklch(22% 0.035 245));
-    border-color: var(--brand, #00C8C8);
+    border-color: var(--brand, #2E7DD6);
     transform: translateY(-3px);
 }
 
@@ -151,13 +152,13 @@ body > main {
 }
 
 .footer-bottom a {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .footer-bottom a:hover {
-    color: var(--brand-light, oklch(88% 0.12 190));
+    color: var(--brand-light, oklch(88% 0.13 250));
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
@@ -207,7 +208,7 @@ body > main {
 }
 
 .footercontent ul li a:hover {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
 }
 
 #copyright {

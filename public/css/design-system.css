@@ -2,37 +2,48 @@
    PALLADIUM DESIGN SYSTEM
    Global tokens, typography, animations, and base overrides.
    Injected by js/common.js on every page.
+
+   Direction: "Refined Metal" — obsidian base, palladium-silver
+   identity, amber signal accent, mono for on-chain data.
    ============================================================ */
 
 /* ── Google Fonts ─────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 /* ── Design Tokens ────────────────────────────────────────── */
 :root {
-  /* Colors */
-  --bg:          oklch(9%  0.04  245);
-  --surface-1:   oklch(12% 0.045 245);
-  --surface-2:   oklch(16% 0.04  245);
-  --surface-3:   oklch(22% 0.035 245);
-  --border:      oklch(28% 0.03  245);
-  --border-strong: oklch(36% 0.03 245);
-  --text-1:      oklch(95% 0.006 240);
-  --text-2:      oklch(68% 0.012 230);
-  --text-3:      oklch(48% 0.012 230);
+  /* Colors — obsidian base with a cool steel tint */
+  --bg:          oklch(8%  0.012 262);
+  --surface-1:   oklch(12% 0.014 262);
+  --surface-2:   oklch(16% 0.015 262);
+  --surface-3:   oklch(21% 0.016 262);
+  --border:      oklch(27% 0.016 262);
+  --border-strong: oklch(36% 0.018 262);
+  --text-1:      oklch(97% 0.003 262);
+  --text-2:      oklch(72% 0.012 258);
+  --text-3:      oklch(50% 0.014 258);
 
-  --brand:       oklch(78% 0.18  195);
-  --brand-dark:  oklch(62% 0.18  195);
-  --brand-light: oklch(88% 0.12  190);
-  --brand-dim:   color-mix(in srgb, var(--brand) 12%, transparent);
-  --brand-glow:  color-mix(in srgb, var(--brand) 28%, transparent);
+  /* Signal accent — vivid azure blue, lifted from the Palladium mark */
+  --brand:       oklch(60% 0.19 254);
+  --brand-dark:  oklch(46% 0.18 254);
+  --brand-light: oklch(74% 0.14 250);
+  --brand-dim:   color-mix(in srgb, var(--brand) 14%, transparent);
+  --brand-glow:  color-mix(in srgb, var(--brand) 32%, transparent);
+  --on-brand:    oklch(98% 0.004 250); /* light text for use on the mid-tone blue fill */
 
-  --success:     oklch(65% 0.20 145);
-  --error:       oklch(60% 0.22  20);
-  --warning:     oklch(76% 0.18  75);
+  /* Metal identity — cool palladium silver, used for logo/hero/decoration */
+  --metal:       oklch(88% 0.008 258);
+  --metal-dark:  oklch(70% 0.012 258);
+  --metal-dim:   color-mix(in srgb, var(--metal) 14%, transparent);
+
+  --success:     oklch(72% 0.19 152);
+  --error:       oklch(62% 0.21  22);
+  --warning:     oklch(78% 0.15  75);
 
   /* Typography */
-  --font-display: 'Syne', sans-serif;
-  --font-body:    'Poppins', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
 
   /* Fluid type scale */
   --text-xs:   clamp(0.7rem,  1.4vw,  0.8rem);
@@ -52,11 +63,11 @@
   --sp-6: 3rem;
   --sp-8: 4rem;
 
-  /* Radius */
-  --radius-sm:   6px;
-  --radius-md:   12px;
+  /* Radius — tighter, more structured than the previous soft-glass look */
+  --radius-sm:   8px;
+  --radius-md:   14px;
   --radius-lg:   20px;
-  --radius-xl:   32px;
+  --radius-xl:   28px;
   --radius-full: 9999px;
 
   /* Easing */
@@ -131,14 +142,21 @@ p, li, td, th {
   font-family: var(--font-body) !important;
 }
 
-/* Display headings use Syne */
+/* Display headings use Space Grotesk */
 .title.is-size-1,
 .title.is-size-2,
 h1.title,
 h2.title,
 .display-title {
   font-family: var(--font-display) !important;
+  font-weight: 700 !important;
   letter-spacing: -0.03em;
+}
+
+/* On-chain data (heights, hashrates, hashes) reads best in mono */
+.mono, [data-mono] {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── Scroll Reveal Animations ─────────────────────────────── */
@@ -193,11 +211,11 @@ h2.title,
   pointer-events: none;
   background:
     radial-gradient(ellipse 80% 55% at 15% 35%,
-      oklch(78% 0.18 195 / 0.22) 0%, transparent 55%),
+      oklch(60% 0.19 254 / 0.22) 0%, transparent 55%),
     radial-gradient(ellipse 65% 45% at 85% 65%,
-      oklch(65% 0.22 255 / 0.14) 0%, transparent 50%),
+      oklch(80% 0.01 258 / 0.14) 0%, transparent 50%),
     radial-gradient(ellipse 110% 80% at 50% 110%,
-      oklch(40% 0.15 280 / 0.10) 0%, transparent 55%);
+      oklch(30% 0.05 254 / 0.14) 0%, transparent 55%);
   background-size: 200% 200%;
   animation: aurora-shift 14s ease-in-out infinite alternate;
 }
@@ -293,7 +311,7 @@ h2.title,
 .button.is-primary {
   background: var(--brand) !important;
   border-color: var(--brand) !important;
-  color: white !important;
+  color: var(--on-brand) !important;
   box-shadow: 0 2px 12px var(--brand-dim) !important;
 }
 
@@ -301,6 +319,7 @@ h2.title,
 .button.is-primary:hover {
   background: var(--brand-dark) !important;
   border-color: var(--brand-dark) !important;
+  color: var(--on-brand) !important;
   box-shadow: 0 6px 24px var(--brand-glow) !important;
 }
 
@@ -396,7 +415,7 @@ a:hover { color: var(--brand-light); }
 .section-title {
   font-family: var(--font-display);
   font-size: var(--text-3xl);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--text-1);
   line-height: 1.1;

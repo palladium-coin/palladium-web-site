@@ -38,12 +38,12 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     margin-bottom: 1rem;
 }
 
 .rm-title {
-    font-family: var(--font-display, 'Syne', sans-serif);
+    font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 800;
     letter-spacing: -0.02em;
@@ -53,7 +53,7 @@
 }
 
 .rm-accent {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
 }
 
 .rm-subtitle {
@@ -82,8 +82,8 @@
 .rm-progress-bar-fill {
     height: 100%;
     border-radius: var(--radius-full, 9999px);
-    background: linear-gradient(90deg, var(--brand, #00C8C8), oklch(65% 0.20 145));
-    box-shadow: 0 0 12px oklch(78% 0.18 195 / 0.5);
+    background: linear-gradient(90deg, var(--brand, #2E7DD6), oklch(65% 0.20 145));
+    box-shadow: 0 0 12px oklch(78% 0.19 254 / 0.5);
     transition: width 1.2s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
@@ -93,7 +93,7 @@
 }
 
 .rm-progress-label strong {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
 }
 
 /* ── Timeline container ───────────────────────────────────── */
@@ -209,7 +209,7 @@
 
 /* ── Card content ─────────────────────────────────────────── */
 .rm-card-title {
-    font-family: var(--font-display, 'Syne', sans-serif);
+    font-family: var(--font-display);
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-1, #f0f0f0);
@@ -262,7 +262,7 @@
     gap: 0.5rem;
     font-size: 0.82rem;
     font-weight: 600;
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     text-decoration: none;
     padding: 0.4rem 0;
     transition: color 0.2s ease, gap 0.2s ease;
@@ -294,7 +294,7 @@
 }
 
 .rm-cta-title {
-    font-family: var(--font-display, 'Syne', sans-serif);
+    font-family: var(--font-display);
     font-size: 1.6rem;
     font-weight: 700;
     color: var(--text-1, #f0f0f0);
@@ -333,13 +333,13 @@
 .rm-btn:hover { transform: translateY(-2px); }
 
 .rm-btn--primary {
-    background: var(--brand, #00C8C8);
+    background: var(--brand, #2E7DD6);
     color: oklch(10% 0.02 245);
-    box-shadow: 0 4px 16px oklch(78% 0.18 195 / 0.3);
+    box-shadow: 0 4px 16px oklch(78% 0.19 254 / 0.3);
 }
 
 .rm-btn--primary:hover {
-    box-shadow: 0 8px 24px oklch(78% 0.18 195 / 0.5);
+    box-shadow: 0 8px 24px oklch(78% 0.19 254 / 0.5);
 }
 
 .rm-btn--secondary {
@@ -350,7 +350,7 @@
 
 .rm-btn--secondary:hover {
     color: var(--text-1, #f0f0f0);
-    border-color: oklch(78% 0.18 195 / 0.35);
+    border-color: oklch(78% 0.19 254 / 0.35);
 }
 
 /* ── Mobile ───────────────────────────────────────────────── */

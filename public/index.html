@@ -8,7 +8,7 @@
     <link rel="canonical" href="index.htm">
     <meta name="robots" content="index, follow">
     <!-- Favicons -->
-    <meta name="theme-color" content="#EE5A24">
+    <meta name="theme-color" content="#0a0b0d">
     <meta name="msapplication-TileColor" content="#da532c">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png?v=2">
     <link rel="icon" type="image/png" href="assets/icons/palladium.png">
@@ -52,33 +52,42 @@
 
 <body>
     <!-- ── Hero ─────────────────────────────────────────────── -->
-    <section class="hero hero-main aurora-hero">
+    <section class="hero hero-main aurora-hero grain">
         <div class="hero-body">
             <div class="columns is-vcentered">
-                <div class="column is-2 is-hidden-mobile"></div>
+                <div class="column is-1 is-hidden-mobile"></div>
                 <div class="column has-text-centered-mobile">
-                    <p class="title hero-title">
+                    <span class="hero-chip" data-animate>
+                        <span class="hero-chip-dot"></span>
+                        SHA-256 · Proof of Work
+                    </span>
+                    <p class="title hero-title" data-animate>
                         Palladium
                     </p>
-                    <p class="subtitle hero-subtitle mt-4">
+                    <p class="subtitle hero-subtitle mt-4" data-animate>
                         Decentralized · <span style="white-space:nowrap">Proof of Work</span> · Fast
                         <b id="devices"></b>
                     </p>
-                    <div class="buttons is-normal mt-5">
+                    <div class="buttons is-normal mt-5" data-animate>
                         <a href="https://github.com/palladium-coin/pallectrum/releases/latest" class="button is-success is-medium">
                             <span class="icon"><i class="fas fa-download"></i></span>
                             <span>Download Wallet</span>
+                        </a>
+                        <a href="#explore" class="button is-outlined is-medium">
+                            <span>Explore the network</span>
+                            <span class="icon"><i class="fas fa-arrow-down"></i></span>
                         </a>
                     </div>
                 </div>
                 <div class="column is-hidden-mobile">
                     <a href="https://twitter.com/Palladium_coin">
                         <div id="wavecontainer">
+                            <div class="wave-ring"></div>
                             <img src="assets/icons/palladium.png" id="waveduco" alt="Palladium logo">
                         </div>
                     </a>
                 </div>
-                <div class="column is-2 is-hidden-mobile"></div>
+                <div class="column is-1 is-hidden-mobile"></div>
             </div>
         </div>
     </section>

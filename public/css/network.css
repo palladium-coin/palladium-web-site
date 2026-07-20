@@ -9,7 +9,7 @@
 }
 
 .network-title {
-    font-family: var(--font-display, 'Syne', sans-serif);
+    font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 2.8rem);
     font-weight: 800;
     color: var(--text-1, #f0f0f0);
@@ -19,7 +19,7 @@
 }
 
 .network-title .accent {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
 }
 
 .network-subtitle {
@@ -46,7 +46,7 @@
 
 /* ── Panel ────────────────────────────────────────────────── */
 .network-panel {
-    border: 1px solid oklch(78% 0.18 195 / 0.25);
+    border: 1px solid oklch(78% 0.19 254 / 0.25);
     border-radius: var(--radius-md, 12px);
     overflow: hidden;
     height: 100%;
@@ -58,8 +58,8 @@
 }
 
 .network-panel:hover {
-    border-color: oklch(78% 0.18 195 / 0.5);
-    box-shadow: 0 6px 24px oklch(78% 0.18 195 / 0.1);
+    border-color: oklch(78% 0.19 254 / 0.5);
+    box-shadow: 0 6px 24px oklch(78% 0.19 254 / 0.1);
     transform: translateY(-2px);
 }
 
@@ -69,20 +69,20 @@
     align-items: center;
     gap: 0.75rem;
     padding: 1rem 1.5rem;
-    background: oklch(78% 0.18 195 / 0.07);
-    border-bottom: 1px solid oklch(78% 0.18 195 / 0.2);
+    background: oklch(78% 0.19 254 / 0.07);
+    border-bottom: 1px solid oklch(78% 0.19 254 / 0.2);
 }
 
 .network-panel-icon {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: oklch(78% 0.18 195 / 0.12);
+    background: oklch(78% 0.19 254 / 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     font-size: 0.95rem;
 }
 
@@ -108,9 +108,9 @@
 .network-badge {
     font-size: 0.75rem;
     font-weight: 700;
-    background: oklch(78% 0.18 195 / 0.12);
-    color: var(--brand, #00C8C8);
-    border: 1px solid oklch(78% 0.18 195 / 0.3);
+    background: oklch(78% 0.19 254 / 0.12);
+    color: var(--brand, #2E7DD6);
+    border: 1px solid oklch(78% 0.19 254 / 0.3);
     border-radius: var(--radius-full, 9999px);
     padding: 0.2rem 0.65rem;
     white-space: nowrap;
@@ -178,9 +178,9 @@
 }
 
 .net-dir.out {
-    background: oklch(78% 0.18 195 / 0.12);
-    color: var(--brand, #00C8C8);
-    border: 1px solid oklch(78% 0.18 195 / 0.3);
+    background: oklch(78% 0.19 254 / 0.12);
+    color: var(--brand, #2E7DD6);
+    border: 1px solid oklch(78% 0.19 254 / 0.3);
 }
 
 .net-dir.in {
@@ -211,9 +211,9 @@
 }
 
 .net-port.ssl {
-    background: oklch(78% 0.18 195 / 0.08);
-    color: var(--brand, #00C8C8);
-    border: 1px solid oklch(78% 0.18 195 / 0.25);
+    background: oklch(78% 0.19 254 / 0.08);
+    color: var(--brand, #2E7DD6);
+    border: 1px solid oklch(78% 0.19 254 / 0.25);
 }
 
 .net-port.unreachable {
@@ -270,9 +270,9 @@
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    border: 1px solid oklch(78% 0.18 195 / 0.4);
+    border: 1px solid oklch(78% 0.19 254 / 0.4);
     background: transparent;
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     font-size: 0.75rem;
     cursor: pointer;
     flex-shrink: 0;
@@ -280,8 +280,8 @@
 }
 
 .refresh-btn:hover {
-    background: oklch(78% 0.18 195 / 0.1);
-    border-color: var(--brand, #00C8C8);
+    background: oklch(78% 0.19 254 / 0.1);
+    border-color: var(--brand, #2E7DD6);
 }
 
 .refresh-btn.spinning .fas {

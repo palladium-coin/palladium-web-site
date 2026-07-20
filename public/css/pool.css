@@ -3,18 +3,18 @@
    ============================================================ */
 
 .pool-brand-title {
-    font-family: var(--font-display, 'Syne', sans-serif);
+    font-family: var(--font-display);
     font-size: clamp(2.6rem, 5.2vw, 4.25rem);
     font-weight: 800;
     line-height: 1.05;
-    background: linear-gradient(135deg, var(--brand, #00C8C8), var(--brand-light, oklch(88% 0.12 190)));
+    background: linear-gradient(135deg, var(--brand, #2E7DD6), var(--brand-light, oklch(88% 0.13 250)));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
 .pool-page-title {
-    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-family: var(--font-body);
     font-size: clamp(1.7rem, 3vw, 2.5rem);
     font-weight: 600;
     line-height: 1.12;
@@ -28,7 +28,7 @@
     gap: 1rem;
     align-items: stretch;
     background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px solid oklch(78% 0.18 195 / 0.2);
+    border: 1px solid oklch(78% 0.19 254 / 0.2);
     border-radius: var(--radius-md, 12px);
     padding: 1.2rem;
 }
@@ -72,7 +72,7 @@
 /* ── User search ──────────────────────────────────────────── */
 .pool-user-search {
     background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px solid oklch(78% 0.18 195 / 0.2);
+    border: 1px solid oklch(78% 0.19 254 / 0.2);
     border-radius: var(--radius-md, 12px);
     padding: 1rem 1.2rem;
 }
@@ -105,14 +105,14 @@
     color: var(--text-1, #f0f0f0);
     padding: 0.6rem 0.75rem;
     font-size: 0.95rem;
-    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-family: var(--font-body);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .pool-user-search-input:focus {
     outline: none;
-    border-color: var(--brand, #00C8C8);
-    box-shadow: 0 0 0 3px oklch(78% 0.18 195 / 0.15);
+    border-color: var(--brand, #2E7DD6);
+    box-shadow: 0 0 0 3px oklch(78% 0.19 254 / 0.15);
 }
 
 .pool-user-search-input::placeholder {
@@ -147,7 +147,7 @@
 /* ── Stat cards ───────────────────────────────────────────── */
 .pool-stat-card {
     background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px solid oklch(78% 0.18 195 / 0.18);
+    border: 1px solid oklch(78% 0.19 254 / 0.18);
     border-radius: var(--radius-md, 12px);
     padding: 1.2rem 1rem;
     text-align: center;
@@ -160,10 +160,10 @@
 }
 
 .pool-stat-card:hover {
-    border-color: oklch(78% 0.18 195 / 0.5);
+    border-color: oklch(78% 0.19 254 / 0.5);
     background: var(--surface-2, oklch(16% 0.04 245));
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px oklch(78% 0.18 195 / 0.12);
+    box-shadow: 0 6px 20px oklch(78% 0.19 254 / 0.12);
 }
 
 .pool-stat-label {
@@ -176,11 +176,11 @@
 }
 
 .pool-stat-value {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     font-size: 1.85rem;
     font-weight: 700;
     line-height: 1.12;
-    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-family: var(--font-body);
     font-variant-numeric: tabular-nums;
     word-break: break-word;
 }
@@ -202,14 +202,14 @@
 
 .user-worker-card {
     background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px solid oklch(78% 0.18 195 / 0.18);
+    border: 1px solid oklch(78% 0.19 254 / 0.18);
     border-radius: var(--radius-sm, 6px);
     padding: 0.9rem 1rem;
     transition: border-color 0.2s ease, transform 0.25s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
 .user-worker-card:hover {
-    border-color: oklch(78% 0.18 195 / 0.4);
+    border-color: oklch(78% 0.19 254 / 0.4);
     transform: translateY(-2px);
 }
 
@@ -243,7 +243,7 @@
 .user-worker-value {
     color: var(--text-1, #f0f0f0);
     font-size: 0.82rem;
-    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-family: var(--font-body);
     font-variant-numeric: tabular-nums;
     text-align: right;
     word-break: break-all;

@@ -34,12 +34,12 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     margin-bottom: 1rem;
 }
 
 .gs-title {
-    font-family: var(--font-display, 'Syne', sans-serif);
+    font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 800;
     letter-spacing: -0.02em;
@@ -49,7 +49,7 @@
 }
 
 .gs-accent {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
 }
 
 .gs-subtitle {
@@ -67,7 +67,7 @@
 }
 
 .gs-intro-title {
-    font-family: var(--font-display, 'Syne', sans-serif);
+    font-family: var(--font-display);
     font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 700;
     color: var(--text-1, #f0f0f0);
@@ -112,14 +112,14 @@
 }
 
 .gs-card--node {
-    border-top: 3px solid var(--brand, #00C8C8);
+    border-top: 3px solid var(--brand, #2E7DD6);
 }
 
 .gs-card--node:hover {
-    border-color: var(--brand, #00C8C8);
+    border-color: var(--brand, #2E7DD6);
     box-shadow:
         0 16px 48px oklch(0% 0 0 / 0.3),
-        0 0 0 1px oklch(78% 0.18 195 / 0.2);
+        0 0 0 1px oklch(78% 0.19 254 / 0.2);
 }
 
 .gs-card--wallet {
@@ -144,9 +144,9 @@
     letter-spacing: 0.08em;
     padding: 0.3rem 0.75rem;
     border-radius: var(--radius-full, 9999px);
-    background: oklch(78% 0.18 195 / 0.12);
-    color: var(--brand, #00C8C8);
-    border: 1px solid oklch(78% 0.18 195 / 0.3);
+    background: oklch(78% 0.19 254 / 0.12);
+    color: var(--brand, #2E7DD6);
+    border: 1px solid oklch(78% 0.19 254 / 0.3);
 }
 
 .gs-card-badge--wallet {
@@ -160,13 +160,13 @@
     width: 3.5rem;
     height: 3.5rem;
     border-radius: var(--radius-lg, 20px);
-    background: oklch(78% 0.18 195 / 0.12);
-    border: 1px solid oklch(78% 0.18 195 / 0.25);
+    background: oklch(78% 0.19 254 / 0.12);
+    border: 1px solid oklch(78% 0.19 254 / 0.25);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.4rem;
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     margin-bottom: 1.25rem;
 }
 
@@ -178,7 +178,7 @@
 
 /* ── Card content ─────────────────────────────────────────── */
 .gs-card-title {
-    font-family: var(--font-display, 'Syne', sans-serif);
+    font-family: var(--font-display);
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-1, #f0f0f0);
@@ -206,8 +206,8 @@
     display: flex;
     align-items: baseline;
     gap: 0.5rem;
-    background: oklch(78% 0.18 195 / 0.06);
-    border-left: 3px solid var(--brand, #00C8C8);
+    background: oklch(78% 0.19 254 / 0.06);
+    border-left: 3px solid var(--brand, #2E7DD6);
     padding: 0.6rem 0.875rem;
     border-radius: 0 var(--radius-sm, 6px) var(--radius-sm, 6px) 0;
     margin-bottom: 1.25rem;
@@ -223,7 +223,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     white-space: nowrap;
 }
 
@@ -261,7 +261,7 @@
 }
 
 .gs-features li .fas.fa-check {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     font-size: 0.75rem;
     margin-top: 0.25rem;
     flex-shrink: 0;
@@ -298,13 +298,13 @@
 }
 
 .gs-btn--primary {
-    background: var(--brand, #00C8C8);
+    background: var(--brand, #2E7DD6);
     color: oklch(10% 0.02 245);
-    box-shadow: 0 4px 16px oklch(78% 0.18 195 / 0.35);
+    box-shadow: 0 4px 16px oklch(78% 0.19 254 / 0.35);
 }
 
 .gs-btn--primary:hover {
-    box-shadow: 0 8px 24px oklch(78% 0.18 195 / 0.5);
+    box-shadow: 0 8px 24px oklch(78% 0.19 254 / 0.5);
 }
 
 .gs-btn--wallet {
@@ -340,7 +340,7 @@
 }
 
 .gs-compare-title {
-    font-family: var(--font-display, 'Syne', sans-serif);
+    font-family: var(--font-display);
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--text-1, #f0f0f0);
@@ -378,7 +378,7 @@
 }
 
 .gs-th--node {
-    color: var(--brand, #00C8C8) !important;
+    color: var(--brand, #2E7DD6) !important;
     gap: 0.4rem;
     justify-content: center;
 }

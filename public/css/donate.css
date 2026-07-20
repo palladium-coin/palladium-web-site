@@ -9,7 +9,7 @@
 }
 
 .donate-title {
-    font-family: var(--font-display, 'Syne', sans-serif);
+    font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 2.8rem);
     font-weight: 800;
     color: var(--text-1, #f0f0f0);
@@ -19,7 +19,7 @@
 }
 
 .donate-title .accent {
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
 }
 
 .donate-subtitle {
@@ -47,7 +47,7 @@
 
 /* ── Panel ────────────────────────────────────────────────── */
 .donate-panel {
-    border: 1px solid oklch(78% 0.18 195 / 0.25);
+    border: 1px solid oklch(78% 0.19 254 / 0.25);
     border-radius: var(--radius-md, 12px);
     overflow: hidden;
     height: 100%;
@@ -59,8 +59,8 @@
 }
 
 .donate-panel:hover {
-    border-color: oklch(78% 0.18 195 / 0.55);
-    box-shadow: 0 6px 24px oklch(78% 0.18 195 / 0.1);
+    border-color: oklch(78% 0.19 254 / 0.55);
+    box-shadow: 0 6px 24px oklch(78% 0.19 254 / 0.1);
     transform: translateY(-2px);
 }
 
@@ -80,8 +80,8 @@
     align-items: center;
     gap: 0.75rem;
     padding: 1rem 1.5rem;
-    background: oklch(78% 0.18 195 / 0.07);
-    border-bottom: 1px solid oklch(78% 0.18 195 / 0.2);
+    background: oklch(78% 0.19 254 / 0.07);
+    border-bottom: 1px solid oklch(78% 0.19 254 / 0.2);
 }
 
 .donate-panel.btc .donate-panel-header {
@@ -94,12 +94,12 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: oklch(78% 0.18 195 / 0.12);
+    background: oklch(78% 0.19 254 / 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
 }
 
 .donate-panel-icon.btc-icon {
@@ -165,12 +165,12 @@
     gap: 0.35rem;
     padding: 0.42rem 0.9rem;
     border-radius: var(--radius-sm, 6px);
-    border: 1px solid oklch(78% 0.18 195 / 0.45);
+    border: 1px solid oklch(78% 0.19 254 / 0.45);
     background: transparent;
-    color: var(--brand, #00C8C8);
+    color: var(--brand, #2E7DD6);
     font-size: 0.8rem;
     font-weight: 600;
-    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-family: var(--font-body);
     cursor: pointer;
     white-space: nowrap;
     flex-shrink: 0;
@@ -178,12 +178,12 @@
 }
 
 .copy-btn:hover {
-    background: oklch(78% 0.18 195 / 0.1);
-    border-color: var(--brand, #00C8C8);
+    background: oklch(78% 0.19 254 / 0.1);
+    border-color: var(--brand, #2E7DD6);
 }
 
 .copy-btn:active {
-    background: oklch(78% 0.18 195 / 0.2);
+    background: oklch(78% 0.19 254 / 0.2);
 }
 
 .copy-btn.btc {
