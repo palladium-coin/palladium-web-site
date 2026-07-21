@@ -21,7 +21,7 @@
     padding: 5rem 1.5rem 4rem;
     text-align: center;
     margin-bottom: 2rem;
-    border-radius: var(--radius-xl, 28px);
+    border-radius: var(--radius-xl);
     overflow: hidden;
     position: relative;
 }
@@ -33,32 +33,23 @@
     margin: 0 auto;
 }
 
-.rm-eyebrow {
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: var(--brand, #2E7DD6);
-    margin-bottom: 1rem;
-}
-
 .rm-title {
     font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.1;
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     margin-bottom: 1rem;
 }
 
 .rm-accent {
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
 }
 
 .rm-subtitle {
     font-size: clamp(0.9rem, 2vw, 1.05rem);
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     line-height: 1.65;
     max-width: 52ch;
     margin: 0 auto;
@@ -73,27 +64,27 @@
 
 .rm-progress-bar-wrap {
     height: 6px;
-    background: var(--border, oklch(28% 0.03 245));
-    border-radius: var(--radius-full, 9999px);
+    background: var(--border);
+    border-radius: var(--radius-full);
     overflow: hidden;
     margin-bottom: 0.75rem;
 }
 
 .rm-progress-bar-fill {
     height: 100%;
-    border-radius: var(--radius-full, 9999px);
-    background: linear-gradient(90deg, var(--brand, #2E7DD6), oklch(65% 0.20 145));
-    box-shadow: 0 0 12px oklch(78% 0.19 254 / 0.5);
-    transition: width 1.2s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+    border-radius: var(--radius-full);
+    background: linear-gradient(90deg, var(--brand), var(--success));
+    box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 50%, transparent);
+    transition: width 1.2s var(--ease-out-expo);
 }
 
 .rm-progress-label {
     font-size: 0.82rem;
-    color: var(--text-3, oklch(48% 0.012 230));
+    color: var(--text-3);
 }
 
 .rm-progress-label strong {
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
 }
 
 /* ── Timeline container ───────────────────────────────────── */
@@ -132,32 +123,32 @@
 }
 
 .rm-node--done {
-    background: oklch(65% 0.20 145);
-    color: oklch(10% 0.02 245);
-    box-shadow: 0 0 0 4px oklch(65% 0.20 145 / 0.15);
+    background: var(--success);
+    color: var(--on-success);
+    box-shadow: 0 0 0 4px var(--success-dim);
 }
 
 .rm-milestone:hover .rm-node--done {
-    box-shadow: 0 0 0 8px oklch(65% 0.20 145 / 0.12);
+    box-shadow: 0 0 0 8px var(--success-dim);
 }
 
 .rm-line {
     flex: 1;
     width: 2px;
-    background: linear-gradient(to bottom, oklch(65% 0.20 145 / 0.4), oklch(65% 0.20 145 / 0.15));
+    background: linear-gradient(to bottom, color-mix(in srgb, var(--success) 40%, transparent), var(--success-dim));
     margin: 4px 0;
     min-height: 1.5rem;
 }
 
 /* ── Milestone card ───────────────────────────────────────── */
 .rm-card {
-    background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px solid var(--border, oklch(28% 0.03 245));
-    border-radius: var(--radius-xl, 28px);
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
     padding: 1.75rem 1.75rem 1.25rem;
     margin-bottom: 1.5rem;
     transition:
-        transform  0.3s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1)),
+        transform  0.3s var(--spring-bounce),
         box-shadow 0.3s ease,
         border-color 0.3s ease;
 }
@@ -168,12 +159,12 @@
 }
 
 .rm-card--done {
-    border-left: 3px solid oklch(65% 0.20 145);
+    border-left: 3px solid var(--success);
 }
 
 .rm-card--done:hover {
-    border-color: oklch(65% 0.20 145 / 0.8);
-    box-shadow: 0 8px 32px oklch(0% 0 0 / 0.2), 0 0 0 1px oklch(65% 0.20 145 / 0.1);
+    border-color: color-mix(in srgb, var(--success) 80%, transparent);
+    box-shadow: 0 8px 32px oklch(0% 0 0 / 0.2), 0 0 0 1px var(--success-dim);
 }
 
 /* ── Card header ──────────────────────────────────────────── */
@@ -189,12 +180,12 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--text-3, oklch(48% 0.012 230));
+    color: var(--text-3);
 }
 
 .rm-badge {
     padding: 0.25rem 0.75rem;
-    border-radius: var(--radius-full, 9999px);
+    border-radius: var(--radius-full);
     font-size: 0.68rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -202,9 +193,9 @@
 }
 
 .rm-badge--done {
-    background: oklch(65% 0.20 145 / 0.12);
-    color: oklch(65% 0.20 145);
-    border: 1px solid oklch(65% 0.20 145 / 0.3);
+    background: var(--success-dim);
+    color: var(--success);
+    border: 1px solid var(--success-glow);
 }
 
 /* ── Card content ─────────────────────────────────────────── */
@@ -212,14 +203,14 @@
     font-family: var(--font-display);
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     margin-bottom: 0.625rem;
     line-height: 1.25;
 }
 
 .rm-card-desc {
     font-size: 0.88rem;
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     line-height: 1.65;
     margin-bottom: 1rem;
 }
@@ -236,7 +227,7 @@
     padding-left: 1.5rem;
     margin-bottom: 0.4rem;
     font-size: 0.85rem;
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     line-height: 1.5;
 }
 
@@ -245,7 +236,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    color: oklch(65% 0.20 145);
+    color: var(--success);
     font-weight: bold;
     font-size: 0.85em;
 }
@@ -253,7 +244,7 @@
 /* ── Card link ────────────────────────────────────────────── */
 .rm-card-actions {
     padding-top: 0.75rem;
-    border-top: 1px solid var(--border, oklch(28% 0.03 245));
+    border-top: 1px solid var(--border);
 }
 
 .rm-link {
@@ -262,14 +253,14 @@
     gap: 0.5rem;
     font-size: 0.82rem;
     font-weight: 600;
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
     text-decoration: none;
     padding: 0.4rem 0;
     transition: color 0.2s ease, gap 0.2s ease;
 }
 
 .rm-link:hover {
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     gap: 0.75rem;
 }
 
@@ -286,9 +277,9 @@
 .rm-cta {
     margin-top: 4rem;
     padding: 3rem 2rem;
-    background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px solid var(--border, oklch(28% 0.03 245));
-    border-radius: var(--radius-xl, 28px);
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
     max-width: 640px;
     margin-inline: auto;
 }
@@ -297,13 +288,13 @@
     font-family: var(--font-display);
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     margin-bottom: 0.75rem;
 }
 
 .rm-cta-sub {
     font-size: 0.9rem;
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     line-height: 1.65;
     max-width: 50ch;
     margin: 0 auto 1.75rem;
@@ -321,36 +312,36 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.7rem 1.5rem;
-    border-radius: var(--radius-full, 9999px);
+    border-radius: var(--radius-full);
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
     transition:
-        transform  0.25s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1)),
+        transform  0.25s var(--spring-bounce),
         box-shadow 0.25s ease;
 }
 
 .rm-btn:hover { transform: translateY(-2px); }
 
 .rm-btn--primary {
-    background: var(--brand, #2E7DD6);
-    color: oklch(10% 0.02 245);
-    box-shadow: 0 4px 16px oklch(78% 0.19 254 / 0.3);
+    background: var(--brand);
+    color: var(--on-brand);
+    box-shadow: 0 4px 16px var(--brand-glow);
 }
 
 .rm-btn--primary:hover {
-    box-shadow: 0 8px 24px oklch(78% 0.19 254 / 0.5);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--brand) 50%, transparent);
 }
 
 .rm-btn--secondary {
-    background: var(--surface-2, oklch(16% 0.04 245));
-    color: var(--text-2, #9ca3af);
-    border: 1px solid var(--border, oklch(28% 0.03 245));
+    background: var(--surface-2);
+    color: var(--text-2);
+    border: 1px solid var(--border);
 }
 
 .rm-btn--secondary:hover {
-    color: var(--text-1, #f0f0f0);
-    border-color: oklch(78% 0.19 254 / 0.35);
+    color: var(--text-1);
+    border-color: color-mix(in srgb, var(--brand) 35%, transparent);
 }
 
 /* ── Mobile ───────────────────────────────────────────────── */
@@ -358,7 +349,7 @@
     .rm-hero {
         min-height: auto;
         padding: 4rem 1.25rem 3rem;
-        border-radius: var(--radius-lg, 20px);
+        border-radius: var(--radius-lg);
     }
 
     .rm-milestone {
@@ -374,7 +365,7 @@
 
     .rm-card {
         padding: 1.25rem;
-        border-radius: var(--radius-lg, 20px);
+        border-radius: var(--radius-lg);
     }
 
     .rm-card-title {

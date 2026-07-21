@@ -65,3 +65,27 @@ async function fetchHalvingData() {
 
 document.addEventListener('DOMContentLoaded', fetchHalvingData);
 setInterval(fetchHalvingData, 60_000);
+
+// ===== HERO ENTRANCE CHOREOGRAPHY =====
+// Orchestrated with anime.js (loaded via CDN). Hero elements are visible by
+// default (normal document flow), so if the CDN fails or reduced-motion is
+// set, they simply render statically — no broken/invisible state.
+function initHeroAnimation() {
+    if (typeof anime === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const els = document.querySelectorAll('.hero-main [data-hero-anim]');
+    if (!els.length) return;
+
+    anime.set(els, { opacity: 0, translateY: 24 });
+    anime.set('.hero-visual', { opacity: 0, scale: 0.88, translateY: 0 });
+
+    anime.timeline({ easing: 'easeOutExpo' })
+        .add({ targets: '.hero-chip', opacity: [0, 1], translateY: [24, 0], duration: 650 })
+        .add({ targets: '.hero-title', opacity: [0, 1], translateY: [24, 0], duration: 850 }, '-=450')
+        .add({ targets: '.hero-subtitle', opacity: [0, 1], translateY: [24, 0], duration: 700 }, '-=550')
+        .add({ targets: '.hero-main .buttons', opacity: [0, 1], translateY: [24, 0], duration: 650 }, '-=450')
+        .add({ targets: '.hero-visual', opacity: [0, 1], scale: [0.88, 1], duration: 900 }, '-=750');
+}
+
+document.addEventListener('DOMContentLoaded', initHeroAnimation);

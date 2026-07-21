@@ -297,4 +297,27 @@ function initCounters() {
 document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     initCounters();
+    initSpotlightCards();
 });
+
+// ── Spotlight Cards ──────────────────────────────────────────────────────────
+// Tracks the pointer over card elements and exposes the position as CSS custom
+// properties (--spot-x/--spot-y) so design-system.css can paint a glow that
+// follows the cursor. Skipped on touch devices and when motion is reduced.
+function initSpotlightCards() {
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!finePointer || reducedMotion) return;
+
+    const selector = '.stat-card, .key-metric, .halving-panel, .glass-1, .glass-2, ' +
+        '.panel, .milestone-card, .donate-panel, .network-panel, .pool-stat-card, .user-worker-card, ' +
+        '.mn-panel, .rm-card, .gs-card';
+
+    document.addEventListener('pointermove', (e) => {
+        const card = e.target.closest(selector);
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+    });
+}

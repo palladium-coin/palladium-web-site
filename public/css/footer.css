@@ -20,10 +20,10 @@ body > main {
 
 /* ── Main footer container ────────────────────────────────── */
 .modern-footer {
-    background: var(--surface-1, oklch(12% 0.045 245));
-    border-top: 1px solid var(--border, oklch(28% 0.03 245));
+    background: var(--surface-1);
+    border-top: 1px solid var(--border);
     box-shadow: inset 0 1px 0 var(--metal-dim);
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     padding: 3rem 0 1.5rem;
     margin-top: 4rem;
 }
@@ -43,7 +43,7 @@ body > main {
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
     letter-spacing: 0.02em;
     text-transform: uppercase;
     font-size: 0.8rem;
@@ -53,11 +53,11 @@ body > main {
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
 }
 
 .footer-section p {
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     margin: 0;
     line-height: 1.6;
     font-size: 0.9rem;
@@ -75,7 +75,7 @@ body > main {
 }
 
 .footer-links a {
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.2s ease, padding-left 0.2s ease;
@@ -83,19 +83,19 @@ body > main {
 }
 
 .footer-links a:hover {
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
     padding-left: 0.25rem;
 }
 
 /* ── Generic links inside footer sections ─────────────────── */
 .footer-section a {
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .footer-section a:hover {
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
 }
 
 /* ── Social icons ─────────────────────────────────────────── */
@@ -112,30 +112,30 @@ body > main {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: var(--surface-2, oklch(16% 0.04 245));
-    border: 1px solid var(--border, oklch(28% 0.03 245));
-    border-radius: var(--radius-md, 14px);
-    color: var(--text-2, #9ca3af);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-2);
     text-decoration: none;
     font-size: 1rem;
     transition:
         color      0.2s ease,
         background 0.2s ease,
         border-color 0.2s ease,
-        transform  0.25s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
+        transform  0.25s var(--spring-bounce);
 }
 
 .social-icon:hover {
-    color: var(--brand, #2E7DD6);
-    background: var(--surface-3, oklch(22% 0.035 245));
-    border-color: var(--brand, #2E7DD6);
+    color: var(--brand);
+    background: var(--surface-3);
+    border-color: var(--brand);
     transform: translateY(-3px);
 }
 
 /* ── Footer divider ───────────────────────────────────────── */
 .footer-divider {
     height: 1px;
-    background: var(--border, oklch(28% 0.03 245));
+    background: var(--border);
     margin: 0 1.5rem 1.5rem;
 }
 
@@ -147,18 +147,18 @@ body > main {
 
 .footer-bottom p {
     margin: 0;
-    color: var(--text-3, oklch(48% 0.012 230));
+    color: var(--text-3);
     font-size: 0.85rem;
 }
 
 .footer-bottom a {
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .footer-bottom a:hover {
-    color: var(--brand-light, oklch(88% 0.13 250));
+    color: var(--brand-light);
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
@@ -187,8 +187,8 @@ body > main {
 
 /* ── Legacy footer compatibility ──────────────────────────── */
 .footer {
-    background: var(--surface-1, oklch(12% 0.045 245));
-    color: var(--text-1, #f0f0f0);
+    background: var(--surface-1);
+    color: var(--text-1);
     padding: 2.5rem 0;
 }
 
@@ -202,18 +202,18 @@ body > main {
 }
 
 .footercontent ul li a {
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .footercontent ul li a:hover {
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
 }
 
 #copyright {
     text-align: center;
     padding: 1.25rem 0;
-    border-top: 1px solid var(--border, oklch(28% 0.03 245));
-    color: var(--text-3, oklch(48% 0.012 230));
+    border-top: 1px solid var(--border);
+    color: var(--text-3);
 }

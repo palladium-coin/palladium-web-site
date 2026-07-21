@@ -17,28 +17,37 @@
   --surface-1:   oklch(12% 0.014 262);
   --surface-2:   oklch(16% 0.015 262);
   --surface-3:   oklch(21% 0.016 262);
-  --border:      oklch(27% 0.016 262);
-  --border-strong: oklch(36% 0.018 262);
+  --border:      oklch(33% 0.016 262); /* raised from 27% — dividers were nearly invisible on --bg */
+  --border-strong: oklch(40% 0.018 262);
   --text-1:      oklch(97% 0.003 262);
   --text-2:      oklch(72% 0.012 258);
-  --text-3:      oklch(50% 0.014 258);
+  --text-3:      oklch(58% 0.014 258); /* raised from 50% for on-dark readability */
 
   /* Signal accent — vivid azure blue, lifted from the Palladium mark */
   --brand:       oklch(60% 0.19 254);
   --brand-dark:  oklch(46% 0.18 254);
   --brand-light: oklch(74% 0.14 250);
+  --brand-a06:   color-mix(in srgb, var(--brand) 6%,  transparent);
   --brand-dim:   color-mix(in srgb, var(--brand) 14%, transparent);
+  --brand-a20:   color-mix(in srgb, var(--brand) 20%, transparent);
   --brand-glow:  color-mix(in srgb, var(--brand) 32%, transparent);
   --on-brand:    oklch(98% 0.004 250); /* light text for use on the mid-tone blue fill */
 
   /* Metal identity — cool palladium silver, used for logo/hero/decoration */
   --metal:       oklch(88% 0.008 258);
   --metal-dark:  oklch(70% 0.012 258);
+  --metal-a08:   color-mix(in srgb, var(--metal) 8%,  transparent);
   --metal-dim:   color-mix(in srgb, var(--metal) 14%, transparent);
 
-  --success:     oklch(72% 0.19 152);
-  --error:       oklch(62% 0.21  22);
-  --warning:     oklch(78% 0.15  75);
+  --success:      oklch(72% 0.19 152);
+  --success-dim:  color-mix(in srgb, var(--success) 14%, transparent);
+  --success-glow: color-mix(in srgb, var(--success) 30%, transparent);
+  --on-success:   oklch(14% 0.03 152); /* dark text for use on the bright success-green fill */
+  --error:        oklch(62% 0.21  22);
+  --error-dim:    color-mix(in srgb, var(--error) 14%, transparent);
+  --warning:      oklch(78% 0.15  75);
+  --warning-dim:  color-mix(in srgb, var(--warning) 14%, transparent);
+  --on-warning:   oklch(16% 0.03  75); /* dark text for use on the bright warning-amber fill */
 
   /* Typography */
   --font-display: 'Space Grotesk', sans-serif;
@@ -211,11 +220,11 @@ h2.title,
   pointer-events: none;
   background:
     radial-gradient(ellipse 80% 55% at 15% 35%,
-      oklch(60% 0.19 254 / 0.22) 0%, transparent 55%),
+      color-mix(in srgb, var(--brand) 22%, transparent) 0%, transparent 55%),
     radial-gradient(ellipse 65% 45% at 85% 65%,
-      oklch(80% 0.01 258 / 0.14) 0%, transparent 50%),
+      color-mix(in srgb, var(--metal) 14%, transparent) 0%, transparent 50%),
     radial-gradient(ellipse 110% 80% at 50% 110%,
-      oklch(30% 0.05 254 / 0.14) 0%, transparent 55%);
+      color-mix(in srgb, var(--brand-dark) 14%, transparent) 0%, transparent 55%);
   background-size: 200% 200%;
   animation: aurora-shift 14s ease-in-out infinite alternate;
 }
@@ -353,6 +362,21 @@ h2.title,
   color: var(--brand) !important;
 }
 
+/* Warning accent button (pool refresh/search actions) */
+.button.is-warning {
+  background: var(--warning) !important;
+  border-color: var(--warning) !important;
+  color: var(--on-warning) !important;
+  box-shadow: 0 2px 12px var(--warning-dim) !important;
+}
+
+.button.is-warning:hover {
+  background: color-mix(in srgb, var(--warning) 85%, black) !important;
+  border-color: color-mix(in srgb, var(--warning) 85%, black) !important;
+  color: var(--on-warning) !important;
+  box-shadow: 0 6px 24px var(--warning-dim) !important;
+}
+
 /* ── Gradient Text ────────────────────────────────────────── */
 .gradient-text {
   background: linear-gradient(135deg, var(--brand), var(--brand-light));
@@ -376,7 +400,7 @@ h2.title,
   background-size: 200% 100% !important;
   animation: skeleton-shimmer 1.6s ease-in-out infinite !important;
   color: transparent !important;
-  border-radius: 6px !important;
+  border-radius: var(--radius-sm) !important;
   pointer-events: none;
 }
 
@@ -422,6 +446,70 @@ a:hover { color: var(--brand-light); }
   text-wrap: balance;
 }
 
+/* ── Eyebrow (shared by every page-specific eyebrow class) ──── */
+.section-eyebrow,
+.mn-eyebrow,
+.mn-section-label,
+.rm-eyebrow,
+.gs-eyebrow,
+.page-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--brand);
+  text-align: center;
+  margin-bottom: var(--sp-2);
+}
+
+/* ── Shared card base ─────────────────────────────────────── */
+/* Surface + border + hover-lift shared by every page's card component,
+   so each page only needs to declare its own accent deltas. */
+.mn-panel,
+.network-panel,
+.rm-card,
+.pool-stat-card,
+.donate-panel,
+.gs-card,
+.user-worker-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color 0.25s ease,
+    background   0.25s ease,
+    transform    0.3s var(--spring-bounce),
+    box-shadow   0.25s ease;
+}
+
+.mn-panel:hover,
+.network-panel:hover,
+.rm-card:hover,
+.pool-stat-card:hover,
+.donate-panel:hover,
+.gs-card:hover,
+.user-worker-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px oklch(0% 0 0 / 0.3);
+}
+
+/* ── Page hero pattern ────────────────────────────────────── */
+/* Shared padding/rhythm for every page-level aurora-hero header
+   (eyebrow + title + subtitle), reused across pages. */
+.page-hero {
+  padding-top: var(--sp-8);
+  padding-bottom: var(--sp-6);
+}
+
+@media (max-width: 768px) {
+  .page-hero {
+    padding-top: var(--sp-6);
+    padding-bottom: var(--sp-4);
+  }
+}
+
 /* ── Mobile global fixes ──────────────────────────────────── */
 @media (max-width: 768px) {
   /* Section headings: smaller floor on mobile */
@@ -460,13 +548,119 @@ a:hover { color: var(--brand-light); }
   .user-worker-card:hover,
   .milestone-card:hover,
   .donate-panel:hover,
-  .network-panel:hover {
+  .network-panel:hover,
+  .mn-panel:hover,
+  .rm-card:hover,
+  .gs-card:hover {
     transform: none !important;
   }
 
   .navbar-item:hover,
   .navbar-link:hover {
     transform: none !important;
+  }
+}
+
+/* ── Spotlight Cards ──────────────────────────────────────── */
+/* Cursor-following glow on hover, driven by --spot-x/--spot-y set in common.js */
+.stat-card,
+.key-metric,
+.halving-panel,
+.glass-1,
+.glass-2,
+.panel,
+.milestone-card,
+.donate-panel,
+.network-panel,
+.pool-stat-card,
+.user-worker-card,
+.mn-panel,
+.rm-card,
+.gs-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.stat-card::before,
+.key-metric::before,
+.halving-panel::before,
+.glass-1::before,
+.glass-2::before,
+.panel::before,
+.milestone-card::before,
+.donate-panel::before,
+.network-panel::before,
+.pool-stat-card::before,
+.user-worker-card::before,
+.mn-panel::before,
+.rm-card::before,
+.gs-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    360px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--brand-glow),
+    transparent 60%
+  );
+}
+
+.stat-card:hover::before,
+.key-metric:hover::before,
+.halving-panel:hover::before,
+.glass-1:hover::before,
+.glass-2:hover::before,
+.panel:hover::before,
+.milestone-card:hover::before,
+.donate-panel:hover::before,
+.network-panel:hover::before,
+.pool-stat-card:hover::before,
+.user-worker-card:hover::before,
+.mn-panel:hover::before,
+.rm-card:hover::before,
+.gs-card:hover::before {
+  opacity: 1;
+}
+
+.stat-card > *,
+.key-metric > *,
+.halving-panel > *,
+.glass-1 > *,
+.glass-2 > *,
+.panel > *,
+.milestone-card > *,
+.donate-panel > *,
+.network-panel > *,
+.pool-stat-card > *,
+.user-worker-card > *,
+.mn-panel > *,
+.rm-card > *,
+.gs-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (pointer: coarse) {
+  .stat-card::before,
+  .key-metric::before,
+  .halving-panel::before,
+  .glass-1::before,
+  .glass-2::before,
+  .panel::before,
+  .milestone-card::before,
+  .donate-panel::before,
+  .network-panel::before,
+  .pool-stat-card::before,
+  .user-worker-card::before,
+  .mn-panel::before,
+  .rm-card::before,
+  .gs-card::before {
+    display: none;
   }
 }
 

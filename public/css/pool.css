@@ -7,7 +7,7 @@
     font-size: clamp(2.6rem, 5.2vw, 4.25rem);
     font-weight: 800;
     line-height: 1.05;
-    background: linear-gradient(135deg, var(--brand, #2E7DD6), var(--brand-light, oklch(88% 0.13 250)));
+    background: linear-gradient(135deg, var(--brand), var(--brand-light));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -18,7 +18,15 @@
     font-size: clamp(1.7rem, 3vw, 2.5rem);
     font-weight: 600;
     line-height: 1.12;
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
+}
+
+.pool-hero-subtitle {
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    color: var(--text-2);
+    line-height: 1.65;
+    max-width: 52ch;
+    margin: 0 auto;
 }
 
 /* ── Pool meta bar ────────────────────────────────────────── */
@@ -27,18 +35,18 @@
     flex-wrap: wrap;
     gap: 1rem;
     align-items: stretch;
-    background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px solid oklch(78% 0.19 254 / 0.2);
-    border-radius: var(--radius-md, 12px);
+    background: var(--surface-1);
+    border: 1px solid var(--brand-a20);
+    border-radius: var(--radius-md);
     padding: 1.2rem;
 }
 
 .pool-meta-item {
     flex: 1 1 200px;
     min-width: 180px;
-    background: oklch(9% 0.04 245 / 0.5);
-    border: 1px solid var(--border, oklch(28% 0.03 245));
-    border-radius: var(--radius-sm, 6px);
+    background: color-mix(in srgb, var(--bg) 55%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     padding: 0.8rem 0.9rem;
 }
 
@@ -47,13 +55,13 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     margin-bottom: 0.2rem;
 }
 
 .pool-meta-value {
     font-size: 0.95rem;
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     font-weight: 600;
     word-break: break-word;
 }
@@ -71,9 +79,9 @@
 
 /* ── User search ──────────────────────────────────────────── */
 .pool-user-search {
-    background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px solid oklch(78% 0.19 254 / 0.2);
-    border-radius: var(--radius-md, 12px);
+    background: var(--surface-1);
+    border: 1px solid var(--brand-a20);
+    border-radius: var(--radius-md);
     padding: 1rem 1.2rem;
 }
 
@@ -83,7 +91,7 @@
 }
 
 .pool-user-search-label {
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -99,10 +107,10 @@
 .pool-user-search-input {
     flex: 1;
     min-width: 0;
-    background: var(--surface-2, oklch(16% 0.04 245));
-    border: 1px solid var(--border-strong, oklch(36% 0.03 245));
-    border-radius: var(--radius-sm, 6px);
-    color: var(--text-1, #f0f0f0);
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--text-1);
     padding: 0.6rem 0.75rem;
     font-size: 0.95rem;
     font-family: var(--font-body);
@@ -111,16 +119,16 @@
 
 .pool-user-search-input:focus {
     outline: none;
-    border-color: var(--brand, #2E7DD6);
-    box-shadow: 0 0 0 3px oklch(78% 0.19 254 / 0.15);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 15%, transparent);
 }
 
 .pool-user-search-input::placeholder {
-    color: var(--text-3, oklch(48% 0.012 230));
+    color: var(--text-3);
 }
 
 .pool-user-search-error {
-    color: var(--error, oklch(60% 0.22 20));
+    color: var(--error);
     font-size: 0.84rem;
     font-weight: 600;
 }
@@ -131,10 +139,10 @@
 
 /* ── Error banner ─────────────────────────────────────────── */
 .pool-error {
-    border: 1px solid oklch(60% 0.22 20 / 0.5);
-    background: oklch(60% 0.22 20 / 0.1);
-    color: oklch(85% 0.08 20);
-    border-radius: var(--radius-sm, 6px);
+    border: 1px solid color-mix(in srgb, var(--error) 50%, transparent);
+    background: var(--error-dim);
+    color: color-mix(in srgb, var(--error) 60%, white);
+    border-radius: var(--radius-sm);
     padding: 0.85rem 1rem;
     margin-bottom: 1.25rem;
     font-weight: 500;
@@ -145,29 +153,23 @@
 }
 
 /* ── Stat cards ───────────────────────────────────────────── */
+/* Base surface/border/hover-lift comes from the shared card rule in
+   design-system.css; this only overrides the accent + shape deltas. */
 .pool-stat-card {
-    background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px solid oklch(78% 0.19 254 / 0.18);
-    border-radius: var(--radius-md, 12px);
+    border-color: var(--brand-a20);
+    border-radius: var(--radius-md);
     padding: 1.2rem 1rem;
     text-align: center;
     height: 100%;
-    transition:
-        border-color 0.25s ease,
-        background   0.25s ease,
-        transform    0.3s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1)),
-        box-shadow   0.25s ease;
 }
 
 .pool-stat-card:hover {
-    border-color: oklch(78% 0.19 254 / 0.5);
-    background: var(--surface-2, oklch(16% 0.04 245));
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px oklch(78% 0.19 254 / 0.12);
+    border-color: color-mix(in srgb, var(--brand) 50%, transparent);
+    background: var(--surface-2);
 }
 
 .pool-stat-label {
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     font-size: 0.76rem;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -176,7 +178,7 @@
 }
 
 .pool-stat-value {
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
     font-size: 1.85rem;
     font-weight: 700;
     line-height: 1.12;
@@ -193,28 +195,25 @@
 }
 
 .user-workers-empty {
-    color: var(--text-2, #9ca3af);
-    background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px dashed var(--border, oklch(28% 0.03 245));
-    border-radius: var(--radius-sm, 6px);
+    color: var(--text-2);
+    background: var(--surface-1);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
     padding: 1rem 1.1rem;
 }
 
 .user-worker-card {
-    background: var(--surface-1, oklch(12% 0.045 245));
-    border: 1px solid oklch(78% 0.19 254 / 0.18);
-    border-radius: var(--radius-sm, 6px);
+    border-color: var(--brand-a20);
+    border-radius: var(--radius-sm);
     padding: 0.9rem 1rem;
-    transition: border-color 0.2s ease, transform 0.25s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
 .user-worker-card:hover {
-    border-color: oklch(78% 0.19 254 / 0.4);
-    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--brand) 40%, transparent);
 }
 
 .user-worker-title {
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     font-size: 0.95rem;
     font-weight: 700;
     margin-bottom: 0.65rem;
@@ -226,7 +225,7 @@
     justify-content: space-between;
     gap: 0.65rem;
     padding: 0.35rem 0;
-    border-top: 1px solid var(--border, oklch(28% 0.03 245));
+    border-top: 1px solid var(--border);
 }
 
 .user-worker-row:first-of-type {
@@ -234,14 +233,14 @@
 }
 
 .user-worker-label {
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
 
 .user-worker-value {
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     font-size: 0.82rem;
     font-family: var(--font-body);
     font-variant-numeric: tabular-nums;

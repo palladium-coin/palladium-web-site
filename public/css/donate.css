@@ -3,27 +3,44 @@
    ============================================================ */
 
 /* ── Hero ─────────────────────────────────────────────────── */
+/* Mirrors the .mn-hero/.rm-hero/.network-hero aurora-hero pattern for a
+   consistent header treatment across pages. */
 .donate-hero {
+    min-height: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 1.5rem 4rem;
     text-align: center;
-    padding: 0 0 2.5rem;
+    margin-bottom: 2.5rem;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    position: relative;
+}
+
+.donate-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
 }
 
 .donate-title {
     font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 2.8rem);
     font-weight: 800;
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     margin-bottom: 0.75rem;
     line-height: 1.15;
     letter-spacing: -0.03em;
 }
 
 .donate-title .accent {
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
 }
 
 .donate-subtitle {
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     font-size: 1rem;
     max-width: 520px;
     margin: 0 auto;
@@ -46,32 +63,29 @@
 }
 
 /* ── Panel ────────────────────────────────────────────────── */
+/* Base surface/border/hover-lift comes from the shared card rule in
+   design-system.css; this only overrides the accent + shape deltas. */
 .donate-panel {
-    border: 1px solid oklch(78% 0.19 254 / 0.25);
-    border-radius: var(--radius-md, 12px);
+    border-color: var(--brand-a20);
+    border-radius: var(--radius-md);
     overflow: hidden;
     height: 100%;
-    background: var(--surface-1, oklch(12% 0.045 245));
-    transition:
-        border-color 0.25s ease,
-        box-shadow   0.25s ease,
-        transform    0.3s var(--spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
 .donate-panel:hover {
-    border-color: oklch(78% 0.19 254 / 0.55);
-    box-shadow: 0 6px 24px oklch(78% 0.19 254 / 0.1);
-    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
 }
 
-/* BTC panel variant */
+/* BTC panel variant — Bitcoin's official brand orange, deliberately outside
+   the site palette, kept as a local custom property instead of a repeated literal. */
 .donate-panel.btc {
-    border-color: oklch(70% 0.17 55 / 0.25); /* Bitcoin amber */
+    --donate-btc: oklch(70% 0.17 55);
+    border-color: color-mix(in srgb, var(--donate-btc) 25%, transparent);
 }
 
 .donate-panel.btc:hover {
-    border-color: oklch(70% 0.17 55 / 0.55);
-    box-shadow: 0 6px 24px oklch(70% 0.17 55 / 0.1);
+    border-color: color-mix(in srgb, var(--donate-btc) 55%, transparent);
+    box-shadow: 0 6px 24px color-mix(in srgb, var(--donate-btc) 10%, transparent);
 }
 
 /* ── Panel header ─────────────────────────────────────────── */
@@ -80,13 +94,13 @@
     align-items: center;
     gap: 0.75rem;
     padding: 1rem 1.5rem;
-    background: oklch(78% 0.19 254 / 0.07);
-    border-bottom: 1px solid oklch(78% 0.19 254 / 0.2);
+    background: color-mix(in srgb, var(--brand) 7%, transparent);
+    border-bottom: 1px solid var(--brand-a20);
 }
 
 .donate-panel.btc .donate-panel-header {
-    background: oklch(70% 0.17 55 / 0.07);
-    border-bottom-color: oklch(70% 0.17 55 / 0.2);
+    background: color-mix(in srgb, var(--donate-btc) 7%, transparent);
+    border-bottom-color: color-mix(in srgb, var(--donate-btc) 20%, transparent);
 }
 
 /* ── Panel icon ───────────────────────────────────────────── */
@@ -94,30 +108,30 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: oklch(78% 0.19 254 / 0.12);
+    background: var(--brand-dim);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
 }
 
 .donate-panel-icon.btc-icon {
-    background: oklch(70% 0.17 55 / 0.12);
-    color: oklch(70% 0.17 55);
+    background: color-mix(in srgb, var(--donate-btc) 12%, transparent);
+    color: var(--donate-btc);
     font-size: 1.2rem;
 }
 
 .donate-panel-name {
     font-size: 1rem;
     font-weight: 700;
-    color: var(--text-1, #f0f0f0);
+    color: var(--text-1);
     line-height: 1.2;
 }
 
 .donate-panel-network {
     font-size: 0.77rem;
-    color: var(--text-3, oklch(48% 0.012 230));
+    color: var(--text-3);
     margin-top: 0.15rem;
 }
 
@@ -131,7 +145,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.09em;
-    color: var(--text-3, oklch(48% 0.012 230));
+    color: var(--text-3);
     margin-bottom: 0.65rem;
 }
 
@@ -140,9 +154,9 @@
     display: flex;
     align-items: center;
     gap: 0.65rem;
-    background: oklch(9% 0.04 245 / 0.6);
-    border: 1px solid var(--border, oklch(28% 0.03 245));
-    border-radius: var(--radius-sm, 6px);
+    background: color-mix(in srgb, var(--bg) 60%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     padding: 0.6rem 0.75rem 0.6rem 1rem;
     min-width: 0;
 }
@@ -151,7 +165,7 @@
     flex: 1;
     font-family: 'Courier New', monospace;
     font-size: 0.83rem;
-    color: var(--text-2, #9ca3af);
+    color: var(--text-2);
     word-break: break-all;
     background: transparent;
     padding: 0;
@@ -164,10 +178,10 @@
     align-items: center;
     gap: 0.35rem;
     padding: 0.42rem 0.9rem;
-    border-radius: var(--radius-sm, 6px);
-    border: 1px solid oklch(78% 0.19 254 / 0.45);
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--brand) 45%, transparent);
     background: transparent;
-    color: var(--brand, #2E7DD6);
+    color: var(--brand);
     font-size: 0.8rem;
     font-weight: 600;
     font-family: var(--font-body);
@@ -178,43 +192,43 @@
 }
 
 .copy-btn:hover {
-    background: oklch(78% 0.19 254 / 0.1);
-    border-color: var(--brand, #2E7DD6);
+    background: var(--brand-a06);
+    border-color: var(--brand);
 }
 
 .copy-btn:active {
-    background: oklch(78% 0.19 254 / 0.2);
+    background: var(--brand-a20);
 }
 
 .copy-btn.btc {
-    border-color: oklch(70% 0.17 55 / 0.45);
-    color: oklch(70% 0.17 55);
+    border-color: color-mix(in srgb, var(--donate-btc) 45%, transparent);
+    color: var(--donate-btc);
 }
 
 .copy-btn.btc:hover {
-    background: oklch(70% 0.17 55 / 0.1);
-    border-color: oklch(70% 0.17 55);
+    background: color-mix(in srgb, var(--donate-btc) 10%, transparent);
+    border-color: var(--donate-btc);
 }
 
 .copy-btn.btc:active {
-    background: oklch(70% 0.17 55 / 0.2);
+    background: color-mix(in srgb, var(--donate-btc) 20%, transparent);
 }
 
 .copy-btn.copied,
 .copy-btn.btc.copied {
-    border-color: var(--success, oklch(65% 0.20 145));
-    color: var(--success, oklch(65% 0.20 145));
-    background: oklch(65% 0.20 145 / 0.08);
+    border-color: var(--success);
+    color: var(--success);
+    background: var(--success-dim);
 }
 
 /* ── Footer note ──────────────────────────────────────────── */
 .donate-note {
     text-align: center;
-    color: var(--text-3, oklch(48% 0.012 230));
+    color: var(--text-3);
     font-size: 0.88rem;
     margin-top: 2.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid var(--border, oklch(28% 0.03 245));
+    border-top: 1px solid var(--border);
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
