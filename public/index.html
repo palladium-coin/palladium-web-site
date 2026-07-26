@@ -93,6 +93,28 @@
         </div>
     </section>
 
+    <!-- ── Ticker Strip ─────────────────────────────────────── -->
+    <div class="ticker-strip" aria-hidden="true">
+        <div class="ticker-track">
+            <div class="ticker-group">
+                <span class="ticker-item"><i class="fas fa-microchip"></i>SHA-256 PROOF OF WORK</span><span class="ticker-sep">/</span>
+                <span class="ticker-item"><i class="fas fa-stopwatch"></i>2 MINUTE BLOCK TIME</span><span class="ticker-sep">/</span>
+                <span class="ticker-item"><i class="fas fa-coins"></i>21,000,000 PLM FIXED SUPPLY</span><span class="ticker-sep">/</span>
+                <span class="ticker-item"><i class="fas fa-code-branch"></i>FULLY OPEN SOURCE</span><span class="ticker-sep">/</span>
+                <span class="ticker-item"><i class="fas fa-server"></i>SOLO MINING POOL</span><span class="ticker-sep">/</span>
+                <span class="ticker-item"><i class="fas fa-wallet"></i>SPV LIGHT WALLET</span><span class="ticker-sep">/</span>
+            </div>
+            <div class="ticker-group">
+                <span class="ticker-item"><i class="fas fa-microchip"></i>SHA-256 PROOF OF WORK</span><span class="ticker-sep">/</span>
+                <span class="ticker-item"><i class="fas fa-stopwatch"></i>2 MINUTE BLOCK TIME</span><span class="ticker-sep">/</span>
+                <span class="ticker-item"><i class="fas fa-coins"></i>21,000,000 PLM FIXED SUPPLY</span><span class="ticker-sep">/</span>
+                <span class="ticker-item"><i class="fas fa-code-branch"></i>FULLY OPEN SOURCE</span><span class="ticker-sep">/</span>
+                <span class="ticker-item"><i class="fas fa-server"></i>SOLO MINING POOL</span><span class="ticker-sep">/</span>
+                <span class="ticker-item"><i class="fas fa-wallet"></i>SPV LIGHT WALLET</span><span class="ticker-sep">/</span>
+            </div>
+        </div>
+    </div>
+
     <!-- ── Key Metrics Strip ────────────────────────────────── -->
     <section class="section pt-2 pb-4">
         <div class="container">
@@ -120,6 +142,8 @@
             </div>
         </div>
     </section>
+
+    <div class="section-divider-glow" aria-hidden="true"><span class="section-divider-glow-node"></span></div>
 
     <!-- ── What is Palladium ─────────────────────────────────── -->
     <section class="hero is-medium">
@@ -173,6 +197,125 @@
         </div>
     </section>
 
+    <!-- ── Why Palladium ──────────────────────────────────────── -->
+    <section class="hero is-medium grid-pattern">
+        <div class="hero-body">
+            <div class="columns is-centered">
+                <div class="column is-1"></div>
+                <div class="column">
+                    <p class="section-eyebrow" data-animate>Why Palladium</p>
+                    <p class="title section-title has-text-centered" data-animate>Built for speed and security</p>
+                    <div class="feature-grid mt-6">
+                        <div class="feature-card" data-animate>
+                            <div class="feature-card-icon"><i class="fas fa-shield-alt"></i></div>
+                            <h3 class="feature-card-title">Battle-tested security</h3>
+                            <p class="feature-card-desc">Inherits Bitcoin's SHA-256 proof-of-work — the most attacked, most resilient consensus algorithm in crypto.</p>
+                        </div>
+                        <div class="feature-card" data-animate>
+                            <div class="feature-card-icon"><i class="fas fa-bolt"></i></div>
+                            <h3 class="feature-card-title">5x faster blocks</h3>
+                            <p class="feature-card-desc">2-minute block times instead of Bitcoin's 10 — faster confirmations without changing the security model.</p>
+                        </div>
+                        <div class="feature-card" data-animate>
+                            <div class="feature-card-icon"><i class="fas fa-microchip"></i></div>
+                            <h3 class="feature-card-title">ASIC compatible</h3>
+                            <p class="feature-card-desc">Same algorithm as Bitcoin means existing SHA-256 ASICs can mine Palladium with zero new hardware.</p>
+                        </div>
+                        <div class="feature-card" data-animate>
+                            <div class="feature-card-icon"><i class="fas fa-coins"></i></div>
+                            <h3 class="feature-card-title">Fixed, predictable supply</h3>
+                            <p class="feature-card-desc">Capped at 21,000,000 PLM with a halving every 210,000 blocks — no inflation, no surprises.</p>
+                        </div>
+                        <div class="feature-card" data-animate>
+                            <div class="feature-card-icon"><i class="fas fa-server"></i></div>
+                            <h3 class="feature-card-title">Solo mining pool</h3>
+                            <p class="feature-card-desc">Poolladium, built on ckpool, pays block rewards directly to your address — no pooled fees, no middlemen.</p>
+                        </div>
+                        <div class="feature-card" data-animate>
+                            <div class="feature-card-icon"><i class="fas fa-code-branch"></i></div>
+                            <h3 class="feature-card-title">100% open source</h3>
+                            <p class="feature-card-desc">Every component — core, wallet, pool, explorer — is public and auditable on GitHub.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-1"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Live Network Status ──────────────────────────────────── -->
+    <section class="hero">
+        <div class="hero-body">
+            <div class="columns is-centered">
+                <div class="column is-2"></div>
+                <div class="column">
+                    <p class="section-eyebrow" data-animate>Live From The Chain</p>
+                    <p class="title section-title has-text-centered mb-6" data-animate>The network, right now</p>
+                    <div class="terminal-panel" data-animate>
+                        <div class="terminal-panel-bar">
+                            <span class="terminal-dot terminal-dot--red"></span>
+                            <span class="terminal-dot terminal-dot--yellow"></span>
+                            <span class="terminal-dot terminal-dot--green"></span>
+                            <span class="terminal-panel-filename">network_status.log</span>
+                            <span class="terminal-live"><span class="terminal-live-dot"></span>LIVE</span>
+                        </div>
+                        <div class="terminal-panel-body">
+                            <div class="terminal-line"><span class="terminal-prompt">$</span>palladium-cli getblockcount</div>
+                            <div class="terminal-line terminal-line--value" id="live-block-height">— <span class="terminal-cursor"></span></div>
+                            <div class="terminal-line"><span class="terminal-prompt">$</span>palladium-cli getnetworkhashps</div>
+                            <div class="terminal-line terminal-line--value" id="live-hashrate">—</div>
+                            <div class="terminal-line"><span class="terminal-prompt">$</span>palladium-cli getdifficulty</div>
+                            <div class="terminal-line terminal-line--value" id="live-difficulty">—</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Ecosystem ─────────────────────────────────────────── -->
+    <section class="hero is-medium">
+        <div class="hero-body">
+            <div class="columns is-centered">
+                <div class="column is-1"></div>
+                <div class="column">
+                    <p class="section-eyebrow" data-animate>Ecosystem</p>
+                    <p class="title section-title has-text-centered" data-animate>Everything you need to get on-chain</p>
+                    <div class="feature-grid mt-6">
+                        <a href="https://github.com/palladium-coin/palladiumcore" data-link="repo" target="_blank" class="feature-card" data-animate>
+                            <div class="feature-card-icon"><i class="fas fa-cube"></i></div>
+                            <h3 class="feature-card-title">PalladiumCore</h3>
+                            <p class="feature-card-desc">The full node — validates the chain, enforces consensus, and mines new blocks.</p>
+                            <span class="feature-card-tag"><i class="fab fa-github"></i> View on GitHub</span>
+                        </a>
+                        <a href="get_started.html" class="feature-card" data-animate>
+                            <div class="feature-card-icon"><i class="fas fa-wallet"></i></div>
+                            <h3 class="feature-card-title">PalladiumWallet</h3>
+                            <p class="feature-card-desc">A lightweight SPV wallet for everyday transactions — synced in minutes.</p>
+                            <span class="feature-card-tag"><i class="fas fa-arrow-right"></i> Get started</span>
+                        </a>
+                        <a href="mining.html" class="feature-card" data-animate>
+                            <div class="feature-card-icon"><i class="fas fa-pickaxe"></i></div>
+                            <h3 class="feature-card-title">Poolladium</h3>
+                            <p class="feature-card-desc">Official solo mining pool with real-time hashrate and share tracking.</p>
+                            <span class="feature-card-tag"><i class="fas fa-arrow-right"></i> Start mining</span>
+                        </a>
+                        <a href="https://explorer.palladium-coin.com/" data-link="explorer" target="_blank" class="feature-card" data-animate>
+                            <div class="feature-card-icon"><i class="fas fa-search"></i></div>
+                            <h3 class="feature-card-title">Explorer</h3>
+                            <p class="feature-card-desc">Browse blocks, transactions, and addresses across the live network.</p>
+                            <span class="feature-card-tag"><i class="fas fa-external-link-alt"></i> Visit Explorer</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="column is-1"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider-glow" aria-hidden="true"><span class="section-divider-glow-node"></span></div>
+
     <!-- ── Community ────────────────────────────────────────── -->
     <section class="hero is-medium community-section">
         <div class="hero-body">
@@ -201,6 +344,94 @@
                                     <span>Join Telegram</span>
                                 </a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FAQ ──────────────────────────────────────────────── -->
+    <section class="hero is-medium">
+        <div class="hero-body">
+            <div class="columns is-centered">
+                <div class="column is-2"></div>
+                <div class="column">
+                    <p class="section-eyebrow" data-animate>FAQ</p>
+                    <p class="title section-title has-text-centered mb-6" data-animate>Frequently asked questions</p>
+                    <div class="faq-list" data-animate>
+                        <div class="faq-item">
+                            <button class="faq-toggle">
+                                <span>What makes Palladium different from Bitcoin?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-panel">
+                                <div class="faq-panel-inner">Palladium is a Bitcoin fork that keeps the same SHA-256 proof-of-work security and 21M fixed supply, but cuts block time from 10 minutes to 2 — meaning faster confirmations and a tighter halving cadence, without giving up decentralization.</div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-toggle">
+                                <span>Can I mine Palladium with my existing hardware?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-panel">
+                                <div class="faq-panel-inner">Yes. Palladium uses the exact same SHA-256 algorithm as Bitcoin, so any SHA-256 ASIC can point at Poolladium and start mining immediately — no new hardware required.</div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-toggle">
+                                <span>Do I need to run a full node to use Palladium?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-panel">
+                                <div class="faq-panel-inner">No. PalladiumWallet is a lightweight SPV wallet that syncs in minutes and is perfect for everyday transactions. Run PalladiumCore only if you want to mine, validate the chain yourself, or contribute to network security.</div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-toggle">
+                                <span>How does solo mining through Poolladium work?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-panel">
+                                <div class="faq-panel-inner">Poolladium runs on ckpool in solo mode: you connect your miner via stratum, and any block you find pays its full coinbase reward directly to your own address — no pool fees, no reward splitting.</div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-toggle">
+                                <span>Is Palladium open source?</span>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </button>
+                            <div class="faq-panel">
+                                <div class="faq-panel-inner">Completely. PalladiumCore, PalladiumWallet, the explorer, and the pool infrastructure are all public on GitHub, so anyone can audit the code or contribute.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Final CTA ────────────────────────────────────────── -->
+    <section class="hero">
+        <div class="hero-body">
+            <div class="columns is-centered">
+                <div class="column is-2"></div>
+                <div class="column">
+                    <div class="cta-band" data-animate>
+                        <div class="cta-band-icon"><i class="fas fa-rocket"></i></div>
+                        <h2 class="cta-band-title">Ready to join the network?</h2>
+                        <p class="cta-band-sub mx-auto">Download a wallet, start mining, or just follow along — Palladium is built in the open, for everyone.</p>
+                        <div class="cta-band-buttons">
+                            <a href="https://github.com/davide3011/PalladiumWallet/releases/latest" data-link="wallet-latest" class="button is-success is-medium">
+                                <span class="icon"><i class="fas fa-download"></i></span>
+                                <span>Download Wallet</span>
+                            </a>
+                            <a href="mining.html" class="button is-outlined is-medium">
+                                <span class="icon"><i class="fas fa-pickaxe"></i></span>
+                                <span>Start Mining</span>
+                            </a>
                         </div>
                     </div>
                 </div>

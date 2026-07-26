@@ -18,6 +18,25 @@
     }
 }());
 
+// Inject the ambient nebula backdrop as the first element in body, on every page
+(function injectNebula() {
+    function inject() {
+        if (document.getElementById('nebula-field')) return;
+        const field = document.createElement('div');
+        field.id = 'nebula-field';
+        field.innerHTML =
+            '<div class="nebula-blob nebula-blob--1"></div>' +
+            '<div class="nebula-blob nebula-blob--2"></div>' +
+            '<div class="nebula-blob nebula-blob--3"></div>';
+        document.body.insertBefore(field, document.body.firstChild);
+    }
+    if (document.body) {
+        inject();
+    } else {
+        document.addEventListener('DOMContentLoaded', inject);
+    }
+}());
+
 class PalladiumLoader {
     constructor() {
         this.init();
@@ -298,7 +317,38 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     initCounters();
     initSpotlightCards();
+    initFaqAccordions();
 });
+
+// ── FAQ Accordion ────────────────────────────────────────────────────────────
+// Delegated click handler so it works for any .faq-item injected on any page
+function initFaqAccordions() {
+    document.addEventListener('click', (e) => {
+        const toggle = e.target.closest('.faq-toggle');
+        if (!toggle) return;
+
+        const item = toggle.closest('.faq-item');
+        const panel = item.querySelector('.faq-panel');
+        const isOpen = item.classList.contains('is-open');
+
+        const list = item.closest('.faq-list');
+        if (list) {
+            list.querySelectorAll('.faq-item.is-open').forEach(other => {
+                if (other === item) return;
+                other.classList.remove('is-open');
+                other.querySelector('.faq-panel').style.maxHeight = null;
+            });
+        }
+
+        if (isOpen) {
+            item.classList.remove('is-open');
+            panel.style.maxHeight = null;
+        } else {
+            item.classList.add('is-open');
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+    });
+}
 
 // ── Spotlight Cards ──────────────────────────────────────────────────────────
 // Tracks the pointer over card elements and exposes the position as CSS custom
