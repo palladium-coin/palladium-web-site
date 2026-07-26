@@ -25,6 +25,8 @@ function setServerBadge(id, count) {
 }
 
 // ---- Render peers ----
+// Built with createElement/textContent (not innerHTML) — peer.addr comes from
+// the P2P network and must never be treated as trusted markup.
 function renderPeers(peers) {
     const el = document.getElementById('peers-list');
     if (!el) return;
@@ -40,15 +42,28 @@ function renderPeers(peers) {
 
     setBadge('peers-count', outbound.length);
 
-    el.innerHTML = outbound.map(peer => `
-        <div class="network-row">
-            <span class="net-dot online"></span>
-            <span class="net-addr" title="${peer.addr}">${peer.addr}</span>
-        </div>`
-    ).join('');
+    el.innerHTML = '';
+    outbound.forEach(peer => {
+        const row = document.createElement('div');
+        row.className = 'network-row';
+
+        const dot = document.createElement('span');
+        dot.className = 'net-dot online';
+        row.appendChild(dot);
+
+        const addr = document.createElement('span');
+        addr.className = 'net-addr';
+        addr.title = peer.addr;
+        addr.textContent = peer.addr;
+        row.appendChild(addr);
+
+        el.appendChild(row);
+    });
 }
 
 // ---- Render ElectrumX servers ----
+// Same rule as renderPeers: srv.host is community-submitted server data,
+// never interpolated into innerHTML.
 function renderServers(servers) {
     const el = document.getElementById('servers-list');
     if (!el) return;
@@ -61,27 +76,44 @@ function renderServers(servers) {
 
     setServerBadge('servers-count', servers.length);
 
-    el.innerHTML = servers.map(srv => {
+    el.innerHTML = '';
+    servers.forEach(srv => {
         const alive = srv.tcp_reachable || srv.ssl_reachable;
-        const dotClass = alive ? 'online' : 'offline';
 
-        const tcpClass = srv.tcp_reachable ? 'tcp' : 'unreachable';
-        const sslClass = srv.ssl_reachable ? 'ssl' : 'unreachable';
+        const row = document.createElement('div');
+        row.className = 'network-row';
 
-        const tcpBadge = srv.tcp_port
-            ? `<span class="net-port ${tcpClass}" title="TCP">TCP ${srv.tcp_port}</span>`
-            : '';
-        const sslBadge = srv.ssl_port
-            ? `<span class="net-port ${sslClass}" title="SSL">SSL ${srv.ssl_port}</span>`
-            : '';
+        const dot = document.createElement('span');
+        dot.className = `net-dot ${alive ? 'online' : 'offline'}`;
+        row.appendChild(dot);
 
-        return `
-        <div class="network-row">
-            <span class="net-dot ${dotClass}"></span>
-            <span class="net-addr" title="${srv.host}">${srv.host}</span>
-            <span class="net-ports">${tcpBadge}${sslBadge}</span>
-        </div>`;
-    }).join('');
+        const addr = document.createElement('span');
+        addr.className = 'net-addr';
+        addr.title = srv.host;
+        addr.textContent = srv.host;
+        row.appendChild(addr);
+
+        const ports = document.createElement('span');
+        ports.className = 'net-ports';
+
+        if (srv.tcp_port) {
+            const tcpBadge = document.createElement('span');
+            tcpBadge.className = `net-port ${srv.tcp_reachable ? 'tcp' : 'unreachable'}`;
+            tcpBadge.title = 'TCP';
+            tcpBadge.textContent = `TCP ${srv.tcp_port}`;
+            ports.appendChild(tcpBadge);
+        }
+        if (srv.ssl_port) {
+            const sslBadge = document.createElement('span');
+            sslBadge.className = `net-port ${srv.ssl_reachable ? 'ssl' : 'unreachable'}`;
+            sslBadge.title = 'SSL';
+            sslBadge.textContent = `SSL ${srv.ssl_port}`;
+            ports.appendChild(sslBadge);
+        }
+        row.appendChild(ports);
+
+        el.appendChild(row);
+    });
 }
 
 // ---- Main fetch ----

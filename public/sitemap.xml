@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://palladiumchain.net/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://palladiumchain.net/get_started.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://palladiumchain.net/mining.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://palladiumchain.net/network.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://palladiumchain.net/roadmap.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://palladiumchain.net/donate.html</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://palladiumchain.net/pool.html</loc>
+    <priority>0.5</priority>
+  </url>
+</urlset>
