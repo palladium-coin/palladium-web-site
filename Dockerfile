@@ -10,3 +10,7 @@ FROM caddy:2.7-alpine
 COPY public/ /srv
 COPY --from=config-builder /build/public/js/config.js /srv/js/config.js
 COPY Caddyfile /etc/caddy/Caddyfile
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
