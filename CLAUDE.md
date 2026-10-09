@@ -11,7 +11,9 @@ Static website for Palladium, a Proof of Work cryptocurrency. Vanilla HTML/CSS/J
 ```bash
 npm run dev                  # Full dev environment: config gen + optional pool sync + live-server on http://localhost:3000
 npm run generate-config      # Regenerate public/js/config.js from .env
+npm run generate-config:prod # Same, with --prod (empty API_BASE_URL; used at Docker build)
 npm run sync-pool-data       # Sync ckpool logs into public/pool-data/ once (needs POOL_LOG_DIR in .env)
+npm run sync-pool-data:watch # Same, every 30s (what `dev` runs when POOL_LOG_DIR is set)
 docker-compose up -d --build # Production: Caddy container on ports 80/443
 ```
 
@@ -26,11 +28,13 @@ The site depends on **palladium-stack**, a separate Flask backend, for live bloc
 
 All page JS builds requests with `apiUrl(CONFIG.ENDPOINTS.X)` and `apiHeaders()` from config.js.
 
+**External dependency: palladium-stack** (separate repo, not vendored here) provides both halves of the live data, so the pool pages need it running too: the Flask API (`/api/*`) and the ckpool log directory. There is no separate pool repo to clone — `POOL_LOG_DIR` should point to palladium-stack's ckpool logs (e.g. `~/palladium-stack/logs`). Without it the site still loads, but pool pages show "Pool statistics are not available" and in dev `POOL_LOG_DIR` can simply be left empty. In prod the web container must share the `palladium` Docker network with the palladium-stack container.
+
 **Pool data** (`public/pool-data/`) is raw ckpool log output fetched directly by [pool.js](public/js/pool.js) / [pool-user.js](public/js/pool-user.js): synced by script every 30s in dev, mounted read-only from the host in prod. Both `config.js` and `pool-data/` are gitignored/generated — never edit by hand.
 
 ## Design & UI conventions
 
-For any visual work (new pages, sections, redesigns, layout fixes), invoke the `ui-ux-pro-max` skill (from the ui-ux-pro-max plugin) first — it defines the quality bar for aesthetics and UX. Useful query context for this site: dark crypto/fintech landing, glassmorphism, cyan brand.
+For any visual work (new pages, sections, redesigns, layout fixes), invoke the `ui-ux-pro-max` skill (from the ui-ux-pro-max plugin) first — it defines the quality bar for aesthetics and UX. Useful query context for this site: dark crypto/fintech landing, glassmorphism, cyan brand. For motion, press feedback, translucent materials and typography details, also consult the project skill `apple-design` (`.claude/skills/apple-design`). The site is vanilla JS with no animation library, so skip its Motion/spring-library and drag/momentum parts unless a page truly needs gestures.
 
 The site has a dark, premium look: near-black blue background, cyan brand accent, Syne for display headings and Poppins for body. All of this is tokenised in [public/css/design-system.css](public/css/design-system.css) — **always use the tokens** (`--bg`, `--surface-1..3`, `--brand`, `--text-1..3`, `--sp-*`, `--radius-*`, `--text-*` fluid type scale, `--spring-*`/`--ease-out-expo` easings) instead of hard-coding colors, sizes, or fonts. Colors are in `oklch()`; derive variants with `color-mix()` like the existing code does.
 
@@ -52,6 +56,6 @@ Every page is a standalone HTML file in `public/` with a matching `css/<page>.cs
 
 **External links** (repo, wallet releases, socials, explorer, exchange listings) are centralized in [public/links.json](public/links.json) — the single source of truth. To change a URL, edit that file only. Anchors reference it via `data-link="<key>"`; `common.js` fetches `links.json` and overwrites each `href` after load. Keep the `href` itself set to the current real URL too (not a placeholder) — it's the fallback if the fetch fails or JS is disabled, so a stale value there degrades gracefully instead of breaking the link. `twitter:url` meta tags are intentionally left static (crawlers need them in raw HTML).
 
-**Site domain in SEO/social meta tags**: `og:url`, `og:image`, `twitter:url`, and every `<loc>` in `sitemap.xml`/`robots.txt` need an absolute URL per spec, but the production domain is `CADDY_HOST` from `.env` and does change between deployments — so these are hardcoded to the current real default (`https://palladiumchain.net`) as checked-in source, and [entrypoint.sh](entrypoint.sh) rewrites that domain to the actual `CADDY_HOST` in `/srv` **every time the container starts** (not just at build), mirroring how the Caddyfile itself resolves `{$CADDY_HOST}` at runtime. If `CADDY_HOST` changes, `docker-compose up -d` (container recreate) picks it up without an image rebuild; a plain `docker-compose restart` on the same container won't re-run the substitution against a new value. `<link rel="canonical">` deliberately uses root-relative hrefs (`/mining.html`) instead — crawlers resolve those against the actual request URL, so they need no domain and no substitution at all.
+**Site domain in SEO/social meta tags**: `og:url`, `og:image`, `twitter:url` and every `<loc>` in `sitemap.xml`/`robots.txt` need absolute URLs, so they are hardcoded to `https://palladiumchain.net` in source. [entrypoint.sh](entrypoint.sh) rewrites that domain to the real `CADDY_HOST` in `/srv` **on every container start**, not just at build. After changing `CADDY_HOST`, run `docker-compose up -d` (recreate); a plain `docker-compose restart` won't re-run the substitution. `<link rel="canonical">` uses root-relative hrefs (`/mining.html`) on purpose, so it needs no domain or substitution.
 
 Caddy sets `Cache-Control: no-store` on partials, CSS, and pool-data — headers are configured in [Caddyfile](Caddyfile). Exceptions: `css/mystyles.css` and `css/footer.css` are cached long-term (`max-age=31536000, immutable`) since they're vendored/rarely-changed and already versioned with a `?v=` query string.

@@ -18,6 +18,8 @@ Browser
 In **development**, `public/js/config.js` is generated from `.env` so the browser knows where to reach the API.
 In **production**, Caddy serves the site and proxies `/api/*` — `API_BASE_URL` is not needed.
 
+The site depends on **palladium-stack** (separate repo) for both live data sources: the Flask API above and the ckpool logs behind the pool pages. There is no separate pool repository — point `POOL_LOG_DIR` to palladium-stack's ckpool log directory (e.g. `~/palladium-stack/logs`). Without it the site still loads, but the pool pages show no statistics.
+
 Pool data (`public/pool-data/`) is:
 - **Dev**: synced from `POOL_LOG_DIR` every 30 seconds by a background script (optional)
 - **Prod**: mounted read-only from `POOL_LOG_DIR` directly into the container
@@ -30,7 +32,7 @@ Pool data (`public/pool-data/`) is:
 |---|---|---|
 | Node.js + npm | required | not needed |
 | Docker + Docker Compose | not needed | required |
-| palladium-stack running | for API calls | must be on `palladium-net` network |
+| palladium-stack running | for API calls | must be on the `palladium` Docker network |
 
 ---
 
@@ -123,7 +125,7 @@ palladium-web-site/
 - Docker and Docker Compose installed on the server
 - Ports **80** and **443** open and reachable from the internet
 - A domain pointing to the server
-- **palladium-stack** already running on the same host, connected to the `palladium-net` Docker network
+- **palladium-stack** already running on the same host, connected to the `palladium` Docker network, and writing its ckpool logs to a host directory you can mount
 
 ### 1. Configure environment
 
@@ -144,10 +146,10 @@ Edit `.env`:
 
 ### 2. Create the shared Docker network
 
-Only needed once. This network is shared between this container and palladium-stack:
+Only needed if it doesn't exist yet (`docker-compose up` also creates it, but palladium-stack must be attached to the same network):
 
 ```bash
-docker network create palladium-net
+docker network create palladium
 ```
 
 ### 3. Start the container
