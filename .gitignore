@@ -124,3 +124,6 @@ coverage.xml
 *.temp
 .tmp/
 .temp/
+
+# Ops (production .env — local only
+ops/
