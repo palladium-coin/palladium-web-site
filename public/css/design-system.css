@@ -1099,3 +1099,205 @@ a:hover { color: var(--brand-light); }
   [data-animate] { opacity: 1 !important; translate: none !important; scale: 1 !important; }
   .aurora-hero::before { animation: none !important; }
 }
+
+/* ============================================================
+   RESPONSIVE POLISH — phone portrait/landscape, tablet, desktop
+   Breakpoints: ≤480 small phone · ≤768 phone · 769–1023 tablet
+   · ≥1024 desktop (matches Bulma's navbar switch)
+   ============================================================ */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Long unbroken strings (addresses, hashes, emails) must never widen the page */
+/* clip (not hidden) keeps position:sticky working; contains pre-reveal translate offsets */
+html, body { overflow-x: clip; }
+body { overflow-wrap: break-word; }
+img, svg, video { max-width: 100%; }
+
+/* Dynamic viewport: the sticky footer layout must not jump with mobile URL bars */
+@supports (min-height: 100dvh) {
+  body { min-height: 100dvh; }
+}
+
+/* Notch / rounded-corner safe areas (phones in landscape especially) */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  .modern-footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
+}
+
+/* ── Touch devices: every tappable control ≥ 44×44 (WCAG 2.5.8 / HIG) ── */
+@media (pointer: coarse) {
+  html body .button.is-small,
+  html body .rm-link,
+  html body .mn-step-link,
+  html body .copy-btn,
+  html body .refresh-btn,
+  html body .footer-links a,
+  html body .footer-section a,
+  html body .footer-bottom a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  html body .rm-link,
+  html body .mn-step-link,
+  html body .footer-links a,
+  html body .footer-section a,
+  html body .footer-bottom a {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  html body .social-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  html body .refresh-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Press feedback instead of hover lift, which sticks on touch */
+  .button:active,
+  .copy-btn:active,
+  .rm-link:active {
+    transform: scale(0.97);
+    transition: transform 100ms ease-out;
+  }
+}
+
+/* ── Navbar: tablet + phone menu ─────────────────────────────── */
+@media (max-width: 1023px) {
+  /* Menu may be taller than a landscape phone: let it scroll, not overflow */
+  html body .navbar-menu.is-active {
+    max-height: calc(100dvh - 5.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* Bulma hides social icons on touch; keep them reachable as a row */
+  html body .navbar-end .navbar-item.is-hidden-touch {
+    display: inline-flex !important;
+    justify-content: center;
+    flex: 1;
+  }
+  html body .navbar-end {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  html body .navbar-end .navbar-cta {
+    flex: 1 0 100%;
+    order: 2;
+  }
+}
+
+/* ── Tablet 769–1023: don't squeeze two-column heroes ────────── */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .hero-main .column.is-1 { display: none; }
+  .hero-main .hero-visual { flex: 0 0 38%; }
+}
+
+/* ── Short landscape phones: drop full-height heroes ─────────── */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero, .hero-main, .gs-hero, .aurora-hero { min-height: auto; }
+  .hero-main { padding-top: 1.5rem; padding-bottom: 1rem; }
+  html body .navbar { margin-block: 0.4rem !important; top: 0.4rem !important; }
+}
+
+/* ── Wide desktop: cap reading width, keep ultra-wide calm ───── */
+@media (min-width: 1600px) {
+  html { font-size: 106.25%; } /* 17px base; rem-based spacing scales with it */
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-1, .glass-2, .navbar, .navbar-menu {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--surface-1) !important;
+  }
+}
+
+/* Navbar capsule keeps a gutter on tablet / landscape (≤480 is edge-to-edge) */
+@media (min-width: 481px) {
+  html body .navbar {
+    width: min(1180px, calc(100% - 1.5rem));
+    margin-inline: auto !important;
+  }
+}
+
+/* ============================================================
+   UX DETAILS — anchors, selection, skip link, navbar state
+   ============================================================ */
+
+/* Anchors land below the floating navbar instead of under it */
+:target, [id] { scroll-margin-top: 6rem; }
+
+::selection {
+  background: color-mix(in oklch, var(--brand) 40%, transparent);
+  color: var(--text-1);
+}
+
+/* Skip link: invisible until keyboard-focused */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10000;
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--radius-full);
+  background: var(--brand);
+  color: var(--on-brand);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 0.2s var(--ease-out-expo);
+}
+.skip-link:focus-visible { transform: translateY(0); }
+[tabindex="-1"]:focus { outline: none; }
+
+/* Navbar: deepens when content scrolls beneath it */
+html body .navbar.is-scrolled {
+  border-color: color-mix(in oklch, var(--brand) 28%, var(--border-strong)) !important;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--metal) 14%, transparent),
+    0 16px 40px oklch(0% 0 0 / 0.55) !important;
+}
+
+/* Burger shows a clear pressed state */
+.navbar-burger[aria-expanded="true"] {
+  color: var(--brand) !important;
+  border-color: var(--brand) !important;
+}
+
+/* The navbar's sticky parent must be the tall element (body), not its own
+   injected wrapper — otherwise sticky has no room to stick. */
+#navbar-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+#navbar-container > * { pointer-events: auto; }
+
+/* Desktop: the menu is inline inside the capsule — no second box around it */
+@media (min-width: 1024px) {
+  html body .navbar-menu {
+    background: transparent !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 0;
+    border-radius: 0;
+    margin-top: 0;
+    box-shadow: none !important;
+    overflow: visible;
+  }
+}

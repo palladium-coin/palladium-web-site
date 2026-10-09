@@ -123,6 +123,8 @@ class PalladiumLoader {
             // Initialize navbar functionality
             this.initNavbarBurger();
             this.setActiveNavbarItem();
+            this.initNavbarScrollState();
+            this.injectSkipLink();
 
             // Apply centralized external links (navbar/footer + static page markup)
             this.applyLinks(links);
@@ -206,23 +208,71 @@ class PalladiumLoader {
     }
 
     initNavbarBurger() {
-        // Get all "navbar-burger" elements
-        const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        document.querySelectorAll('.navbar-burger').forEach(burger => {
+            const menu = document.getElementById(burger.dataset.target);
+            if (!menu) return;
 
-        // Add a click event on each of them
-        navbarBurgers.forEach(el => {
-            el.addEventListener('click', () => {
-                // Get the target from the "data-target" attribute
-                const target = el.dataset.target;
-                const targetElement = document.getElementById(target);
+            // <a role="button"> is not keyboard-operable by default
+            burger.setAttribute('tabindex', '0');
+            burger.setAttribute('aria-controls', menu.id);
 
-                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-                el.classList.toggle('is-active');
-                if (targetElement) {
-                    targetElement.classList.toggle('is-active');
+            const setOpen = (open, restoreFocus = false) => {
+                burger.classList.toggle('is-active', open);
+                menu.classList.toggle('is-active', open);
+                burger.setAttribute('aria-expanded', String(open));
+                burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+                if (!open && restoreFocus) burger.focus();
+            };
+            setOpen(false);
+
+            burger.addEventListener('click', () => setOpen(!menu.classList.contains('is-active')));
+            burger.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setOpen(!menu.classList.contains('is-active'));
                 }
             });
+
+            // Dismiss: Escape, tap outside, or following a link (same-page anchors included)
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && menu.classList.contains('is-active')) setOpen(false, true);
+            });
+            document.addEventListener('pointerdown', e => {
+                if (menu.classList.contains('is-active') && !menu.contains(e.target) && !burger.contains(e.target)) setOpen(false);
+            });
+            menu.addEventListener('click', e => {
+                if (e.target.closest('a')) setOpen(false);
+            });
         });
+    }
+
+    // Navbar gains a stronger edge/shadow once content scrolls beneath it
+    initNavbarScrollState() {
+        const nav = document.querySelector('.navbar');
+        if (!nav) return;
+        let ticking = false;
+        const update = () => {
+            nav.classList.toggle('is-scrolled', window.scrollY > 8);
+            ticking = false;
+        };
+        window.addEventListener('scroll', () => {
+            if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        }, { passive: true });
+        update();
+    }
+
+    // Keyboard users jump past the navbar straight to the page content
+    injectSkipLink() {
+        if (document.querySelector('.skip-link')) return;
+        const target = document.querySelector('body > section, body > main');
+        if (!target) return;
+        if (!target.id) target.id = 'main-content';
+        target.setAttribute('tabindex', '-1');
+        const link = document.createElement('a');
+        link.className = 'skip-link';
+        link.href = '#' + target.id;
+        link.textContent = 'Skip to content';
+        document.body.insertBefore(link, document.body.firstChild);
     }
 
     setActiveNavbarItem() {
@@ -233,8 +283,10 @@ class PalladiumLoader {
             const href = item.getAttribute('href');
             if (href && (href === currentPage || (currentPage === '' && href === 'index.html'))) {
                 item.classList.add('is-active');
+                item.setAttribute('aria-current', 'page');
             } else {
                 item.classList.remove('is-active');
+                item.removeAttribute('aria-current');
             }
         });
     }

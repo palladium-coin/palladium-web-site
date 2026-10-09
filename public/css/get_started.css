@@ -74,7 +74,7 @@
 /* ── Comparison grid ──────────────────────────────────────── */
 .gs-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem;
     margin-bottom: 3rem;
     max-width: 920px;
@@ -419,9 +419,9 @@
 .gs-icon-no { color: var(--error);  font-size: 1rem; }
 
 /* ── Mobile ───────────────────────────────────────────────── */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .gs-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 
