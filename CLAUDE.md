@@ -17,18 +17,18 @@ npm run sync-pool-data:watch # Same, every 30s (what `dev` runs when POOL_LOG_DI
 docker-compose up -d --build # Production: Caddy container on ports 80/443
 ```
 
-Dev requires a `.env` (copy from `.env.example`). `API_KEY` must match the palladium-stack backend's key. Prod additionally requires `CADDY_HOST` and `POOL_LOG_DIR` in `.env`.
+Dev requires a `.env` (copy from `.env.example`). `API_KEY` is shared with the api/ service (compose passes it in; empty disables auth in dev). Prod additionally requires `CADDY_HOST` and `POOL_LOG_DIR` in `.env`.
 
 ## Architecture
 
-The site depends on **palladium-stack**, a separate Flask backend, for live blockchain data (block height, hashrate, peers, pool stats).
+The site depends on a small API in [api/](api/server.py) (stdlib Python, container `palladium-dashboard`) for live blockchain data (block height, hashrate, difficulty, peers, Electrum servers). It reads the palladiumd RPC (`RPC_URL`, default `http://docker-palladiumcore:2332`, credentials `RPC_USER`/`RPC_PASSWORD` from `.env`) and Fulcrum (`plm-fulcrum`) over the shared `palladium` Docker network. It replaced the old external palladium-stack dashboard.
 
 - **Dev**: the browser calls the API directly at `API_BASE_URL` with an `X-API-Key` header, both baked into the generated `public/js/config.js` ([scripts/generate-config.js](scripts/generate-config.js)).
-- **Prod**: Caddy serves `public/` and proxies `/api/*` to the `palladium-dashboard:{$API_PORT:8080}` container (shared `palladium` Docker network), injecting the API key server-side. `API_PORT` (default `8080`) is the port Flask listens on inside the palladium-stack container — set it in `.env` if that changes. `API_BASE_URL` is empty; `config.js` is generated with `--prod` at Docker build time.
+- **Prod**: Caddy serves `public/` and proxies `/api/*` to the `palladium-dashboard:{$API_PORT:8080}` container (shared `palladium` Docker network), injecting the API key server-side. `API_PORT` (default `8080`) is the port the api/ container listens on (also the dev host port) — set it in `.env` if that changes. `API_BASE_URL` is empty; `config.js` is generated with `--prod` at Docker build time.
 
 All page JS builds requests with `apiUrl(CONFIG.ENDPOINTS.X)` and `apiHeaders()` from config.js.
 
-**External dependency: palladium-stack** (separate repo, not vendored here) provides both halves of the live data, so the pool pages need it running too: the Flask API (`/api/*`) and the ckpool log directory. There is no separate pool repo to clone — `POOL_LOG_DIR` should point to palladium-stack's ckpool logs (e.g. `~/palladium-stack/logs`). Without it the site still loads, but pool pages show "Pool statistics are not available" and in dev `POOL_LOG_DIR` can simply be left empty. In prod the web container must share the `palladium` Docker network with the palladium-stack container.
+**External dependencies** (separate containers, not in this repo): the palladiumd node (`docker-palladiumcore`), Fulcrum (`plm-fulcrum`) and ckpool, all on the `palladium` Docker network. `POOL_LOG_DIR` should point to ckpool's logs (e.g. `~/ckpool-palladium/logs`). Without it the site still loads, but pool pages show "Pool statistics are not available"; in dev `POOL_LOG_DIR` can be left empty (compose still needs a non-empty value to start, e.g. `POOL_LOG_DIR=/tmp docker compose up -d --build api`). In dev the API is published on `127.0.0.1:8080` — set `API_BASE_URL=http://localhost:8080`.
 
 **Pool data** (`public/pool-data/`) is raw ckpool log output fetched directly by [pool.js](public/js/pool.js) / [pool-user.js](public/js/pool-user.js): synced by script every 30s in dev, mounted read-only from the host in prod. Both `config.js` and `pool-data/` are gitignored/generated — never edit by hand.
 

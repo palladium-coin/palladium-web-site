@@ -28,6 +28,24 @@ services:
         max-file: "3"
     # If running behind a firewall/NAT, ensure port 443 is reachable from the Internet
 
+  # Replaces the old palladium-stack dashboard: serves /api/* (see api/server.py).
+  # Container name must stay "palladium-dashboard": Caddy proxies to it by that name.
+  api:
+    build: ./api
+    container_name: palladium-dashboard
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${API_PORT:-8080}:8080"  # dev only: browser calls it directly
+    environment:
+      - RPC_URL=${RPC_URL:-http://docker-palladiumcore:2332}
+      - RPC_USER=${RPC_USER}
+      - RPC_PASSWORD=${RPC_PASSWORD}
+      - FULCRUM_HOST=${FULCRUM_HOST:-plm-fulcrum}
+      - FULCRUM_PUBLIC_HOST=${FULCRUM_PUBLIC_HOST:-}
+      - API_KEY=${API_KEY}
+    networks:
+      - palladium
+
 volumes:
   caddy_data:
   caddy_config:
