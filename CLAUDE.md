@@ -30,13 +30,25 @@ All page JS builds requests with `apiUrl(CONFIG.ENDPOINTS.X)` and `apiHeaders()`
 
 **External dependencies** (separate containers, not in this repo): the palladiumd node (`docker-palladiumcore`), Fulcrum (`plm-fulcrum`) and ckpool, all on the `palladium` Docker network. `POOL_LOG_DIR` should point to ckpool's logs (e.g. `~/ckpool-palladium/logs`). Without it the site still loads, but pool pages show "Pool statistics are not available"; in dev `POOL_LOG_DIR` can be left empty (compose still needs a non-empty value to start, e.g. `POOL_LOG_DIR=/tmp docker compose up -d --build api`). In dev the API is published on `127.0.0.1:8080` — set `API_BASE_URL=http://localhost:8080`.
 
+**Production topology** (single VPS, repo cloned at `~/palladium-web-site`; all containers on the `palladium` Docker network, which this repo's compose file creates by name):
+
+| Container | Role | Reached by | Exposed |
+|---|---|---|---|
+| `palladium-web` | Caddy: serves `public/`, proxies `/api/*` (adds `X-API-Key`) | browser | 80/443 |
+| `palladium-dashboard` | `api/server.py` | Caddy → `palladium-dashboard:8080`; dev browser via `127.0.0.1:8080` | localhost only |
+| `docker-palladiumcore` (alias `palladiumd`) | palladiumd node, RPC 2332, `txindex=1`, p2p 2333, zmq hashblock 28332 | api (`getblockchaininfo`, `getpeerinfo`, …), ckpool (`getblocktemplate`, `submitblock`), Fulcrum | p2p 2333 |
+| `plm-fulcrum` | Electrum server (TCP 50001, SSL 50002), indexes the node over RPC | api (Electrum server list/peers) | 50001/50002 public, `peering = true` |
+| `ckpool` | solo-mining pool (stratum 3333/4444), RPC to `palladiumd:2332` | miners; writes logs to `~/ckpool-palladium/logs` | 3333/4444 |
+
+Data flow: miners → ckpool → palladiumd. Wallets → Fulcrum → palladiumd. Website → Caddy → api → palladiumd + Fulcrum. Pool pages read ckpool's logs (`pool/pool.status`, `users/<address>`), which are bind-mounted **read-only** into Caddy as `/srv/pool-data` — no API hop. RPC credentials are shared by api, ckpool and Fulcrum via their own configs (`~/ckpool-palladium/ckpool.conf`, `~/.plm-fulcrum/plm-fulcrum.conf`, `~/.palladium/palladium.conf`). The node's own `rpcbind`/`rpcallowip` are `127.0.0.1` in the host config, so check the container entrypoint before assuming other containers can reach RPC. The same VPS also runs unrelated BitcoinPurple containers (`purple` network, ports 8081/13496) — don't touch them.
+
 **Pool data** (`public/pool-data/`) is raw ckpool log output fetched directly by [pool.js](public/js/pool.js) / [pool-user.js](public/js/pool-user.js): synced by script every 30s in dev, mounted read-only from the host in prod. Both `config.js` and `pool-data/` are gitignored/generated — never edit by hand.
 
 ## Design & UI conventions
 
 For any visual work (new pages, sections, redesigns, layout fixes), invoke the `ui-ux-pro-max` skill (from the ui-ux-pro-max plugin) first — it defines the quality bar for aesthetics and UX. Useful query context for this site: dark crypto/fintech landing, glassmorphism, cyan brand. For motion, press feedback, translucent materials and typography details, also consult the project skill `apple-design` (`.claude/skills/apple-design`). The site is vanilla JS with no animation library, so skip its Motion/spring-library and drag/momentum parts unless a page truly needs gestures.
 
-The site has a dark, premium look: near-black blue background, cyan brand accent, Syne for display headings and Poppins for body. All of this is tokenised in [public/css/design-system.css](public/css/design-system.css) — **always use the tokens** (`--bg`, `--surface-1..3`, `--brand`, `--text-1..3`, `--sp-*`, `--radius-*`, `--text-*` fluid type scale, `--spring-*`/`--ease-out-expo` easings) instead of hard-coding colors, sizes, or fonts. Colors are in `oklch()`; derive variants with `color-mix()` like the existing code does.
+The site has a dark, premium look: near-black blue background, cyan brand accent, Space Grotesk for display headings, Inter for body and JetBrains Mono for labels/numbers. All of this is tokenised in [public/css/design-system.css](public/css/design-system.css) — **always use the tokens** (`--bg`, `--surface-1..3`, `--brand`, `--text-1..3`, `--sp-*`, `--radius-*`, `--text-*` fluid type scale, `--spring-*`/`--ease-out-expo` easings) instead of hard-coding colors, sizes, or fonts. Colors are in `oklch()`; derive variants with `color-mix()` like the existing code does.
 
 Reusable building blocks already in the design system — reach for these before writing new CSS:
 
