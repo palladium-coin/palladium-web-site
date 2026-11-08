@@ -103,7 +103,6 @@ html, body {
   word-break: break-word;
 }
 
-
 /* Prevent headings from breaking in ugly spots */
 h1, h2, h3, h4, h5, h6,
 .title, .subtitle, .section-title {
@@ -135,7 +134,7 @@ p, li, td, th {
 .hero {
   background-color: transparent !important;
 }
-.hero.is-dark, .hero.is-black, .hero.is-light {
+.hero.is-dark, .hero.is-light {
   background-color: transparent !important;
 }
 .hero .title,
@@ -145,7 +144,6 @@ p, li, td, th {
 
 /* Bulma: panels, boxes */
 .panel { background: var(--surface-1) !important; border: 1px solid var(--border); }
-.box   { background: var(--surface-1) !important; }
 
 /* ── Typography Overrides ─────────────────────────────────── */
 .title {
@@ -154,18 +152,16 @@ p, li, td, th {
 }
 
 /* Display headings use Space Grotesk */
-.title.is-size-1,
-.title.is-size-2,
+
 h1.title,
-h2.title,
-.display-title {
+h2.title {
   font-family: var(--font-display) !important;
   font-weight: 700 !important;
   letter-spacing: -0.03em;
 }
 
 /* On-chain data (heights, hashrates, hashes) reads best in mono */
-.mono, [data-mono] {
+[data-mono] {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
@@ -318,16 +314,14 @@ h2.title,
 }
 
 /* Brand primary button */
-.button.is-success,
-.button.is-primary {
+.button.is-success {
   background: var(--brand) !important;
   border-color: var(--brand) !important;
   color: var(--on-brand) !important;
   box-shadow: 0 2px 12px var(--brand-dim) !important;
 }
 
-.button.is-success:hover,
-.button.is-primary:hover {
+.button.is-success:hover {
   background: var(--brand-dark) !important;
   border-color: var(--brand-dark) !important;
   color: var(--on-brand) !important;
@@ -344,21 +338,6 @@ h2.title,
 
 .button.is-dark:hover,
 .button.is-outlined:hover {
-  background: var(--surface-3) !important;
-  border-color: var(--brand) !important;
-  color: var(--brand) !important;
-}
-
-/* Ghost buttons (Discord, Telegram) */
-.button.is-link,
-.button.is-info {
-  background: var(--surface-2) !important;
-  border-color: var(--border-strong) !important;
-  color: var(--text-1) !important;
-}
-
-.button.is-link:hover,
-.button.is-info:hover {
   background: var(--surface-3) !important;
   border-color: var(--brand) !important;
   color: var(--brand) !important;
@@ -412,7 +391,7 @@ h2.title,
 }
 
 /* ── Inputs ───────────────────────────────────────────────── */
-.input, .textarea, .select select {
+.input, .select select {
   background: var(--surface-2) !important;
   border-color: var(--border-strong) !important;
   color: var(--text-1) !important;
@@ -420,11 +399,11 @@ h2.title,
   border-radius: var(--radius-md) !important;
 }
 
-.input::placeholder, .textarea::placeholder {
+.input::placeholder {
   color: var(--text-3) !important;
 }
 
-.input:focus, .textarea:focus, .select select:focus {
+.input:focus, .select select:focus {
   border-color: var(--brand) !important;
   box-shadow: 0 0 0 3px var(--brand-dim) !important;
   outline: none !important;
@@ -453,8 +432,7 @@ a:hover { color: var(--brand-light); }
 .mn-eyebrow,
 .mn-section-label,
 .rm-eyebrow,
-.gs-eyebrow,
-.page-eyebrow {
+.gs-eyebrow {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 500;
@@ -495,21 +473,6 @@ a:hover { color: var(--brand-light); }
   border-color: var(--border-strong);
   transform: translateY(-4px);
   box-shadow: 0 8px 24px oklch(0% 0 0 / 0.3);
-}
-
-/* ── Page hero pattern ────────────────────────────────────── */
-/* Shared padding/rhythm for every page-level aurora-hero header
-   (eyebrow + title + subtitle), reused across pages. */
-.page-hero {
-  padding-top: var(--sp-8);
-  padding-bottom: var(--sp-6);
-}
-
-@media (max-width: 768px) {
-  .page-hero {
-    padding-top: var(--sp-6);
-    padding-bottom: var(--sp-4);
-  }
 }
 
 /* ── Mobile global fixes ──────────────────────────────────── */
@@ -557,8 +520,7 @@ a:hover { color: var(--brand-light); }
     transform: none !important;
   }
 
-  .navbar-item:hover,
-  .navbar-link:hover {
+  .navbar-item:hover {
     transform: none !important;
   }
 }

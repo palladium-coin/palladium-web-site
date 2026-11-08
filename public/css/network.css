@@ -180,27 +180,6 @@
     white-space: nowrap;
 }
 
-/* ── Direction badge ──────────────────────────────────────── */
-.net-dir {
-    font-size: 0.68rem;
-    font-weight: 700;
-    padding: 0.15rem 0.45rem;
-    border-radius: var(--radius-sm);
-    flex-shrink: 0;
-}
-
-.net-dir.out {
-    background: var(--brand-dim);
-    color: var(--brand);
-    border: 1px solid var(--brand-glow);
-}
-
-.net-dir.in {
-    background: var(--surface-2);
-    color: var(--text-3);
-    border: 1px solid var(--border);
-}
-
 /* ── Port badges ──────────────────────────────────────────── */
 .net-ports {
     display: flex;

@@ -403,27 +403,12 @@
     margin-top: 1.25rem !important;
 }
 
-/* ── Legacy / misc ────────────────────────────────────────── */
-.fix-link a {
-    color: transparent;
-}
-
-.exchange_box {
-    cursor: pointer;
-}
-
-.exchange_box,
 figure {
     transition: transform 0.25s var(--spring-bounce);
 }
 
 figure:hover {
     transform: scale(1.05);
-}
-
-.centered-figure {
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /* ── Mobile ── ≤ 768px ────────────────────────────────────── */

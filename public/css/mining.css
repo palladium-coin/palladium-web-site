@@ -1,9 +1,4 @@
-/* ============================================================
-   MINING PAGE — Hero, stats, steps, config panel
-   ============================================================ */
 
-.fix-link a { color: transparent; }
-.exchange_box { cursor: pointer; }
 .hide { opacity: 0 !important; }
 
 /* ── Page wrapper ─────────────────────────────────────────── */
@@ -308,29 +303,6 @@
     color: var(--text-3);
     margin-top: -0.75rem;
     margin-left: calc(0.5rem + 1em);   /* align under icon in label */
-}
-
-.mn-dashboard-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1.25rem;
-    border-radius: var(--radius-full);
-    font-size: 0.82rem;
-    font-weight: 700;
-    text-decoration: none;
-    background: var(--brand);
-    color: var(--on-brand);
-    transition:
-        transform  0.25s var(--spring-bounce),
-        box-shadow 0.25s ease;
-    white-space: nowrap;
-    align-self: flex-start;
-}
-
-.mn-dashboard-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px color-mix(in srgb, var(--brand) 40%, transparent);
 }
 
 /* Accent deltas on top of the shared card base (design-system.css) */

@@ -192,25 +192,6 @@ body > main {
     padding: 2.5rem 0;
 }
 
-.footercontent ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footercontent ul li {
-    margin-bottom: 0.6rem;
-}
-
-.footercontent ul li a {
-    color: var(--text-2);
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.footercontent ul li a:hover {
-    color: var(--brand);
-}
-
 #copyright {
     text-align: center;
     padding: 1.25rem 0;
