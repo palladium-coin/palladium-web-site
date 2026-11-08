@@ -171,17 +171,17 @@
 }
 
 .rm-step {
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.06em;
     color: var(--text-3);
 }
 
 .rm-badge {
     padding: 0.25rem 0.75rem;
     border-radius: var(--radius-full);
-    font-size: 0.68rem;
+    font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.07em;

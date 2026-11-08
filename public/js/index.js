@@ -55,7 +55,7 @@ async function fetchHalvingData() {
 
         const label = document.getElementById('halving-progress-label');
         if (label) label.textContent =
-            `Halving #${halvingNumber} · ${progressPct}% completato · blocco ${prevHalving.toLocaleString()} → ${nextHalving.toLocaleString()}`;
+            `Halving #${halvingNumber} · ${progressPct}% complete · blocks ${prevHalving.toLocaleString()} → ${nextHalving.toLocaleString()}`;
 
     } catch (e) {
         console.error('Failed to fetch halving data:', e);

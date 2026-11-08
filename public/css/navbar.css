@@ -129,25 +129,22 @@
 
 /* ── Download Wallet button ──────────────────────────────── */
 .navbar-end .button.is-success {
-    background: var(--brand) !important;
-    border-color: var(--brand) !important;
-    color: var(--on-brand) !important;
-    font-weight: 700 !important;
+    background: transparent !important;
+    border: 1px solid var(--border-strong) !important;
+    color: var(--text-1) !important;
+    font-weight: 600 !important;
     border-radius: var(--radius-full) !important;
     padding: 0.5rem 1.2rem !important;
     font-size: 0.85rem !important;
-    box-shadow: 0 2px 12px var(--brand-dim) !important;
-    transition:
-        background 0.2s ease,
-        box-shadow 0.2s ease,
-        transform  0.25s var(--spring-bounce) !important;
+    box-shadow: none !important;
+    transition: border-color 0.2s ease, color 0.2s ease !important;
 }
 
 .navbar-end .button.is-success:hover {
-    background: var(--brand-light) !important;
-    border-color: var(--brand-light) !important;
-    box-shadow: 0 6px 24px var(--brand-glow) !important;
-    transform: translateY(-2px) !important;
+    background: transparent !important;
+    border-color: var(--brand) !important;
+    color: var(--brand) !important;
+    box-shadow: none !important;
 }
 
 /* ── Social icons in navbar end ──────────────────────────── */

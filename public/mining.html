@@ -33,7 +33,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
     <!-- CSS -->
     <link rel="preload" href="css/mystyles.css?v=3" as="style">
     <link rel="stylesheet" type="text/css" href="css/mystyles.css?v=3">
@@ -83,41 +83,12 @@
             <!-- ── How to start ──────────────────────────────── -->
             <div class="mn-steps-wrap" data-animate="fade">
                 <p class="mn-section-label"><i class="fas fa-list-ol"></i> How to Start Mining</p>
-                <div class="mn-steps">
-                    <div class="mn-step">
-                        <div class="mn-step-num">1</div>
-                        <div class="mn-step-body">
-                            <h3 class="mn-step-title">Get a Palladium address</h3>
-                            <p class="mn-step-desc">Download PalladiumCore or PalladiumWallet and generate a receiving address. This is where your block rewards will land.</p>
-                            <a href="get_started.html" class="mn-step-link">Download wallet <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="mn-step">
-                        <div class="mn-step-num">2</div>
-                        <div class="mn-step-body">
-                            <h3 class="mn-step-title">Configure your miner</h3>
-                            <p class="mn-step-desc">Point your SHA-256 ASIC at <code>palladiumchain.net:3333</code>. Use your PLM address as username, <code>x</code> as password.</p>
-                        </div>
-                    </div>
-                    <div class="mn-step">
-                        <div class="mn-step-num">3</div>
-                        <div class="mn-step-body">
-                            <h3 class="mn-step-title">Track your stats</h3>
-                            <p class="mn-step-desc">Open the Poolladium dashboard to monitor your hashrate, submitted shares, and any blocks found.</p>
-                            <a href="pool.html" class="mn-step-link">Open dashboard <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
+                <ul class="rule-list">
+                    <li class="rule-row"><span class="rule-num">01</span><h2 class="rule-title">Get a Palladium address</h2><p class="rule-desc">Download PalladiumCore or PalladiumWallet and generate a receiving address. This is where your block rewards will land.</p><a href="get_started.html" class="rule-go">Download wallet →</a></li>
+                    <li class="rule-row"><span class="rule-num">02</span><h2 class="rule-title">Configure your miner</h2><p class="rule-desc">Point your SHA-256 ASIC at <code>palladiumchain.net:3333</code>. Use your PLM address as username, <code>x</code> as password.</p><span></span></li>
+                    <li class="rule-row"><span class="rule-num">03</span><h2 class="rule-title">Track your stats</h2><p class="rule-desc">Open the Poolladium dashboard to monitor your hashrate, submitted shares, and any blocks found.</p><a href="pool.html" class="rule-go">Open dashboard →</a></li>
+                </ul>
             </div>
-
-            <!-- ── Pool dashboard CTA ───────────────────────── -->
-            <a href="pool.html" class="mn-cta-banner" data-animate="fade">
-                <div class="mn-cta-banner-text">
-                    <p class="mn-cta-banner-title"><i class="fas fa-chart-line"></i> Poolladium Dashboard</p>
-                    <p class="mn-cta-banner-sub">Track your hashrate, submitted shares, and blocks found in real time.</p>
-                </div>
-                <span class="mn-cta-banner-btn">Open Dashboard <i class="fas fa-arrow-right"></i></span>
-            </a>
 
             <!-- ── Poolladium config panel ────────────────────── -->
             <div class="mn-panel-wrap" data-animate="fade">

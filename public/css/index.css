@@ -47,21 +47,13 @@
     border: 1px solid var(--border-strong);
     border-radius: var(--radius-full);
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.06em;
     color: var(--text-2);
     margin-bottom: 1.25rem;
 }
 
-.hero-chip-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--success);
-    box-shadow: 0 0 8px var(--success);
-    animation: chip-pulse 2s ease-in-out infinite;
-}
 
 @keyframes chip-pulse {
     0%, 100% { opacity: 1; }
@@ -74,10 +66,7 @@
     font-weight: 700 !important;
     letter-spacing: -0.03em !important;
     line-height: 1.05 !important;
-    background: linear-gradient(135deg, var(--metal), var(--text-1) 45%, var(--metal-dark));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent !important;
+    color: var(--text-1) !important;
     white-space: nowrap;
 }
 
@@ -93,50 +82,17 @@
     gap: 0.75rem;
 }
 
-/* Primary CTA — rotating conic-gradient border, the one signature accent of the hero */
-.hero-main .button.is-success {
-    position: relative;
-    z-index: 1;
+.hero-link {
+    color: var(--text-2);
+    font-weight: 500;
+    padding: 0.5rem 0.25rem;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+    text-decoration-color: var(--border-strong);
 }
+.hero-link:hover { color: var(--text-1); text-decoration-color: var(--brand); }
 
-.hero-main .button.is-success::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    z-index: -1;
-    border-radius: inherit;
-    padding: 2px;
-    background: conic-gradient(
-        from var(--cta-angle, 0deg),
-        var(--brand-light),
-        var(--metal),
-        var(--brand),
-        var(--brand-light)
-    );
-    /* Mask down to a ring so only the border shows, not a solid fill over the button */
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    animation: cta-border-spin 4s linear infinite;
-}
-
-@property --cta-angle {
-    syntax: '<angle>';
-    inherits: false;
-    initial-value: 0deg;
-}
-
-@keyframes cta-border-spin {
-    to { --cta-angle: 360deg; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .hero-main .button.is-success::before {
-        animation: none;
-    }
-}
-
+/* Hero logo: static coin, no orbit */
 /* Animated logo + orbit ring */
 #wavecontainer {
     position: relative;
@@ -146,42 +102,9 @@
 }
 
 #waveduco {
-    height: 9rem;
-    filter: drop-shadow(0 0 28px var(--metal-dim));
-    animation: logo-float 4s ease-in-out infinite;
+    height: 11rem;
+    filter: drop-shadow(0 12px 24px oklch(0% 0 0 / 0.5));
     display: block;
-    position: relative;
-    z-index: 1;
-}
-
-.wave-ring {
-    position: absolute;
-    width: 13rem;
-    height: 13rem;
-    border-radius: 50%;
-    border: 1px dashed var(--border-strong);
-    animation: ring-spin 24s linear infinite;
-}
-
-.wave-ring::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: 50%;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--brand);
-    box-shadow: 0 0 10px var(--brand-glow);
-}
-
-@keyframes ring-spin {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes logo-float {
-    0%, 100% { transform: translateY(0)   rotate(-2deg); }
-    50%       { transform: translateY(-10px) rotate(2deg); }
 }
 
 .hide { opacity: 0 !important; }
@@ -243,7 +166,7 @@
     font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.06em;
     color: var(--text-3);
 }
 
@@ -294,13 +217,11 @@
     background: var(--surface-2);
     border-bottom: 1px solid var(--border-strong);
     padding: 0.85rem 1.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--brand);
-    text-align: center;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text-1);
+    text-align: left;
 }
 
 .halving-panel-body {
@@ -330,10 +251,10 @@
 
 .stat-label {
     color: var(--text-2);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.06em;
     margin-bottom: 0.6rem;
 }
 
@@ -500,6 +421,6 @@ figure:hover {
     }
 
     .halving-progress-label {
-        font-size: 0.72rem;
+        font-size: 0.78rem;
     }
 }

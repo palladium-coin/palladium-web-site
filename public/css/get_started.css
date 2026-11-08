@@ -109,14 +109,14 @@
 }
 
 .gs-card--wallet {
-    border-top: 3px solid var(--success);
+    border-top: 3px solid var(--brand);
 }
 
 .gs-card--wallet:hover {
-    border-color: color-mix(in srgb, var(--success) 60%, transparent);
+    border-color: color-mix(in srgb, var(--brand) 60%, transparent);
     box-shadow:
         0 16px 48px oklch(0% 0 0 / 0.3),
-        0 0 0 1px var(--success-dim);
+        0 0 0 1px var(--brand-dim);
 }
 
 /* ── Card badge ───────────────────────────────────────────── */
@@ -124,7 +124,7 @@
     position: absolute;
     top: 1.25rem;
     right: 1.25rem;
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -136,9 +136,9 @@
 }
 
 .gs-card-badge--wallet {
-    background: var(--success-dim);
-    color: var(--success);
-    border-color: var(--success-glow);
+    background: var(--brand-dim);
+    color: var(--brand);
+    border-color: var(--brand-a20);
 }
 
 /* ── Card icon ────────────────────────────────────────────── */
@@ -157,9 +157,9 @@
 }
 
 .gs-card-icon--wallet {
-    background: var(--success-dim);
-    border-color: color-mix(in srgb, var(--success) 25%, transparent);
-    color: var(--success);
+    background: var(--brand-dim);
+    border-color: color-mix(in srgb, var(--brand) 25%, transparent);
+    color: var(--brand);
 }
 
 /* ── Card content ─────────────────────────────────────────── */
@@ -175,7 +175,7 @@
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.06em;
     color: var(--text-3);
     margin-bottom: 1rem;
 }
@@ -198,13 +198,10 @@
     margin-bottom: 1.25rem;
 }
 
-.gs-card--wallet .gs-ideal {
-    background: var(--success-dim);
-    border-color: var(--success);
-}
+
 
 .gs-ideal-label {
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -213,7 +210,7 @@
 }
 
 .gs-card--wallet .gs-ideal-label {
-    color: var(--success);
+    color: var(--brand);
 }
 
 .gs-ideal-value {
@@ -253,7 +250,7 @@
 }
 
 .gs-card--wallet .gs-features li .fas.fa-check {
-    color: var(--success);
+    color: var(--brand);
 }
 
 /* ── Card footer ──────────────────────────────────────────── */
@@ -282,24 +279,25 @@
     transform: translateY(-2px);
 }
 
-.gs-btn--primary {
+/* Wallet is the recommended path: filled. Core is the secondary: outline. */
+.gs-btn--wallet {
     background: var(--brand);
     color: var(--on-brand);
-    box-shadow: 0 4px 16px color-mix(in srgb, var(--brand) 35%, transparent);
-}
-
-.gs-btn--primary:hover {
-    box-shadow: 0 8px 24px color-mix(in srgb, var(--brand) 50%, transparent);
-}
-
-.gs-btn--wallet {
-    background: var(--success);
-    color: var(--on-success);
-    box-shadow: 0 4px 16px color-mix(in srgb, var(--success) 35%, transparent);
 }
 
 .gs-btn--wallet:hover {
-    box-shadow: 0 8px 24px color-mix(in srgb, var(--success) 50%, transparent);
+    background: var(--brand-dark);
+}
+
+.gs-btn--primary {
+    background: transparent;
+    color: var(--text-1);
+    border: 1px solid var(--border-strong);
+}
+
+.gs-btn--primary:hover {
+    border-color: var(--brand);
+    color: var(--brand);
 }
 
 .gs-card-note {
@@ -394,7 +392,7 @@
 
 /* ── Tags ─────────────────────────────────────────────────── */
 .gs-tag {
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 700;
     padding: 0.2rem 0.6rem;
     border-radius: var(--radius-full);

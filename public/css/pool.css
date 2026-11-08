@@ -7,10 +7,7 @@
     font-size: clamp(2.6rem, 5.2vw, 4.25rem);
     font-weight: 800;
     line-height: 1.05;
-    background: linear-gradient(135deg, var(--brand), var(--brand-light));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--brand-light);
 }
 
 .pool-page-title {

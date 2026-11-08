@@ -316,10 +316,10 @@
 
 .mn-panel-section-title {
     padding: 1rem 1.75rem 0.25rem;
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.06em;
     color: var(--brand);
     background: var(--brand-a06);
     border-bottom: 1px solid var(--brand-dim);
@@ -397,7 +397,7 @@
 }
 
 .mn-endpoint-label {
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
