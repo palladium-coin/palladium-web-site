@@ -68,6 +68,8 @@
     background: var(--brand) !important;
 }
 
+.navbar-brand .navbar-item.is-active { background: none !important; }
+
 .navbar-item.is-active::after {
     content: none;
 }

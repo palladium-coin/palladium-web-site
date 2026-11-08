@@ -193,9 +193,8 @@
     align-items: baseline;
     gap: 0.5rem;
     background: var(--brand-a06);
-    border-left: 3px solid var(--brand);
     padding: 0.6rem 0.875rem;
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    border-radius: var(--radius-sm);
     margin-bottom: 1.25rem;
 }
 

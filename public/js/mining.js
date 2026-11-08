@@ -48,7 +48,7 @@ async function fetchMiningStats() {
             const height = data.block_height ?? data.height ?? data;
             setStatValue('stat-block-height', Number(height).toLocaleString());
         } else {
-            setStatValue('stat-block-height', 'N/A');
+            setStatValue('stat-block-height', '—');
         }
 
         if (hashrateRes.ok) {
@@ -57,7 +57,7 @@ async function fetchMiningStats() {
             const { value, unit } = formatHashrate(Number(raw));
             setStatValue('stat-hashrate', `${value} ${unit}`);
         } else {
-            setStatValue('stat-hashrate', 'N/A');
+            setStatValue('stat-hashrate', '—');
         }
 
         if (diffRes.ok) {
@@ -65,12 +65,12 @@ async function fetchMiningStats() {
             const diff = data.difficulty ?? data;
             setStatValue('stat-difficulty', formatDifficulty(Number(diff)));
         } else {
-            setStatValue('stat-difficulty', 'N/A');
+            setStatValue('stat-difficulty', '—');
         }
 
     } catch (e) {
         console.error('Failed to fetch mining stats:', e);
-        ['stat-block-height', 'stat-hashrate', 'stat-difficulty'].forEach(id => setStatValue(id, 'N/A'));
+        ['stat-block-height', 'stat-hashrate', 'stat-difficulty'].forEach(id => setStatValue(id, '—'));
     }
 }
 

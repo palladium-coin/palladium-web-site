@@ -1,6 +1,8 @@
 {
-  "wallet-latest": "https://github.com/davide3011/PalladiumWallet/releases/latest",
+  "wallet-latest": "https://github.com/palladium-coin/palladium-wallet/releases/latest",
   "repo": "https://github.com/palladium-coin/palladiumcore",
+  "repo-wallet": "https://github.com/palladium-coin/palladium-wallet",
+  "repo-fulcrum": "https://github.com/palladium-coin/plm-fulcrum",
   "repo-org": "https://github.com/palladium-coin/",
   "twitter": "https://twitter.com/Palladium_coin",
   "discord": "https://discord.com/invite/z2T8qvzeGc",
