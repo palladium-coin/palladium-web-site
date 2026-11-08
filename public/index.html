@@ -146,46 +146,23 @@
     </section>
 
     <!-- ── Why Palladium ──────────────────────────────────────── -->
-    <section class="hero is-medium grid-pattern">
+    <section class="hero is-medium">
         <div class="hero-body">
-            <div class="columns is-centered">
-                <div class="column is-1"></div>
-                <div class="column">
-                    <p class="title section-title has-text-centered" data-animate>What you get</p>
-                    <div class="feature-grid mt-6">
-                        <div class="feature-card" data-animate>
-                            <div class="feature-card-icon">01</div>
-                            <h3 class="feature-card-title">Bitcoin's proof-of-work</h3>
-                            <p class="feature-card-desc">Same SHA-256 hashing as Bitcoin, so the security model is the one already tested on the largest PoW chain.</p>
-                        </div>
-                        <div class="feature-card" data-animate>
-                            <div class="feature-card-icon">02</div>
-                            <h3 class="feature-card-title">2-minute blocks</h3>
-                            <p class="feature-card-desc">Bitcoin targets 10 minutes. Palladium targets 2, so confirmations arrive five times sooner.</p>
-                        </div>
-                        <div class="feature-card" data-animate>
-                            <div class="feature-card-icon">03</div>
-                            <h3 class="feature-card-title">ASIC compatible</h3>
-                            <p class="feature-card-desc">Existing SHA-256 ASICs mine Palladium as they are. No new hardware.</p>
-                        </div>
-                        <div class="feature-card" data-animate>
-                            <div class="feature-card-icon">04</div>
-                            <h3 class="feature-card-title">Fixed, predictable supply</h3>
-                            <p class="feature-card-desc">Capped at 21,000,000 PLM with a halving every 210,000 blocks — a schedule fixed in the code.</p>
-                        </div>
-                        <div class="feature-card" data-animate>
-                            <div class="feature-card-icon">05</div>
-                            <h3 class="feature-card-title">Solo mining pool</h3>
-                            <p class="feature-card-desc">Poolladium, built on ckpool, pays the full block reward to your address when you find a block.</p>
-                        </div>
-                        <div class="feature-card" data-animate>
-                            <div class="feature-card-icon">06</div>
-                            <h3 class="feature-card-title">100% open source</h3>
-                            <p class="feature-card-desc">Every component — core, wallet, pool, explorer — is public and auditable on GitHub.</p>
-                        </div>
-                    </div>
+            <div class="container">
+                <div class="split">
+                    <header data-animate>
+                        <h2 class="title section-title">What you get</h2>
+                        <p class="split-lead">Bitcoin's security model with a faster clock.</p>
+                    </header>
+                    <ul class="rule-list">
+<li class="rule-row" data-animate><span class="rule-num">01</span><h3 class="rule-title">Bitcoin's proof-of-work</h3><p class="rule-desc">Same SHA-256 hashing as Bitcoin, so the security model is the one already tested on the largest PoW chain.</p></li>
+<li class="rule-row" data-animate><span class="rule-num">02</span><h3 class="rule-title">2-minute blocks</h3><p class="rule-desc">Bitcoin targets 10 minutes. Palladium targets 2, so confirmations arrive five times sooner.</p></li>
+<li class="rule-row" data-animate><span class="rule-num">03</span><h3 class="rule-title">ASIC compatible</h3><p class="rule-desc">Existing SHA-256 ASICs mine Palladium as they are. No new hardware.</p></li>
+<li class="rule-row" data-animate><span class="rule-num">04</span><h3 class="rule-title">Fixed supply</h3><p class="rule-desc">Capped at 21,000,000 PLM with a halving every 210,000 blocks — a schedule fixed in the code.</p></li>
+<li class="rule-row" data-animate><span class="rule-num">05</span><h3 class="rule-title">Solo mining pool</h3><p class="rule-desc">Poolladium, built on ckpool, pays the full block reward to your address when you find a block.</p></li>
+<li class="rule-row" data-animate><span class="rule-num">06</span><h3 class="rule-title">Open source</h3><p class="rule-desc">Core, wallet, pool and explorer are public and auditable on GitHub.</p></li>
+</ul>
                 </div>
-                <div class="column is-1"></div>
             </div>
         </div>
     </section>
@@ -223,38 +200,19 @@
     <!-- ── Ecosystem ─────────────────────────────────────────── -->
     <section class="hero is-medium">
         <div class="hero-body">
-            <div class="columns is-centered">
-                <div class="column is-1"></div>
-                <div class="column">
-                    <p class="title section-title has-text-centered" data-animate>The software</p>
-                    <div class="feature-grid feature-grid--4 mt-6">
-                        <a href="https://github.com/palladium-coin/palladiumcore" data-link="repo" target="_blank" class="feature-card" data-animate>
-                            <div class="feature-card-icon"><i class="fas fa-cube"></i></div>
-                            <h3 class="feature-card-title">PalladiumCore</h3>
-                            <p class="feature-card-desc">The full node — validates the chain, enforces consensus, and mines new blocks.</p>
-                            <span class="feature-card-tag"><i class="fab fa-github"></i> View on GitHub</span>
-                        </a>
-                        <a href="get_started.html" class="feature-card" data-animate>
-                            <div class="feature-card-icon"><i class="fas fa-wallet"></i></div>
-                            <h3 class="feature-card-title">PalladiumWallet</h3>
-                            <p class="feature-card-desc">A lightweight SPV wallet for everyday transactions — synced in minutes.</p>
-                            <span class="feature-card-tag"><i class="fas fa-arrow-right"></i> Get started</span>
-                        </a>
-                        <a href="mining.html" class="feature-card" data-animate>
-                            <div class="feature-card-icon"><i class="fas fa-hammer"></i></div>
-                            <h3 class="feature-card-title">Poolladium</h3>
-                            <p class="feature-card-desc">Official solo mining pool with real-time hashrate and share tracking.</p>
-                            <span class="feature-card-tag"><i class="fas fa-arrow-right"></i> Start mining</span>
-                        </a>
-                        <a href="https://explorer.palladium-coin.com/" data-link="explorer" target="_blank" class="feature-card" data-animate>
-                            <div class="feature-card-icon"><i class="fas fa-search"></i></div>
-                            <h3 class="feature-card-title">Explorer</h3>
-                            <p class="feature-card-desc">Browse blocks, transactions, and addresses across the live network.</p>
-                            <span class="feature-card-tag"><i class="fas fa-external-link-alt"></i> Visit Explorer</span>
-                        </a>
-                    </div>
+            <div class="container">
+                <div class="split">
+                    <header data-animate>
+                        <h2 class="title section-title">The software</h2>
+                        <p class="split-lead">Node, wallet, pool and explorer. All open source.</p>
+                    </header>
+                    <div class="rule-list">
+<a class="rule-row" href="https://github.com/palladium-coin/palladiumcore" data-link="repo" target="_blank" data-animate><span class="rule-num">01</span><h3 class="rule-title">PalladiumCore</h3><p class="rule-desc">The full node — validates the chain, enforces consensus, and mines new blocks.</p><span class=rule-go>GitHub →</span></a>
+<a class="rule-row" href="get_started.html" data-animate><span class="rule-num">02</span><h3 class="rule-title">PalladiumWallet</h3><p class="rule-desc">A lightweight SPV wallet for everyday transactions — synced in minutes.</p><span class=rule-go>Get started →</span></a>
+<a class="rule-row" href="mining.html" data-animate><span class="rule-num">03</span><h3 class="rule-title">Poolladium</h3><p class="rule-desc">Official solo mining pool with real-time hashrate and share tracking.</p><span class=rule-go>Start mining →</span></a>
+<a class="rule-row" href="https://explorer.palladium-coin.com/" data-link="explorer" target="_blank" data-animate><span class="rule-num">04</span><h3 class="rule-title">Explorer</h3><p class="rule-desc">Browse blocks, transactions, and addresses across the live network.</p><span class=rule-go>Open →</span></a>
+</div>
                 </div>
-                <div class="column is-1"></div>
             </div>
         </div>
     </section>

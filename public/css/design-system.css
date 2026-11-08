@@ -26,14 +26,15 @@
   --text-3:      oklch(68% 0.014 258); /* contrast ≥6:1 on --bg */
 
   /* Signal accent — vivid azure blue, lifted from the Palladium mark */
-  --brand:       oklch(60% 0.19 254);
-  --brand-dark:  oklch(46% 0.18 254);
-  --brand-light: oklch(74% 0.14 250);
+  --brand:       oklch(84% 0.014 250); /* palladium silver */
+  --brand-dark:  oklch(68% 0.016 252);
+  --brand-light: oklch(95% 0.008 250);
   --brand-a06:   color-mix(in srgb, var(--brand) 6%,  transparent);
   --brand-dim:   color-mix(in srgb, var(--brand) 14%, transparent);
   --brand-a20:   color-mix(in srgb, var(--brand) 20%, transparent);
   --brand-glow:  color-mix(in srgb, var(--brand) 32%, transparent);
-  --on-brand:    oklch(98% 0.004 250); /* light text for use on the mid-tone blue fill */
+  --on-brand:    oklch(15% 0.012 262); /* dark text on the silver fill */
+  --metal-fill:  linear-gradient(160deg, oklch(96% 0.006 250), oklch(80% 0.014 252) 48%, oklch(90% 0.008 250) 70%, oklch(72% 0.016 252));
 
   /* Metal identity — cool palladium silver, used for logo/hero/decoration */
   --metal:       oklch(88% 0.008 258);
@@ -315,17 +316,17 @@ h2.title {
 
 /* Brand primary button */
 .button.is-success {
-  background: var(--brand) !important;
-  border-color: var(--brand) !important;
+  background: var(--metal-fill) !important;
+  border-color: oklch(96% 0.006 250 / 0.6) !important;
   color: var(--on-brand) !important;
-  box-shadow: 0 2px 12px var(--brand-dim) !important;
+  box-shadow: inset 0 1px 0 oklch(100% 0 0 / 0.55), 0 2px 8px oklch(0% 0 0 / 0.35) !important;
 }
 
 .button.is-success:hover {
-  background: var(--brand-dark) !important;
-  border-color: var(--brand-dark) !important;
+  background: var(--metal-fill) !important;
+  filter: brightness(1.08);
   color: var(--on-brand) !important;
-  box-shadow: 0 6px 24px var(--brand-glow) !important;
+  box-shadow: inset 0 1px 0 oklch(100% 0 0 / 0.6), 0 8px 20px oklch(0% 0 0 / 0.4) !important;
 }
 
 /* Secondary button */
@@ -707,83 +708,34 @@ a:hover { color: var(--brand-light); }
   .ticker-track { animation: none; }
 }
 
-/* ── Feature Cards (sweep-line hover) ─────────────────────────── */
-.feature-grid {
+/* ── Ruled list (replaces the card grid): number | title | text ── */
+.rule-list { border-top: 1px solid var(--border-strong); margin: 0; padding: 0; list-style: none; }
+.rule-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 1.4fr) auto;
   gap: var(--sp-3);
+  align-items: baseline;
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--border);
+  color: inherit;
+  transition: background 0.25s ease, padding-left 0.35s var(--ease-out-expo);
+}
+a.rule-row:hover { background: var(--metal-a08); padding-left: var(--sp-1); color: inherit; }
+.rule-num { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-3); font-variant-numeric: tabular-nums; }
+.rule-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-xl); letter-spacing: -0.02em; color: var(--text-1); margin: 0; }
+.rule-desc { color: var(--text-2); font-size: var(--text-base); line-height: 1.6; margin: 0; max-width: 60ch; }
+.rule-go { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--brand); white-space: nowrap; }
+@media (max-width: 800px) {
+  .rule-row { grid-template-columns: 2.5rem 1fr; row-gap: 0.4rem; }
+  .rule-desc, .rule-go { grid-column: 2; }
 }
 
-@media (max-width: 900px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } }
-
-.feature-card {
-  position: relative;
-  display: block;
-  background: var(--surface-1);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: var(--sp-4);
-  overflow: hidden;
-  transition:
-    border-color 0.3s ease,
-    transform    0.3s var(--spring-bounce),
-    box-shadow   0.3s ease;
-}
-
-.feature-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--brand), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.6s ease;
-}
-
-.feature-card:hover::before { transform: translateX(100%); }
-
-.feature-card:hover {
-  border-color: var(--border-strong);
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px oklch(0% 0 0 / 0.3);
-}
-
-.feature-card-icon {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--text-2xl);
-  line-height: 1;
-  color: var(--brand);
-  margin-bottom: var(--sp-2);
-}
-
-.feature-grid--4 { grid-template-columns: repeat(4, 1fr); }
-@media (max-width: 1100px) { .feature-grid--4 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px)  { .feature-grid--4 { grid-template-columns: 1fr; } }
-
-.feature-card-title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--text-lg);
-  margin-bottom: 0.5rem;
-  color: var(--text-1);
-}
-
-.feature-card-desc {
-  color: var(--text-2);
-  font-size: var(--text-sm);
-  line-height: 1.65;
-}
-
-.feature-card-tag {
-  display: inline-block;
-  margin-top: 0.85rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--brand);
-  letter-spacing: 0.04em;
-}
+/* Split section: sticky left-aligned heading, content on the right */
+.split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--sp-8); align-items: start; }
+.split > header { position: sticky; top: 6rem; }
+.split .section-title { text-align: left; margin: 0; }
+.split-lead { color: var(--text-2); font-size: var(--text-lg); line-height: 1.55; margin-top: var(--sp-2); max-width: 32ch; }
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: var(--sp-4); } .split > header { position: static; } }
 
 /* ── FAQ Accordion ─────────────────────────────────────────────── */
 .faq-list {
@@ -900,7 +852,6 @@ a:hover { color: var(--brand-light); }
 
 @media (max-width: 600px) {
   .cta-band-buttons .button { width: 100%; justify-content: center; }
-  .feature-card { padding: var(--sp-3); }
 }
 
 /* ── Section Divider (glowing line + center node) ────────────── */
@@ -1264,4 +1215,3 @@ html body .navbar.is-scrolled {
   }
 }
 
-.feature-grid--4 .feature-card-icon { font-size: 1.5rem; }
