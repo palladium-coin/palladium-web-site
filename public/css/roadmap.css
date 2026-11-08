@@ -1,9 +1,4 @@
-/* ============================================================
-   ROADMAP PAGE — Vertical timeline layout
-   ============================================================ */
 
-.fix-link a { color: transparent; }
-.exchange_box { cursor: pointer; }
 .hide { opacity: 0 !important; }
 
 /* ── Page wrapper ─────────────────────────────────────────── */
@@ -380,4 +375,25 @@
     .rm-btn {
         justify-content: center;
     }
+}
+
+.rm-node--planned {
+    background: var(--surface-2);
+    color: var(--text-2);
+    border: 1px solid var(--border-strong);
+}
+
+.rm-card--planned {
+    border-left: 3px dashed var(--border-strong);
+}
+
+.rm-badge--planned {
+    background: var(--surface-2);
+    color: var(--text-2);
+    border: 1px solid var(--border);
+}
+
+.rm-card--planned .rm-list li::before {
+    content: "○";
+    color: var(--text-3);
 }
