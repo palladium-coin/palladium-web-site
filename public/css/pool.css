@@ -288,3 +288,23 @@
         text-align: left;
     }
 }
+
+/* ── Pool pages: header like the other inner pages, one accent ── */
+.section > .container > .hero.aurora-hero {
+    background: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid var(--border-strong);
+    min-height: 0 !important;
+    margin-bottom: var(--sp-4);
+}
+.section > .container > .hero.aurora-hero::before,
+.section > .container > .hero.aurora-hero::after { display: none !important; }
+.section > .container > .hero.aurora-hero .hero-body { padding: var(--sp-6) 0 var(--sp-3) !important; }
+.section > .container > .hero.aurora-hero .has-text-centered { text-align: left !important; margin-bottom: 0 !important; }
+.pool-stat-value.is-na { color: var(--text-3); font-weight: 500; }
+.pool-page-title .has-text-primary { color: var(--brand) !important; }
+
+@media (max-width: 480px) {
+    .pool-stat-card { padding: 0.9rem 0.5rem; }
+    .pool-stat-value { font-size: 1.2rem; }
+}

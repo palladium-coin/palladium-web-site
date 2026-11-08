@@ -198,3 +198,31 @@ body > main {
     border-top: 1px solid var(--border);
     color: var(--text-3);
 }
+
+/* ── Compact footer: left-aligned, links on one row ───────── */
+.footer-content {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr) minmax(0, 1.2fr);
+    max-width: 74rem;
+    gap: var(--sp-6);
+    padding: 0;
+    margin: 0 auto var(--sp-4);
+}
+.footer-section h3 {
+    font-family: var(--font-display);
+    text-transform: none;
+    font-size: var(--text-xl);
+    letter-spacing: -0.02em;
+    color: var(--text-1);
+    margin-bottom: 0.5rem;
+}
+.footer-section h4 { font-size: var(--text-sm); color: var(--text-3); font-weight: 500; margin-bottom: 0.75rem; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+.footer-links li { margin: 0; }
+.footer-links a:hover { padding-left: 0; }
+.social-icons { justify-content: flex-start; max-width: 74rem; margin: 0 auto var(--sp-3); }
+.footer-divider { max-width: 74rem; margin: 0 auto var(--sp-3); }
+.footer-bottom { text-align: left; max-width: 74rem; margin: 0 auto; padding: 0; }
+@media (max-width: 768px) { .footer-content { grid-template-columns: 1fr; gap: var(--sp-3); } }
+
+/* Gutter: Bulma's .container has no side padding below 1024px */
+.modern-footer .container { padding-inline: var(--sp-3); }

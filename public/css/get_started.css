@@ -454,3 +454,13 @@
         font-size: 0.78rem;
     }
 }
+
+/* ── Narrow screens: keep the comparison table inside the card ── */
+@media (max-width: 560px) {
+    .gs-compare-table { grid-template-columns: 1.1fr 1fr 1fr; }
+    .gs-compare-head > span,
+    .gs-compare-row > span { padding: 0.65rem 0.4rem; font-size: 0.78rem; }
+    .gs-compare-head > span { font-size: 0.7rem; letter-spacing: 0; text-transform: none; overflow-wrap: normal; word-break: normal; text-align: center; }
+    .gs-th--node i, .gs-th--wallet i { display: none; }
+    .gs-tag { font-size: 0.66rem; padding: 0.15rem 0.4rem; letter-spacing: 0; }
+}

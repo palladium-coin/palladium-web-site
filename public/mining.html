@@ -80,16 +80,6 @@
                 </div>
             </div>
 
-            <!-- ── How to start ──────────────────────────────── -->
-            <div class="mn-steps-wrap" data-animate="fade">
-                <p class="mn-section-label"><i class="fas fa-list-ol"></i> How to Start Mining</p>
-                <ul class="rule-list">
-                    <li class="rule-row"><span class="rule-num">01</span><h2 class="rule-title">Get a Palladium address</h2><p class="rule-desc">Download PalladiumCore or PalladiumWallet and generate a receiving address. This is where your block rewards will land.</p><a href="get_started.html" class="rule-go">Download wallet →</a></li>
-                    <li class="rule-row"><span class="rule-num">02</span><h2 class="rule-title">Configure your miner</h2><p class="rule-desc">Point your SHA-256 ASIC at <code>palladiumchain.net:3333</code>. Use your PLM address as username, <code>x</code> as password.</p><span></span></li>
-                    <li class="rule-row"><span class="rule-num">03</span><h2 class="rule-title">Track your stats</h2><p class="rule-desc">Open the Poolladium dashboard to monitor your hashrate, submitted shares, and any blocks found.</p><a href="pool.html" class="rule-go">Open dashboard →</a></li>
-                </ul>
-            </div>
-
             <!-- ── Poolladium config panel ────────────────────── -->
             <div class="mn-panel-wrap" data-animate="fade">
                 <div class="mn-panel-header-row">
@@ -99,21 +89,15 @@
                     </div>
                 </div>
 
-                <div class="mn-panel">
+                <ul class="rule-list">
+                        <li class="rule-row"><span class="rule-num">01</span><h2 class="rule-title">Get a Palladium address</h2><p class="rule-desc">Download PalladiumCore or PalladiumWallet and generate a receiving address. This is where your block rewards will land.</p><a href="get_started.html" class="rule-go">Download wallet →</a></li>
+                        <li class="rule-row"><span class="rule-num">02</span><h2 class="rule-title">Configure your miner</h2><p class="rule-desc">Enter a stratum endpoint, your PLM address as username and any password. Exact values are listed below.</p><a href="#miner-config" class="rule-go">See values ↓</a></li>
+                        <li class="rule-row"><span class="rule-num">03</span><h2 class="rule-title">Track your stats</h2><p class="rule-desc">Open the Poolladium dashboard to monitor your hashrate, submitted shares, and any blocks found.</p><a href="pool.html" class="rule-go">Open dashboard →</a></li>
+                    </ul>
+
+                <div class="mn-panel mt-5" id="miner-config">
                     <div class="mn-panel-section-title">Miner Configuration</div>
                     <div class="mn-config">
-                        <div class="mn-config-row">
-                            <span class="mn-config-label"><i class="fas fa-network-wired"></i> Stratum URL</span>
-                            <code class="mn-config-value">palladiumchain.net</code>
-                        </div>
-                        <div class="mn-config-row">
-                            <span class="mn-config-label"><i class="fas fa-plug"></i> Standard Port</span>
-                            <code class="mn-config-value">3333</code>
-                        </div>
-                        <div class="mn-config-row">
-                            <span class="mn-config-label"><i class="fas fa-broadcast-tower"></i> High Difficulty Port</span>
-                            <code class="mn-config-value">4444</code>
-                        </div>
                         <div class="mn-config-row">
                             <span class="mn-config-label"><i class="fas fa-user"></i> Username</span>
                             <code class="mn-config-value mn-config-value--dim">&lt;your PLM address&gt;</code>
@@ -127,66 +111,23 @@
                     <div class="mn-panel-section-title mn-panel-section-title--spaced">Full Stratum Endpoints</div>
                     <div class="mn-endpoints">
                         <div class="mn-endpoint">
-                            <span class="mn-endpoint-label">Standard</span>
+                            <span class="mn-endpoint-label">Standard (most ASICs)</span>
                             <code class="mn-endpoint-url">stratum+tcp://palladiumchain.net:3333</code>
                         </div>
                         <div class="mn-endpoint">
-                            <span class="mn-endpoint-label">High Diff</span>
+                            <span class="mn-endpoint-label">High difficulty (very high hashrate)</span>
                             <code class="mn-endpoint-url">stratum+tcp://palladiumchain.net:4444</code>
                         </div>
                     </div>
 
                     <div class="mn-note">
                         <i class="fas fa-info-circle mn-note-icon"></i>
-                        <p>Coinbase rewards from valid blocks are paid <strong>directly to your configured address</strong>. No pool fees apply in solo mode.</p>
+                        <p>Coinbase rewards from valid blocks are paid <strong>directly to your configured address</strong>. No pool fees apply in solo mode. The high-difficulty port only reduces shares per second; it does not change your payout.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- ── FAQ ─────────────────────────────────────────── -->
-            <div class="mn-panel-wrap" data-animate="fade">
-                <p class="mn-section-label"><i class="fas fa-circle-question"></i> Frequently Asked Questions</p>
-                <div class="faq-list">
-                    <div class="faq-item">
-                        <button class="faq-toggle">
-                            <span>Does Poolladium take a fee from block rewards?</span>
-                            <i class="fas fa-chevron-down faq-icon"></i>
-                        </button>
-                        <div class="faq-panel">
-                            <div class="faq-panel-inner">No. Poolladium runs in solo mode, so the full coinbase reward from any block you find is paid directly to your configured address — no pool fees apply.</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-toggle">
-                            <span>Which port should I use, 3333 or 4444?</span>
-                            <i class="fas fa-chevron-down faq-icon"></i>
-                        </button>
-                        <div class="faq-panel">
-                            <div class="faq-panel-inner">Use the standard port (3333) for most ASICs. The high-difficulty port (4444) is for very high hashrate miners, reducing the number of shares submitted per second without changing your payout.</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-toggle">
-                            <span>What username and password do I configure?</span>
-                            <i class="fas fa-chevron-down faq-icon"></i>
-                        </button>
-                        <div class="faq-panel">
-                            <div class="faq-panel-inner">Username is your Palladium receiving address — this is where rewards are paid. Password can be anything; ckpool doesn't check it, so <code>x</code> is the convention.</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-toggle">
-                            <span>How do I track my mining progress?</span>
-                            <i class="fas fa-chevron-down faq-icon"></i>
-                        </button>
-                        <div class="faq-panel">
-                            <div class="faq-panel-inner">Open the <a href="pool.html">Poolladium dashboard</a> and search your address to see live hashrate, submitted shares, and any blocks found.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div><!-- /.container -->
+            </div><!-- /.container -->
     </section>
 </body>
 <script src="js/config.js"></script>

@@ -397,3 +397,20 @@
     content: "○";
     color: var(--text-3);
 }
+
+/* ── Flatten milestone cards: ruled entries on the timeline ──── */
+.rm-card, .rm-card--done {
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+    padding: 0.25rem 0 var(--sp-4);
+    margin-bottom: var(--sp-4);
+}
+.rm-card:hover { transform: none; box-shadow: none; border-color: var(--border-strong); }
+.rm-card--done:hover { box-shadow: none; border-color: var(--border-strong); }
+.rm-list a, .rm-link, .network-panel-sub a { color: var(--brand); }
+.rm-list li::before { color: var(--text-3) !important; }
+.rm-line { background: var(--border-strong); }
+.rm-node--done { background: var(--surface-3); color: var(--success); box-shadow: 0 0 0 1px var(--border-strong); }
+.rm-milestone:hover .rm-node--done { box-shadow: 0 0 0 1px var(--success); }

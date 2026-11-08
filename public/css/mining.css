@@ -285,8 +285,7 @@
 
 /* ── Config panel ─────────────────────────────────────────── */
 .mn-panel-wrap {
-    max-width: 760px;
-    margin-inline: auto;
+    max-width: none;
 }
 
 .mn-panel-header-row {
@@ -508,3 +507,9 @@
         padding-inline: 1.25rem;
     }
 }
+
+/* ── Narrow screens: endpoints wrap instead of clipping ───── */
+.mn-endpoint { flex-wrap: wrap; min-width: 0; }
+.mn-endpoint-label { white-space: normal; }
+.mn-endpoint-url { min-width: 0; overflow-wrap: anywhere; word-break: normal; }
+@media (max-width: 480px) { .mn-endpoint-url { font-size: 0.72rem; } }

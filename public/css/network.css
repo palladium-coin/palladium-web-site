@@ -310,3 +310,11 @@
         margin: 0.75rem 1rem;
     }
 }
+.network-panel-sub a { color: var(--brand); }
+
+/* Phones: show the full address, ports wrap beneath it */
+@media (max-width: 480px) {
+    .network-row { flex-wrap: wrap; }
+    .net-addr { flex: 1 1 calc(100% - 2rem); white-space: normal; overflow-wrap: anywhere; }
+    .net-ports { margin-left: 1.3rem; }
+}
